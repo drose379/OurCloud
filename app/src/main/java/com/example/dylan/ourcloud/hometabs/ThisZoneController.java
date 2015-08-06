@@ -1,6 +1,7 @@
 package com.example.dylan.ourcloud.hometabs;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.example.dylan.ourcloud.UserInfo;
 import com.squareup.okhttp.Call;
@@ -25,15 +26,12 @@ public class ThisZoneController {
         public void postSubmitted();
     }
 
-    private Context context;
-
     private OkHttpClient httpClient;
 
     private Callback callback;
 
-    public ThisZoneController(Context context) {
-        this.context = context;
-        callback = (Callback) context;
+    public ThisZoneController(ThisZone frag) {
+        callback = frag;
 
         httpClient = new OkHttpClient();
     }
@@ -47,7 +45,9 @@ public class ThisZoneController {
     }
 
     public void newPost(String postText) {
-        String jsonVals = generateJSONArray(UserInfo.getPerson().getDisplayName(),UserInfo.getWifiId(),postText);
+        //remove all whitespace from postText
+        String jsonVals = generateJSONArray(UserInfo.getPerson().getDisplayName(),UserInfo.getWifiId(),postText.trim());
+        Log.i("jsonVals",jsonVals );
         RequestBody rBody = RequestBody.create(MediaType.parse("text/plain"), jsonVals);
         Request request = new Request.Builder()
                 .url("http://104.236.15.47/OurCloudAPI/index.php/newPost")
@@ -65,7 +65,6 @@ public class ThisZoneController {
                 callback.postSubmitted();
             }
         });
-
     }
 
 }

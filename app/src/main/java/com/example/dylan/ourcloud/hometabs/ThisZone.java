@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.example.dylan.ourcloud.R;
@@ -19,17 +20,21 @@ import java.util.zip.Inflater;
 /**
  * Created by dylan on 8/6/15.
  */
-public class ThisZone extends Fragment implements View.OnClickListener {
+public class ThisZone extends Fragment implements View.OnClickListener,ThisZoneController.Callback {
 
     private Context context;
+    private ThisZoneController thisZoneController;
 
     FloatingActionButton newPostButton;
     MaterialDialog newPost;
     MaterialDialog loading;
 
+
+
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         this.context = activity;
+        thisZoneController = new ThisZoneController(this);
     }
 
     public View onCreateView(LayoutInflater inflater,ViewGroup parent,Bundle savedInstance) {
@@ -51,11 +56,17 @@ public class ThisZone extends Fragment implements View.OnClickListener {
         return v;
     }
 
+    @Override
+    public void postSubmitted() {
+        loading.dismiss();
+        //refresh feed
+    }
+
     public void initDialogs() {
 
         newPost = new MaterialDialog.Builder(context)
                 .title("New Post")
-                .customView(R.layout.new_post_dialog,true)
+                .customView(R.layout.new_post_dialog, true)
                 .positiveText("Post")
                 .positiveColor(getResources().getColor(R.color.ColorPrimary))
                 .negativeText("Cancel")
@@ -64,19 +75,28 @@ public class ThisZone extends Fragment implements View.OnClickListener {
                 .callback(new MaterialDialog.ButtonCallback() {
                     @Override
                     public void onPositive(MaterialDialog dialog) {
-                        //submit with ThisZoneController
-                        //dismiss this
-                        //show loading
+                        EditText postInput = (EditText) dialog.getCustomView().findViewById(R.id.postInput);
+                        String input = postInput.getText().toString();
+                        if (!input.isEmpty()) {
+                            thisZoneController.newPost(input);
+                            dialog.dismiss();
+                            loading.show();
+                        }
+                        initDialogs();
                     }
+
                     @Override
                     public void onNegative(MaterialDialog dialog) {
                         dialog.dismiss();
+                        initDialogs();
                     }
                 })
                 .build();
 
         loading = new MaterialDialog.Builder(context)
-                .
+                .title("Publishing")
+                .customView(R.layout.load_dialog,true)
+                .build();
 
     }
 
@@ -85,6 +105,7 @@ public class ThisZone extends Fragment implements View.OnClickListener {
         switch(v.getId()) {
             case R.id.newPostButton :
 
+                newPost.show();
 
                 break;
         }

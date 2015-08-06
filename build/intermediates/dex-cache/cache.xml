@@ -2,6 +2,20 @@
 <items version="2" >
 
     <item
+        jar="/home/dylan/Documents/Programming/OurCloud/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-panorama/7.5.0/jars/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="ba207be21987c11b37d9f8faa08ed6e722569f30">
+        <dex dex="/home/dylan/Documents/Programming/OurCloud/app/build/intermediates/pre-dexed/debug/classes-a904606862c02bfece85c8cbacf287e41dbfa552.jar" />
+    </item>
+    <item
+        jar="/home/dylan/Documents/Programming/OurCloud/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-appinvite/7.5.0/jars/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="63ec6e9f4fe5482a7447d0f3091b8e543a02554c">
+        <dex dex="/home/dylan/Documents/Programming/OurCloud/app/build/intermediates/pre-dexed/debug/classes-13fbd1cf5c1c8b4f0f89d56306d98bdc4a5c60aa.jar" />
+    </item>
+    <item
         jar="/home/dylan/Documents/Programming/OurCloud/app/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/22.2.1/jars/classes.jar"
         jumboMode="false"
         revision="22.0.1"
@@ -9,11 +23,207 @@
         <dex dex="/home/dylan/Documents/Programming/OurCloud/app/build/intermediates/pre-dexed/debug/classes-aadfe72c9fb87f59a440ff1de89d2a78d8e3e6bf.jar" />
     </item>
     <item
+        jar="/home/dylan/Documents/Programming/OurCloud/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.1/jars/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="4486e953d1f35f8ccab098b1dd67146366d5f731">
+        <dex dex="/home/dylan/Documents/Programming/OurCloud/app/build/intermediates/pre-dexed/debug/classes-8430d3b0143e33e4c32a1f7b6b1578b63c7b74e8.jar" />
+    </item>
+    <item
+        jar="/home/dylan/.gradle/caches/modules-2/files-2.1/com.nineoldandroids/library/2.4.0/e9b63380f3a242dbdbf103a2355ad7e43bad17cb/library-2.4.0.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="e9b63380f3a242dbdbf103a2355ad7e43bad17cb">
+        <dex dex="/home/dylan/Documents/Programming/OurCloud/app/build/intermediates/pre-dexed/debug/library-2.4.0-43fc78417850d42488666832d651c527d1afeffb.jar" />
+    </item>
+    <item
+        jar="/home/dylan/Documents/Programming/OurCloud/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-analytics/7.5.0/jars/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="e7b35244f50663b3f8d150714bca9ecd7a290da1">
+        <dex dex="/home/dylan/Documents/Programming/OurCloud/app/build/intermediates/pre-dexed/debug/classes-dbd4480b4f148e1b8f5999f230b312df2c6a5d53.jar" />
+    </item>
+    <item
+        jar="/home/dylan/Documents/Programming/OurCloud/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-wallet/7.5.0/jars/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="6836d188602ec5382d1967c58b00960eb8ff8773">
+        <dex dex="/home/dylan/Documents/Programming/OurCloud/app/build/intermediates/pre-dexed/debug/classes-6a7f868f2009d273e464e0ab390998675ccaa3aa.jar" />
+    </item>
+    <item
+        jar="/home/dylan/Documents/Programming/OurCloud/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.5.0/jars/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="a78183f30e769a98ab4820794f597763088d3065">
+        <dex dex="/home/dylan/Documents/Programming/OurCloud/app/build/intermediates/pre-dexed/debug/classes-689ae59c8c98611ba9bb125ceac7c923c8b70e83.jar" />
+    </item>
+    <item
+        jar="/home/dylan/Documents/Programming/OurCloud/app/build/intermediates/exploded-aar/com.android.support/support-v4/22.2.1/jars/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="f8efd0096475e0daf054267b61544e10dc776503">
+        <dex dex="/home/dylan/Documents/Programming/OurCloud/app/build/intermediates/pre-dexed/debug/classes-569ddcac71f38843d25057875088dc6e55aa372c.jar" />
+    </item>
+    <item
+        jar="/home/dylan/Documents/Programming/OurCloud/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-appstate/7.5.0/jars/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="68c140702c7242d914655bcb3164d9e8c45b84cb">
+        <dex dex="/home/dylan/Documents/Programming/OurCloud/app/build/intermediates/pre-dexed/debug/classes-7947c2b68767765f1abb7860340247ef835884c2.jar" />
+    </item>
+    <item
+        jar="/home/dylan/Documents/Programming/OurCloud/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-plus/7.5.0/jars/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="272bc5d7063f24bc3a33ea1d318cde8f31f5ec4c">
+        <dex dex="/home/dylan/Documents/Programming/OurCloud/app/build/intermediates/pre-dexed/debug/classes-904a53a82a6582bb6db4f49a357e122be0e34eef.jar" />
+    </item>
+    <item
+        jar="/home/dylan/.gradle/caches/modules-2/files-2.1/com.squareup.okhttp/okhttp/2.4.0/40340c0748190fe897baf7bffbc1b282734294e5/okhttp-2.4.0.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="40340c0748190fe897baf7bffbc1b282734294e5">
+        <dex dex="/home/dylan/Documents/Programming/OurCloud/app/build/intermediates/pre-dexed/debug/okhttp-2.4.0-79cc0d457ead9acf0b325764e1b963f4c48a0916.jar" />
+    </item>
+    <item
+        jar="/home/dylan/Documents/Programming/OurCloud/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-maps/7.5.0/jars/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="06a42becc33232ec0ee125161da68c1829c9f8fd">
+        <dex dex="/home/dylan/Documents/Programming/OurCloud/app/build/intermediates/pre-dexed/debug/classes-0ce74508e1c0afe154e00ef4cbf7442c48d18fea.jar" />
+    </item>
+    <item
+        jar="/home/dylan/Documents/Programming/OurCloud/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-wearable/7.5.0/jars/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="69dd177337ead693c408c8dddc9546bb6f1244fa">
+        <dex dex="/home/dylan/Documents/Programming/OurCloud/app/build/intermediates/pre-dexed/debug/classes-561210e8c0a32490d176d4736c29f87743dd9318.jar" />
+    </item>
+    <item
+        jar="/home/dylan/Documents/Programming/OurCloud/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-games/7.5.0/jars/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="02bac2dc792d78241077861566f2c82da955e7fa">
+        <dex dex="/home/dylan/Documents/Programming/OurCloud/app/build/intermediates/pre-dexed/debug/classes-a51d5128e88a9d88595da229de7853fecec90fae.jar" />
+    </item>
+    <item
+        jar="/home/dylan/Documents/Programming/OurCloud/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-ads/7.5.0/jars/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="29ebc7e04d877062317c8cc0e68b20f0c1fcda66">
+        <dex dex="/home/dylan/Documents/Programming/OurCloud/app/build/intermediates/pre-dexed/debug/classes-ab960ed00f5b52490d2a955f1c0508cae3b95490.jar" />
+    </item>
+    <item
+        jar="/home/dylan/Documents/Programming/OurCloud/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-safetynet/7.5.0/jars/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="1a6411087ab88ce5542f593e63a2752b6b0d6f1a">
+        <dex dex="/home/dylan/Documents/Programming/OurCloud/app/build/intermediates/pre-dexed/debug/classes-72d4197b77958a354e9dc6fc0c88f15b9970ce0d.jar" />
+    </item>
+    <item
+        jar="/home/dylan/Documents/Programming/OurCloud/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-drive/7.5.0/jars/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="f44d03c138cb6488fdbaa65e3a7e5878861a56d8">
+        <dex dex="/home/dylan/Documents/Programming/OurCloud/app/build/intermediates/pre-dexed/debug/classes-30346c6cfa6d259daf7e6e996ecaf0ac57126403.jar" />
+    </item>
+    <item
         jar="/home/dylan/Documents/Programming/OurCloud/app/build/intermediates/exploded-aar/com.afollestad/material-dialogs/0.7.8.1/jars/classes.jar"
         jumboMode="false"
         revision="22.0.1"
         sha1="332c3fb3a17fa7a66f84c701047aac964653fdf6">
         <dex dex="/home/dylan/Documents/Programming/OurCloud/app/build/intermediates/pre-dexed/debug/classes-e5195db47e6dae62f8f1f40168a5313d39104a8b.jar" />
+    </item>
+    <item
+        jar="/home/dylan/Documents/Programming/OurCloud/app/build/intermediates/exploded-aar/com.android.support/mediarouter-v7/22.0.0/jars/libs/internal_impl-22.0.0.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="ba3df4eb0a630d7de294f0e48d3f9267d279b784">
+        <dex dex="/home/dylan/Documents/Programming/OurCloud/app/build/intermediates/pre-dexed/debug/internal_impl-22.0.0-bbb9ce6cb5df4e2aafdcdbe04a3b746bb36f548a.jar" />
+    </item>
+    <item
+        jar="/home/dylan/Documents/Programming/OurCloud/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-identity/7.5.0/jars/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="d405025c600055237c171a0bbabaa49d69696573">
+        <dex dex="/home/dylan/Documents/Programming/OurCloud/app/build/intermediates/pre-dexed/debug/classes-69a2dfde1268ee6d881830a90920fe5a1ed2d48c.jar" />
+    </item>
+    <item
+        jar="/home/dylan/Android/Sdk/extras/android/m2repository/com/android/support/support-annotations/22.2.1/support-annotations-22.2.1.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="61a0ff5c29295ec56d7e0bd3d25d95dbf71b4b2b">
+        <dex dex="/home/dylan/Documents/Programming/OurCloud/app/build/intermediates/pre-dexed/debug/support-annotations-22.2.1-c94e104e27d58b6c031f0508f8fd52860bb6e9ea.jar" />
+    </item>
+    <item
+        jar="/home/dylan/Documents/Programming/OurCloud/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-appindexing/7.5.0/jars/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="f02127a85abd52a2cd526d4c2409f21969f80ee8">
+        <dex dex="/home/dylan/Documents/Programming/OurCloud/app/build/intermediates/pre-dexed/debug/classes-86b463c34c17c19d854419abb1ba7815cfdccc40.jar" />
+    </item>
+    <item
+        jar="/home/dylan/Documents/Programming/OurCloud/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-gcm/7.5.0/jars/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="8d736fefa22d896e84a268354b3ed48a42663150">
+        <dex dex="/home/dylan/Documents/Programming/OurCloud/app/build/intermediates/pre-dexed/debug/classes-288d9306bf947180bd3c6cdd0d8b00c1bf104aab.jar" />
+    </item>
+    <item
+        jar="/home/dylan/Documents/Programming/OurCloud/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-cast/7.5.0/jars/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="8e3a972f28b8bae817e382257ba177a31bcadbbc">
+        <dex dex="/home/dylan/Documents/Programming/OurCloud/app/build/intermediates/pre-dexed/debug/classes-61eed4a6693dca1947ecb8ade3cd687bc52891b0.jar" />
+    </item>
+    <item
+        jar="/home/dylan/Documents/Programming/OurCloud/app/build/intermediates/exploded-aar/com.android.support/mediarouter-v7/22.0.0/jars/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="a1372c17fccacca753d3951d3ad820571cbce075">
+        <dex dex="/home/dylan/Documents/Programming/OurCloud/app/build/intermediates/pre-dexed/debug/classes-4d184ede498083e9a90af84744c05ccb8c4abd59.jar" />
+    </item>
+    <item
+        jar="/home/dylan/Documents/Programming/OurCloud/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-nearby/7.5.0/jars/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="6440e5e5cfe368f9bff3c537fb8988048069cb33">
+        <dex dex="/home/dylan/Documents/Programming/OurCloud/app/build/intermediates/pre-dexed/debug/classes-7034713506faae7093c31640074f66eed17ba23c.jar" />
+    </item>
+    <item
+        jar="/home/dylan/Documents/Programming/OurCloud/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-location/7.5.0/jars/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="1e98ef3f124bb7a11f8575f9ff5dfea330b61b6f">
+        <dex dex="/home/dylan/Documents/Programming/OurCloud/app/build/intermediates/pre-dexed/debug/classes-ab74b3ae712ba989c4fb64207965b93198d87f98.jar" />
+    </item>
+    <item
+        jar="/home/dylan/Documents/Programming/OurCloud/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-fitness/7.5.0/jars/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="a172852a35ff919e85b9b7f14bbc15c5bee25520">
+        <dex dex="/home/dylan/Documents/Programming/OurCloud/app/build/intermediates/pre-dexed/debug/classes-41ec0f9b41e718138a299008bdd405e00bc8459e.jar" />
+    </item>
+    <item
+        jar="/home/dylan/Documents/Programming/OurCloud/app/build/intermediates/exploded-aar/com.melnykov/floatingactionbutton/1.3.0/jars/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="8c6ebb7d087d1a30bf84356bd2aecf85309fc024">
+        <dex dex="/home/dylan/Documents/Programming/OurCloud/app/build/intermediates/pre-dexed/debug/classes-7f5b21213ac7e156050939c4a72bcb8e4e399173.jar" />
+    </item>
+    <item
+        jar="/home/dylan/.gradle/caches/modules-2/files-2.1/com.squareup.okio/okio/1.4.0/5b72bf48563ea8410e650de14aa33ff69a3e8c35/okio-1.4.0.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="5b72bf48563ea8410e650de14aa33ff69a3e8c35">
+        <dex dex="/home/dylan/Documents/Programming/OurCloud/app/build/intermediates/pre-dexed/debug/okio-1.4.0-b2233086fbecd3dacc4580958d3813b1df5b9787.jar" />
+    </item>
+    <item
+        jar="/home/dylan/Documents/Programming/OurCloud/app/build/intermediates/exploded-aar/com.android.support/support-v4/22.2.1/jars/libs/internal_impl-22.2.1.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="c471eaaba13ff64f6e0383d1c30a9cdc9a97efeb">
+        <dex dex="/home/dylan/Documents/Programming/OurCloud/app/build/intermediates/pre-dexed/debug/internal_impl-22.2.1-52531b1f7e4d9b1764d6cb1ceba8ad26d074e1cd.jar" />
     </item>
 
 </items>
