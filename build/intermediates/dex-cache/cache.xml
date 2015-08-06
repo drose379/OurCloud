@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="/home/dylan/Documents/Programming/OurCloud/app/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/22.2.1/jars/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="3abb4b88f5a8a0584a9b01d3170d7165f12f8588">
+        <dex dex="/home/dylan/Documents/Programming/OurCloud/app/build/intermediates/pre-dexed/debug/classes-aadfe72c9fb87f59a440ff1de89d2a78d8e3e6bf.jar" />
+    </item>
+    <item
+        jar="/home/dylan/Documents/Programming/OurCloud/app/build/intermediates/exploded-aar/com.afollestad/material-dialogs/0.7.8.1/jars/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="332c3fb3a17fa7a66f84c701047aac964653fdf6">
+        <dex dex="/home/dylan/Documents/Programming/OurCloud/app/build/intermediates/pre-dexed/debug/classes-e5195db47e6dae62f8f1f40168a5313d39104a8b.jar" />
+    </item>
+
+</items>

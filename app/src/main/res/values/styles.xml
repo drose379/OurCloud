@@ -1,0 +1,18 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:fitsSystemWindows">true</item>
+    </style>
+
+    <style name="Toolbar" parent="Widget.AppCompat.ActionBar">
+        <item name="theme">@style/ThemeOverlay.Toolbar</item>
+        <item name="popupTheme">@style/ThemeOverlay.Toolbar</item>
+    </style>
+
+    <style name="ThemeOverlay.Toolbar" parent="ThemeOverlay.AppCompat.ActionBar">
+
+    </style>
+
+</resources>
