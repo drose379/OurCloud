@@ -9,12 +9,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.ProgressBar;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.example.dylan.ourcloud.Post;
 import com.example.dylan.ourcloud.R;
 import com.example.dylan.ourcloud.UserInfo;
 import com.melnykov.fab.FloatingActionButton;
 
+import java.util.List;
 import java.util.zip.Inflater;
 
 /**
@@ -26,6 +30,8 @@ public class ThisZone extends Fragment implements View.OnClickListener,ThisZoneC
     private ThisZoneController thisZoneController;
 
     FloatingActionButton newPostButton;
+    ProgressBar loadingSpinner;
+    ListView postContainer;
     MaterialDialog newPost;
     MaterialDialog loading;
 
@@ -49,11 +55,21 @@ public class ThisZone extends Fragment implements View.OnClickListener,ThisZoneC
          * INFLATE MATERIAL DIALOG TO ADD NEW POST
          */
 
+        postContainer = (ListView) v.findViewById(R.id.zonePostList);
+        loadingSpinner = (ProgressBar) v.findViewById(R.id.initialLoader);
         newPostButton = (FloatingActionButton) v.findViewById(R.id.newPostButton);
         newPostButton.setOnClickListener(this);
         initDialogs();
+        thisZoneController.getZonePosts();
 
         return v;
+    }
+
+    @Override
+    public void getZonePosts(List<Post> posts) {
+        //not functional yet
+        loadingSpinner.setVisibility(View.GONE);
+        postContainer.setAdapter(new ThisZoneListAdapter(posts));
     }
 
     @Override

@@ -3,6 +3,7 @@ package com.example.dylan.ourcloud.hometabs;
 import android.content.Context;
 import android.util.Log;
 
+import com.example.dylan.ourcloud.Post;
 import com.example.dylan.ourcloud.UserInfo;
 import com.squareup.okhttp.Call;
 import com.squareup.okhttp.Callback;
@@ -16,6 +17,7 @@ import org.json.JSONArray;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created by dylan on 8/6/15.
@@ -23,7 +25,8 @@ import java.util.Arrays;
 public class ThisZoneController {
 
     public interface Callback {
-        public void postSubmitted();
+        void getZonePosts(List<Post> posts);
+        void postSubmitted();
     }
 
     private OkHttpClient httpClient;
@@ -44,10 +47,16 @@ public class ThisZoneController {
         return vals.toString();
     }
 
+    public void getZonePosts() {
+        String currentZone = UserInfo.getWifiId();
+        //send to api which will query where zone = zone
+        //grab items that user is OP off, change the author name to "Me"
+    }
+
     public void newPost(String postText) {
         //remove all whitespace from postText
         String jsonVals = generateJSONArray(UserInfo.getPerson().getDisplayName(),UserInfo.getWifiId(),postText.trim());
-        Log.i("jsonVals",jsonVals );
+        Log.i("jsonVals", jsonVals);
         RequestBody rBody = RequestBody.create(MediaType.parse("text/plain"), jsonVals);
         Request request = new Request.Builder()
                 .url("http://104.236.15.47/OurCloudAPI/index.php/newPost")
