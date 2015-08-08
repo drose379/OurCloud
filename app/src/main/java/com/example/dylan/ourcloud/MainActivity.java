@@ -45,15 +45,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onStart() {
         super.onStart();
+
         wifiController = new WifiController(this);
+
         signInController = new SignInController(this);
         signInController.attemptSignIn();
     }
 
     @Override
     public void signInSuccess(Person currentUser) {
-        UserInfo.setPerson(currentUser);
-        UserInfo.setWifiId(wifiController.getWifiId());
+        UserInfo.getInstance().setPerson(currentUser);
 
         Intent i = new Intent(this,HomeRoot.class);
         startActivity(i);

@@ -74,6 +74,7 @@ public class ThisZone extends Fragment implements View.OnClickListener,ThisZoneC
 
     @Override
     public void postSubmitted() {
+
         loading.dismiss();
         //refresh feed
     }
@@ -95,16 +96,19 @@ public class ThisZone extends Fragment implements View.OnClickListener,ThisZoneC
                         String input = postInput.getText().toString();
                         if (!input.isEmpty()) {
                             thisZoneController.newPost(input);
+
                             dialog.dismiss();
                             loading.show();
                         }
-                        initDialogs();
+                        //create method to clear edittext of dialogs
+                        postInput.setText("");
                     }
 
                     @Override
                     public void onNegative(MaterialDialog dialog) {
                         dialog.dismiss();
-                        initDialogs();
+                        EditText postInput = (EditText) dialog.getCustomView().findViewById(R.id.postInput);
+                        postInput.setText("");
                     }
                 })
                 .build();
@@ -112,6 +116,7 @@ public class ThisZone extends Fragment implements View.OnClickListener,ThisZoneC
         loading = new MaterialDialog.Builder(context)
                 .title("Publishing")
                 .customView(R.layout.load_dialog,true)
+                .autoDismiss(false)
                 .build();
 
     }

@@ -11,18 +11,31 @@ import com.google.android.gms.plus.model.people.Person;
  */
 public class UserInfo {
 
-    private static Person person;
-    private static String wifiId;
+    /**
+     * Instead of all static, create singleton and use throughout application
+     */
 
-    public static void setPerson(Person currentPerson) {person = currentPerson;}
-    public static void setWifiId(String id) {
+    private Person person;
+    private String wifiId;
+
+    private static UserInfo userInfo;
+
+    public static UserInfo getInstance() {
+        if (userInfo == null) {
+            userInfo = new UserInfo();
+        }
+        return userInfo;
+    }
+
+    public void setPerson(Person currentPerson) {person = currentPerson;}
+    public void setWifiId(String id) {
         wifiId = id;
     }
 
-    public static Person getPerson() {
+    public Person getPerson() {
         return person;
     }
-    public static String getWifiId() {
+    public String getWifiId() {
         return wifiId;
     }
 

@@ -48,14 +48,13 @@ public class ThisZoneController {
     }
 
     public void getZonePosts() {
-        String currentZone = UserInfo.getWifiId();
+        String currentZone = UserInfo.getInstance().getWifiId();
         //send to api which will query where zone = zone
         //grab items that user is OP off, change the author name to "Me"
     }
 
     public void newPost(String postText) {
-        //remove all whitespace from postText
-        String jsonVals = generateJSONArray(UserInfo.getPerson().getDisplayName(),UserInfo.getWifiId(),postText.trim());
+        String jsonVals = generateJSONArray(UserInfo.getInstance().getPerson().getDisplayName(),UserInfo.getInstance().getWifiId(),postText.trim());
         Log.i("jsonVals", jsonVals);
         RequestBody rBody = RequestBody.create(MediaType.parse("text/plain"), jsonVals);
         Request request = new Request.Builder()

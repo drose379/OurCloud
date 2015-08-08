@@ -9,6 +9,16 @@ import android.net.wifi.WifiManager;
 public class WifiController {
 
     private WifiManager wifiManager;
+    public boolean connected = false;
+
+    private static WifiController wifiController;
+
+    public static WifiController getInstance(Context context) {
+        if (wifiController == null) {
+            wifiController = new WifiController(context);
+        }
+        return wifiController;
+    }
 
     public WifiController(Context context) {
         wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
@@ -17,6 +27,11 @@ public class WifiController {
     public String getWifiId() {
         String wifiId = wifiManager.getConnectionInfo().getBSSID();
         return wifiId;
+    }
+
+    public boolean isConnected() {
+        connected = getWifiId() == null ? false : true;
+        return connected;
     }
 
 }
