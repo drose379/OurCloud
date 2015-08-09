@@ -5,10 +5,11 @@ package com.example.dylan.ourcloud;
  */
 public class Post {
 
-    //user
-    //zone
-    //posttext
+    //user (OP)
+    //user (OP) profile image
+    //post text
     //image
+    //comments
 
     //can have: text or image, text + image, just text or just image
 

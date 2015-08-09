@@ -35,6 +35,8 @@ public class UserInfo {
     public Person getPerson() {
         return person;
     }
+    public String getDisplayName() {return person.getDisplayName();}
+    public String getProfileImage() {return person.getImage().getUrl();}
     public String getWifiId() {
         return wifiId;
     }

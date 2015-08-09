@@ -24,10 +24,10 @@ public class ViewPagerAdapterHome extends FragmentPagerAdapter {
                 ThisZone thisZone = new ThisZone();
                 return thisZone;
             case 1:
-                ThisZone markedZones = new ThisZone();
+                Fragment markedZones = new Fragment();
                 return markedZones;
             case 2:
-                ThisZone myPosts = new ThisZone();
+                Fragment myPosts = new Fragment();
                 return myPosts;
             default:
                 throw new RuntimeException();

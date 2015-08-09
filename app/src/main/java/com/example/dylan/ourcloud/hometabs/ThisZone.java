@@ -35,14 +35,14 @@ public class ThisZone extends Fragment implements View.OnClickListener,ThisZoneC
     MaterialDialog newPost;
     MaterialDialog loading;
 
-
-
+    @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         this.context = activity;
         thisZoneController = new ThisZoneController(this);
     }
 
+    @Override
     public View onCreateView(LayoutInflater inflater,ViewGroup parent,Bundle savedInstance) {
         super.onCreateView(inflater,parent,savedInstance);
         View v = inflater.inflate(R.layout.this_zone,parent,false);
@@ -53,6 +53,7 @@ public class ThisZone extends Fragment implements View.OnClickListener,ThisZoneC
          * Have fab for user to create a post
          * Swipe down to refresh (call controller method again)
          * INFLATE MATERIAL DIALOG TO ADD NEW POST
+         * Whenever user refreshes feed or attempts to add a new post, check WifiController.isConnected() method and show dialog if not connected or zone changed.
          */
 
         postContainer = (ListView) v.findViewById(R.id.zonePostList);
@@ -60,9 +61,19 @@ public class ThisZone extends Fragment implements View.OnClickListener,ThisZoneC
         newPostButton = (FloatingActionButton) v.findViewById(R.id.newPostButton);
         newPostButton.setOnClickListener(this);
         initDialogs();
-        thisZoneController.getZonePosts();
 
         return v;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        /**
+         * Pull posts for this zone via method (must check wifi is still connected before calling method)
+         * Call this same method and wifi checkpoint when user refreshes feed
+         */
+
+        thisZoneController.grabZonePosts();
     }
 
     @Override
