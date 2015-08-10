@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom_text="http://schemas.android.com/apk/res-auto"
     xmlns:fab="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
 
     <ProgressBar
         android:layout_width="50dp"
@@ -14,11 +17,25 @@
         />
 
     <ListView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#ECEDF0"
+        android:divider="@null"
+        android:dividerHeight="0dp"
         android:id="@+id/zonePostList"
         >
     </ListView>
+
+    <com.example.dylan.ourcloud.CustomTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        custom_text:bold="true"
+        android:textSize="20sp"
+        android:text="Be The First!"
+        android:visibility="gone"
+        android:id="@+id/noPosts"
+        />
 
     <com.melnykov.fab.FloatingActionButton
         android:id="@+id/newPostButton"
@@ -31,5 +48,6 @@
         fab:fab_colorPressed="@color/ColorPrimaryDark"
         android:src="@drawable/ic_add_white_24dp"
         />
+
 
 </RelativeLayout>

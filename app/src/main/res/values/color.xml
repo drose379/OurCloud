@@ -6,6 +6,7 @@
     <color name="ColorLightPrimary">#B3E5FC</color>
 
     <color name="ColorWhite">#FFFFFF</color>
+    <color name="ColorBlack">#000000</color>
 
     <color name="ColorStart">#00bfa5</color>
 </resources>

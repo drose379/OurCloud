@@ -1,6 +1,7 @@
 package com.example.dylan.ourcloud.hometabs;
 
 import android.content.Context;
+import android.os.Handler;
 import android.util.Log;
 
 import com.example.dylan.ourcloud.JSONUtil;
@@ -31,12 +32,12 @@ public class ThisZoneController {
     }
 
     private OkHttpClient httpClient;
-
+    private Handler handler;
     private Callback callback;
 
     public ThisZoneController(ThisZone frag) {
         callback = frag;
-
+        handler = new Handler();
         httpClient = new OkHttpClient();
     }
 
@@ -58,8 +59,9 @@ public class ThisZoneController {
 
             @Override
             public void onResponse(Response response) throws IOException {
-                //pass to method to build List<Post> posts
-                //callback to ThisZone class with List<Post>
+                final List<Post> posts = JSONUtil.toPostList(response.body().string());
+                Runnable r = new Runnable() {@Override public void run() {callback.getZonePosts(posts);}};
+                handler.post(r);
             }
         });
 
@@ -74,7 +76,7 @@ public class ThisZoneController {
                 .url("http://104.236.15.47/OurCloudAPI/index.php/newPost")
                 .post(rBody)
                 .build();
-        Call newCall = httpClient.newCall(request);;
+        Call newCall = httpClient.newCall(request);
         newCall.enqueue(new com.squareup.okhttp.Callback() {
             @Override
             public void onFailure(Request request, IOException e) {

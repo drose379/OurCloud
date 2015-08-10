@@ -43,51 +43,11 @@ public class HomeRoot extends AppCompatActivity {
          * If user logs in without wifi connection, gets dialog and then connects, their bssid is never being set, need to have a config method here and update UserInfo
          */
         super.onStart();
-        wifiController = WifiController.getInstance(getApplicationContext());
-        initWifiConnection();
-    }
-
-    public void initWifiConnection() {
-        if (wifiController.isConnected()) {
-            UserInfo.getInstance().setWifiId(wifiController.getWifiId());
-            initHomeView();
-        } else {
-            showWifiConnectDialog();
-        }
-    }
-
-    public void showWifiConnectDialog() {
-
-        if (WifiController.getInstance(getApplicationContext()).isConnected()) {
-            initHomeView();
-        } else {
-            MaterialDialog enableWifi = new MaterialDialog.Builder(this)
-                    .title("Enable Wifi")
-                    .content("Please enable wifi to post in a zone, press reload when connected. If you want to check your marked zones, click skip")
-                    .positiveText("Reload")
-                    .negativeText("Skip")
-                    .dismissListener(new DialogInterface.OnDismissListener() {
-                        @Override
-                        public void onDismiss(DialogInterface dialogInterface) {
-                            initWifiConnection();
-                        }
-                    })
-                    .callback(new MaterialDialog.ButtonCallback() {
-                        @Override
-                        public void onNegative(MaterialDialog dialog) {
-                            //wants to just view marked zones, account for this
-                        }
-                    })
-                    .build();
-
-            enableWifi.show();
-        }
-
+        initHomeView();
     }
 
     public void initHomeView() {
 
-        Log.i("userData","BSSID" + UserInfo.getInstance().getWifiId());
 
         tabs = (SlidingTabLayout) findViewById(R.id.tabs);
         pager = (ViewPager) findViewById(R.id.viewPager);
