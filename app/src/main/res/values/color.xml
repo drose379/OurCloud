@@ -9,4 +9,6 @@
     <color name="ColorBlack">#000000</color>
 
     <color name="ColorStart">#00bfa5</color>
+    <color name="ColorHighlight">#00E676</color>
+
 </resources>

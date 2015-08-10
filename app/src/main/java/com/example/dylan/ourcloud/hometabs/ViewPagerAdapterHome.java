@@ -11,7 +11,7 @@ import com.example.dylan.ourcloud.R;
  */
 public class ViewPagerAdapterHome extends FragmentPagerAdapter {
 
-    private String[] titles = {"This Zone","Marked Zones","My Posts"};
+    private String[] titles = {"This Zone","Marked Zones","Me"};
 
     public ViewPagerAdapterHome(FragmentManager manager) {
         super(manager);

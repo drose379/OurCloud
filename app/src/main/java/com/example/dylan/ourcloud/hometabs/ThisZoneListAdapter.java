@@ -1,6 +1,7 @@
 package com.example.dylan.ourcloud.hometabs;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,26 +49,30 @@ public class ThisZoneListAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position,View recycledView,ViewGroup parent) {
-        View v  = recycledView;
+        View v = recycledView;
         Post currentPost = posts.get(position);
-        if (v == null) {
-            v = inflater.inflate(R.layout.post_card,parent,false);
 
-            TextView userName = (TextView) v.findViewById(R.id.userName);
-            ImageView userImage = (ImageView) v.findViewById(R.id.userImage);
+        if(v == null) {
+            v = inflater.inflate(R.layout.post_card, parent, false);
+        }
 
-            TextView postText = (TextView) v.findViewById(R.id.postText);
+        TextView userName = (TextView) v.findViewById(R.id.userName);
+        ImageView userImage = (ImageView) v.findViewById(R.id.userImage);
 
-            Picasso.with(context).load(currentPost.getUserImage()).into(userImage);
-            userName.setText(currentPost.getUser());
+        TextView postText = (TextView) v.findViewById(R.id.postText);
 
-            postText.setText(currentPost.getPostText());
+        Picasso.with(context).load(currentPost.getUserImage()).into(userImage);
+
+        userName.setText(currentPost.isCurrentUser() ? "Me" : currentPost.getUser());
+        userName.setTextColor(currentPost.isCurrentUser() ? context.getResources().getColor(R.color.ColorStart) : Color.parseColor("#000000"));
+
+        postText.setText(currentPost.getPostText());
 
             //need to show post image (add functionality)
             //need to give comment option
             //create detail view to view comments on card click
+            //show date in card bottom section
 
-        }
         return v;
     }
 }

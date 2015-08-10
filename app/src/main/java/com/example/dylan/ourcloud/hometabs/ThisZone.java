@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -31,12 +32,13 @@ import java.util.zip.Inflater;
 /**
  * Created by dylan on 8/6/15.
  */
-public class ThisZone extends Fragment implements View.OnClickListener,ThisZoneController.Callback {
+public class ThisZone extends Fragment implements View.OnClickListener,ListView.OnScrollListener,SwipeRefreshLayout.OnRefreshListener,ThisZoneController.Callback {
 
     private Context context;
     private WifiController wifiController;
     private ThisZoneController thisZoneController;
 
+    SwipeRefreshLayout refreshLayout;
     FloatingActionButton newPostButton;
     ProgressBar loadingSpinner;
     ListView postContainer;
@@ -44,6 +46,7 @@ public class ThisZone extends Fragment implements View.OnClickListener,ThisZoneC
     MaterialDialog newPost;
     MaterialDialog loading;
     MaterialDialog enableWifi;
+
 
     @Override
     public void onAttach(Activity activity) {
@@ -66,11 +69,13 @@ public class ThisZone extends Fragment implements View.OnClickListener,ThisZoneC
          * INFLATE MATERIAL DIALOG TO ADD NEW POST
          * Whenever user refreshes feed or attempts to add a new post, check WifiController.isConnected() method and show dialog if not connected or zone changed.
          */
+        refreshLayout = (SwipeRefreshLayout) v.findViewById(R.id.refreshContainer);
         postContainer = (ListView) v.findViewById(R.id.zonePostList);
         noPostsText = (TextView) v.findViewById(R.id.noPosts);
         loadingSpinner = (ProgressBar) v.findViewById(R.id.initialLoader);
         newPostButton = (FloatingActionButton) v.findViewById(R.id.newPostButton);
 
+        refreshLayout.setOnRefreshListener(this);
         newPostButton.setOnClickListener(this);
         newPostButton.attachToListView(postContainer);
 
@@ -98,12 +103,19 @@ public class ThisZone extends Fragment implements View.OnClickListener,ThisZoneC
         }
     }
 
+    /**
+     * postContainer scroll listener needs to be updated each time data changes
+     * @param posts
+     */
     @Override
     public void getZonePosts(final List<Post> posts) {
         loadingSpinner.setVisibility(View.GONE);
+        refreshLayout.setRefreshing(false);
         if (posts.size() > 0) {postContainer.setAdapter(new ThisZoneListAdapter(getActivity(), posts));}
         else {noPostsText.setVisibility(View.VISIBLE);}
-        Log.i("postsCount", String.valueOf(posts.size()));
+
+        postContainer.setOnScrollListener(this);
+
     }
 
     @Override
@@ -188,13 +200,16 @@ public class ThisZone extends Fragment implements View.OnClickListener,ThisZoneC
     }
 
     @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        int action = event.getActionMasked();
-        if (action == MotionEvent.ACTION_DOWN) {
-            Log.i("motionDown",String.valueOf(getView().getScrollY()));
-        }
-        return super.onTouchEvent())
+    public void onScroll(AbsListView view,int firstVisibleItem,int visibleItemCount,int totalItemCount) {
+        int topViewMargin = postContainer.getChildAt(0) != null ? postContainer.getChildAt(0).getTop() : 0;
+        refreshLayout.setEnabled(firstVisibleItem == 0 && topViewMargin == 0);
     }
+    @Override
+    public void onScrollStateChanged(AbsListView view,int scrollState) {}
 
+    @Override
+    public void onRefresh() {
+        thisZoneController.grabZonePosts();
+    }
 
 }

@@ -36,7 +36,6 @@ public class Post {
     }
 
     public String getUser() {
-        user = user.equals(UserInfo.getInstance().getDisplayName()) ? "Me" : user;
         return user;
     }
     public String getUserImage() {
@@ -44,6 +43,11 @@ public class Post {
     }
     public String getPostText() {
         return postText;
+    }
+
+    public boolean isCurrentUser() {
+        boolean isCurrentUser = user.equals(UserInfo.getInstance().getDisplayName()) ? true : false;
+        return isCurrentUser;
     }
 
 }
