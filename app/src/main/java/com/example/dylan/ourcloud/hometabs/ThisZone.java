@@ -3,29 +3,39 @@ package com.example.dylan.ourcloud.hometabs;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.graphics.BitmapFactory;
+import android.media.ExifInterface;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.example.dylan.ourcloud.ImageUtil;
 import com.example.dylan.ourcloud.Post;
 import com.example.dylan.ourcloud.R;
 import com.example.dylan.ourcloud.UserInfo;
 import com.example.dylan.ourcloud.WifiController;
 import com.melnykov.fab.FloatingActionButton;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.zip.Inflater;
 
@@ -37,15 +47,19 @@ public class ThisZone extends Fragment implements View.OnClickListener,ListView.
     private Context context;
     private WifiController wifiController;
     private ThisZoneController thisZoneController;
+    File newPostImage = null;
 
     SwipeRefreshLayout refreshLayout;
     FloatingActionButton newPostButton;
     ProgressBar loadingSpinner;
     ListView postContainer;
     TextView noPostsText;
+
+    boolean dialogsInflated;
     MaterialDialog newPost;
     MaterialDialog loading;
     MaterialDialog enableWifi;
+    MaterialDialog imageFromSelect;
 
 
     @Override
@@ -79,7 +93,7 @@ public class ThisZone extends Fragment implements View.OnClickListener,ListView.
         newPostButton.setOnClickListener(this);
         newPostButton.attachToListView(postContainer);
 
-        initDialogs();
+        if(!dialogsInflated) {initDialogs();}
 
         return v;
     }
@@ -111,8 +125,15 @@ public class ThisZone extends Fragment implements View.OnClickListener,ListView.
     public void getZonePosts(final List<Post> posts) {
         loadingSpinner.setVisibility(View.GONE);
         refreshLayout.setRefreshing(false);
-        if (posts.size() > 0) {postContainer.setAdapter(new ThisZoneListAdapter(getActivity(), posts));}
-        else {noPostsText.setVisibility(View.VISIBLE);}
+        if (posts.size() > 0) {
+            postContainer.setVisibility(View.VISIBLE);
+            postContainer.setAdapter(new ThisZoneListAdapter(getActivity(), posts));
+            noPostsText.setVisibility(View.GONE);
+        }
+        else {
+            noPostsText.setVisibility(View.VISIBLE);
+            postContainer.setVisibility(View.GONE);
+        }
 
         postContainer.setOnScrollListener(this);
 
@@ -127,6 +148,8 @@ public class ThisZone extends Fragment implements View.OnClickListener,ListView.
     }
 
     public void initDialogs() {
+
+        dialogsInflated = true;
 
         newPost = new MaterialDialog.Builder(context)
                 .title("New Post")
@@ -143,7 +166,7 @@ public class ThisZone extends Fragment implements View.OnClickListener,ListView.
                         String input = postInput.getText().toString();
                         if (!input.isEmpty()) {
                             thisZoneController.newPost(input);
-
+                            
                             dialog.dismiss();
                             loading.show();
                         }
@@ -159,6 +182,38 @@ public class ThisZone extends Fragment implements View.OnClickListener,ListView.
                     }
                 })
                 .build();
+
+        ImageView addImageButton = (ImageView) newPost.getCustomView().findViewById(R.id.image);
+        addImageButton.setOnClickListener(this);
+
+        imageFromSelect = new MaterialDialog.Builder(context)
+               .title("Choose Location")
+                .items(new String[] {"Camera","Gallery"})
+                .dismissListener(new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialogInterface) {
+                        newPost.show();
+                    }
+                })
+                .itemsCallback(new MaterialDialog.ListCallback() {
+                    @Override
+                    public void onSelection(MaterialDialog materialDialog, View view, int i, CharSequence charSequence) {
+                        switch (i) {
+                            case 0:
+                                //camera
+                                break;
+                            case 1:
+                                Intent imagePicker = new Intent();
+                                imagePicker.setType("image/*");
+                                imagePicker.setAction(Intent.ACTION_GET_CONTENT);
+                                startActivityForResult(imagePicker,2);
+                                break;
+                        }
+                    }
+                })
+                .build();
+
+
 
         loading = new MaterialDialog.Builder(context)
                 .title("Publishing")
@@ -188,6 +243,24 @@ public class ThisZone extends Fragment implements View.OnClickListener,ListView.
 
     }
 
+    public void setNewPostDialogImage() throws IOException {
+        ImageView selectedImage = (ImageView) newPost.getCustomView().findViewById(R.id.image);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(200,200);
+        params.gravity  = Gravity.CENTER_HORIZONTAL;
+        selectedImage.setLayoutParams(params);
+
+        ExifInterface imageExif = new ExifInterface(newPostImage.getAbsolutePath());
+        int rotation = imageExif.getAttributeInt(ExifInterface.TAG_ORIENTATION,6);
+
+        if (rotation != ExifInterface.ORIENTATION_NORMAL && rotation != ExifInterface.ORIENTATION_UNDEFINED) {
+            Log.i("imageOri","Not normal");
+            Log.i("imageOri",imageExif.getAttribute(ExifInterface.TAG_ORIENTATION));
+            selectedImage.setRotation(90);
+        }
+
+        selectedImage.setImageBitmap(BitmapFactory.decodeFile(newPostImage.getAbsolutePath()));
+    }
+
     @Override
     public void onClick(View v) {
         switch(v.getId()) {
@@ -196,6 +269,30 @@ public class ThisZone extends Fragment implements View.OnClickListener,ListView.
                 newPost.show();
 
                 break;
+            case R.id.image :
+                newPost.hide();
+                imageFromSelect.show();
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode,int resultCode,Intent data) {
+        if (resultCode == -1) {
+            switch (requestCode) {
+                case 1 :
+                    //from camera
+                    break;
+
+                case 2:
+                    try {
+                        Uri imageUri = data.getData();
+                        newPostImage = ImageUtil.getImageFile(context,imageUri);
+                        setNewPostDialogImage();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e.getMessage());
+                    }
+                    break;
+            }
         }
     }
 

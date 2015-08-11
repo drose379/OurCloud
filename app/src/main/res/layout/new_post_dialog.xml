@@ -15,8 +15,27 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:minLines="3"
+        android:minLines="2"
         android:id="@+id/postInput"
+        />
+
+    <com.example.dylan.ourcloud.CustomTextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        custom_text:bold="true"
+        android:text="Image: "
+        />
+
+    <ImageView
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:maxWidth="150dp"
+        android:maxHeight="150dp"
+        android:adjustViewBounds="true"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp"
+        android:id="@+id/image"
+        android:src="@drawable/ic_photo_camera_black_48dp"
         />
 
 </LinearLayout>
