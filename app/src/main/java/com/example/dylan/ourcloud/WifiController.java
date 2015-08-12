@@ -1,7 +1,9 @@
 package com.example.dylan.ourcloud;
 
 import android.content.Context;
+import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiManager;
+import android.util.Log;
 
 /**
  * Created by dylan on 8/6/15.
@@ -25,7 +27,8 @@ public class WifiController {
     }
 
     public String getWifiId() {
-        String wifiId = wifiManager.getConnectionInfo().getBSSID();
+        String wifiId = wifiManager.getConnectionInfo().getSSID();
+        wifiId = wifiId.equals("<unknown ssid>") ? null : wifiId;
         return wifiId;
     }
 

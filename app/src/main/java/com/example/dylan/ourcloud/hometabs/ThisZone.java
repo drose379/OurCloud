@@ -166,7 +166,7 @@ public class ThisZone extends Fragment implements View.OnClickListener,ListView.
                         String input = postInput.getText().toString();
                         if (!input.isEmpty()) {
                             thisZoneController.newPost(input);
-                            
+
                             dialog.dismiss();
                             loading.show();
                         }
