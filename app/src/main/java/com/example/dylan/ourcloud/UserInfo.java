@@ -3,6 +3,7 @@ package com.example.dylan.ourcloud;
 import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
 import com.google.android.gms.plus.model.people.Person;
 
@@ -36,9 +37,17 @@ public class UserInfo {
         return person;
     }
     public String getDisplayName() {return person.getDisplayName();}
-    public String getProfileImage() {return person.getImage().getUrl();}
     public String getWifiId() {
         return wifiId;
+    }
+    public String getProfileImage() {
+        return person.getImage().getUrl();
+    }
+    public String getProfileImageSized(int size) {
+        String fullUrl = person.getImage().getUrl();
+        String[] splitUrl = fullUrl.split("\\=");
+
+        return splitUrl[0] + "=" + String.valueOf(size);
     }
 
 }

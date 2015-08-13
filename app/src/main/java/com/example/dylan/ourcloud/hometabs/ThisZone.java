@@ -29,6 +29,7 @@ import android.widget.TextView;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.example.dylan.ourcloud.ImageUtil;
 import com.example.dylan.ourcloud.Post;
+import com.example.dylan.ourcloud.PostComposeActivity;
 import com.example.dylan.ourcloud.R;
 import com.example.dylan.ourcloud.UserInfo;
 import com.example.dylan.ourcloud.WifiController;
@@ -72,7 +73,7 @@ public class ThisZone extends Fragment implements View.OnClickListener,ListView.
 
     @Override
     public View onCreateView(LayoutInflater inflater,ViewGroup parent,Bundle savedInstance) {
-        super.onCreateView(inflater,parent,savedInstance);
+        super.onCreateView(inflater, parent, savedInstance);
         View v = inflater.inflate(R.layout.this_zone,parent,false);
 
         /**
@@ -266,8 +267,9 @@ public class ThisZone extends Fragment implements View.OnClickListener,ListView.
         switch(v.getId()) {
             case R.id.newPostButton :
 
-                newPost.show();
-
+                //newPost.show();
+                Intent i = new Intent(context, PostComposeActivity.class);
+                startActivity(i);
                 break;
             case R.id.image :
                 newPost.hide();
