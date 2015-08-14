@@ -2,11 +2,11 @@
 <items version="2" >
 
     <item
-        jar="/home/dylan/.gradle/caches/modules-2/files-2.1/com.squareup.picasso/picasso/2.5.2/7446d06ec8d4f7ffcc53f1da37c95f200dcb9387/picasso-2.5.2.jar"
+        jar="/home/dylan/Documents/Programming/OurCloud/app/build/intermediates/exploded-aar/com.soundcloud.android/android-crop/1.0.0/jars/classes.jar"
         jumboMode="false"
         revision="22.0.1"
-        sha1="7446d06ec8d4f7ffcc53f1da37c95f200dcb9387">
-        <dex dex="/home/dylan/Documents/Programming/OurCloud/app/build/intermediates/pre-dexed/debug/picasso-2.5.2-6696bcd1b93d46be1121ba08fce11907bd66e8fe.jar" />
+        sha1="7d59ba36bdb53bd81f4d16ed7e2abb47de5c53bd">
+        <dex dex="/home/dylan/Documents/Programming/OurCloud/app/build/intermediates/pre-dexed/debug/classes-3e95f57ce3eaeae3607484d251d92c8ad2af9e49.jar" />
     </item>
 
 </items>

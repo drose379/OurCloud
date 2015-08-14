@@ -101,10 +101,9 @@
                 />
 
             <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:paddingLeft="30dp"
-                android:paddingRight="30dp"
+                android:layout_width="250dp"
+                android:layout_height="250dp"
+                android:layout_gravity="center_horizontal"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="20dp"
                 android:visibility="gone"

@@ -2,6 +2,7 @@ package com.example.dylan.ourcloud;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.ExifInterface;
 import android.net.Uri;
@@ -19,6 +20,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.example.dylan.ourcloud.hometabs.ThisZoneController;
 import com.example.dylan.ourcloud.hometabs.ThisZoneListAdapter;
 import com.melnykov.fab.FloatingActionButton;
+import com.soundcloud.android.crop.Crop;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
@@ -36,6 +38,7 @@ public class PostComposeActivity extends AppCompatActivity implements View.OnCli
     ImageView uploadedImageContainer;
 
     private MaterialDialog photoSourceSelect;
+    private Uri finalImageUri;
     private File postImage = null;
 
     @Override
@@ -62,6 +65,13 @@ public class PostComposeActivity extends AppCompatActivity implements View.OnCli
 
         selectImageIcon.setOnClickListener(this);
         postSubmitButton.setOnClickListener(this);
+
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        finalImageUri = Uri.fromFile(new File(getFilesDir(),"cropped"));
 
     }
 
@@ -117,23 +127,23 @@ public class PostComposeActivity extends AppCompatActivity implements View.OnCli
 
     @Override
     public void onActivityResult(int requestCode,int resultCode,Intent data) {
-        if (resultCode == -1) {
             switch (requestCode) {
                 case 1 :
                     //from camera
                     break;
 
                 case 2:
+                    Crop.of(data.getData(),finalImageUri).asSquare().start(this);
+                    break;
+                case Crop.REQUEST_CROP :
                     try {
-                        Uri imageUri = data.getData();
-                        postImage  = ImageUtil.getImageFile(this,imageUri);
+                        postImage = new File(Crop.getOutput(data).getPath());
                         updateUserSelectedImage();
                     } catch (IOException e) {
-                        throw new RuntimeException(e.getMessage());
+                        throw new RuntimeException(e);
                     }
                     break;
             }
-        }
     }
 
     @Override
