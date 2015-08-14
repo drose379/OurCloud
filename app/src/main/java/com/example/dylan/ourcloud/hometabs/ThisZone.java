@@ -25,6 +25,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.example.dylan.ourcloud.ImageUtil;
@@ -188,9 +189,6 @@ public class ThisZone extends Fragment implements View.OnClickListener,ListView.
         addImageButton.setOnClickListener(this);
 
 
-
-
-
         loading = new MaterialDialog.Builder(context)
                 .title("Publishing")
                 .customView(R.layout.load_dialog, true)
@@ -219,6 +217,23 @@ public class ThisZone extends Fragment implements View.OnClickListener,ListView.
 
     }
 
+    @Override
+    public void onActivityResult(int requestCode,int resultCode,Intent data) {
+        switch (resultCode) {
+            case 1 :
+                //just text
+
+                break;
+            case 2:
+                //both
+
+                break;
+            case 3:
+                //just image
+
+                break;
+        }
+    }
 
 
     @Override
@@ -226,7 +241,7 @@ public class ThisZone extends Fragment implements View.OnClickListener,ListView.
         switch(v.getId()) {
             case R.id.newPostButton:
                 Intent i = new Intent(context, PostComposeActivity.class);
-                startActivity(i);
+                startActivityForResult(i,1);
                 break;
         }
 

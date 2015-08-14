@@ -10,11 +10,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.example.dylan.ourcloud.hometabs.ThisZoneController;
+import com.example.dylan.ourcloud.hometabs.ThisZoneListAdapter;
+import com.melnykov.fab.FloatingActionButton;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
@@ -25,6 +29,8 @@ import java.io.IOException;
  * Created by dylan on 8/12/15.
  */
 public class PostComposeActivity extends AppCompatActivity implements View.OnClickListener {
+
+    EditText postTextArea;
 
     ImageView selectImageIcon;
     ImageView uploadedImageContainer;
@@ -46,12 +52,16 @@ public class PostComposeActivity extends AppCompatActivity implements View.OnCli
 
         TextView userName = (TextView) findViewById(R.id.userName);
         ImageView userImage = (ImageView) findViewById(R.id.userImage);
+        FloatingActionButton postSubmitButton = (FloatingActionButton) findViewById(R.id.postSubmitButton);
+        postTextArea = (EditText) findViewById(R.id.postTextArea);
         selectImageIcon = (ImageView) findViewById(R.id.photoAddButton);
         uploadedImageContainer = (ImageView) findViewById(R.id.selectedImageContainer);
 
         userName.setText(UserInfo.getInstance().getDisplayName());
         Picasso.with(this).load(UserInfo.getInstance().getProfileImageSized(100)).into(userImage);
+
         selectImageIcon.setOnClickListener(this);
+        postSubmitButton.setOnClickListener(this);
 
     }
 
@@ -94,6 +104,17 @@ public class PostComposeActivity extends AppCompatActivity implements View.OnCli
         uploadedImageContainer.setImageBitmap(BitmapFactory.decodeFile(postImage.getAbsolutePath()));
     }
 
+    public int generateResultCode() {
+        int status = 0;
+
+        if (postTextArea.length() > 0 && postImage != null) {status = 2;}
+        if (postTextArea.length() > 0 && postImage == null) {status = 1;}
+        if (postTextArea.length() == 0 && postImage != null) {status = 3;}
+        if (postTextArea.length() == 0 && postImage == null) {status = 0;}
+
+        return status;
+    }
+
     @Override
     public void onActivityResult(int requestCode,int resultCode,Intent data) {
         if (resultCode == -1) {
@@ -125,8 +146,36 @@ public class PostComposeActivity extends AppCompatActivity implements View.OnCli
                 /**
                  * Check to make sure at least post text is filled in, photo is not required
                  * Call different thisZoneController.newPost depending on if there is a photo to be uploaded or not
+                 * NEED TO GENERATE DIFFERENT RESULT CODES FOR EACH SCENARIO, 1 FOR JUST TEXT, 2 FOR BOTH, 3 FOR JUST IMAGE
                  */
-                break;
+
+                Intent results = new Intent();
+                int resultCode = 0;
+
+                switch (generateResultCode()) {
+                    case 0 :
+                        results = null;
+                        break;
+                    case 1:
+                        results.putExtra("postText",postTextArea.getText().toString());
+                        resultCode = 1;
+                        break;
+                    case 2:
+                        results.putExtra("postText",postTextArea.getText().toString());
+                        results.putExtra("postImage",postImage);
+                        resultCode = 2;
+                        break;
+                    case 3:
+                        results.putExtra("postImage",postImage);
+                        resultCode = 3;
+                        break;
+                }
+
+                if (results != null) {
+                    setResult(resultCode,results);
+                    finish();
+                }
+
         }
     }
 
