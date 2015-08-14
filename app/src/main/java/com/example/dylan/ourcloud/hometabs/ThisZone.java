@@ -187,32 +187,7 @@ public class ThisZone extends Fragment implements View.OnClickListener,ListView.
         ImageView addImageButton = (ImageView) newPost.getCustomView().findViewById(R.id.image);
         addImageButton.setOnClickListener(this);
 
-        imageFromSelect = new MaterialDialog.Builder(context)
-               .title("Choose Location")
-                .items(new String[] {"Camera","Gallery"})
-                .dismissListener(new DialogInterface.OnDismissListener() {
-                    @Override
-                    public void onDismiss(DialogInterface dialogInterface) {
-                        newPost.show();
-                    }
-                })
-                .itemsCallback(new MaterialDialog.ListCallback() {
-                    @Override
-                    public void onSelection(MaterialDialog materialDialog, View view, int i, CharSequence charSequence) {
-                        switch (i) {
-                            case 0:
-                                //camera
-                                break;
-                            case 1:
-                                Intent imagePicker = new Intent();
-                                imagePicker.setType("image/*");
-                                imagePicker.setAction(Intent.ACTION_GET_CONTENT);
-                                startActivityForResult(imagePicker,2);
-                                break;
-                        }
-                    }
-                })
-                .build();
+
 
 
 
@@ -244,59 +219,19 @@ public class ThisZone extends Fragment implements View.OnClickListener,ListView.
 
     }
 
-    public void setNewPostDialogImage() throws IOException {
-        ImageView selectedImage = (ImageView) newPost.getCustomView().findViewById(R.id.image);
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(200,200);
-        params.gravity  = Gravity.CENTER_HORIZONTAL;
-        selectedImage.setLayoutParams(params);
 
-        ExifInterface imageExif = new ExifInterface(newPostImage.getAbsolutePath());
-        int rotation = imageExif.getAttributeInt(ExifInterface.TAG_ORIENTATION,6);
-
-        if (rotation != ExifInterface.ORIENTATION_NORMAL && rotation != ExifInterface.ORIENTATION_UNDEFINED) {
-            Log.i("imageOri","Not normal");
-            Log.i("imageOri",imageExif.getAttribute(ExifInterface.TAG_ORIENTATION));
-            selectedImage.setRotation(90);
-        }
-
-        selectedImage.setImageBitmap(BitmapFactory.decodeFile(newPostImage.getAbsolutePath()));
-    }
 
     @Override
     public void onClick(View v) {
         switch(v.getId()) {
-            case R.id.newPostButton :
-
-                //newPost.show();
+            case R.id.newPostButton:
                 Intent i = new Intent(context, PostComposeActivity.class);
                 startActivity(i);
                 break;
-            case R.id.image :
-                newPost.hide();
-                imageFromSelect.show();
         }
+
     }
 
-    @Override
-    public void onActivityResult(int requestCode,int resultCode,Intent data) {
-        if (resultCode == -1) {
-            switch (requestCode) {
-                case 1 :
-                    //from camera
-                    break;
-
-                case 2:
-                    try {
-                        Uri imageUri = data.getData();
-                        newPostImage = ImageUtil.getImageFile(context,imageUri);
-                        setNewPostDialogImage();
-                    } catch (IOException e) {
-                        throw new RuntimeException(e.getMessage());
-                    }
-                    break;
-            }
-        }
-    }
 
     @Override
     public void onScroll(AbsListView view,int firstVisibleItem,int visibleItemCount,int totalItemCount) {

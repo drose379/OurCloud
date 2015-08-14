@@ -2,6 +2,7 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:custom_text="http://schemas.android.com/apk/res-auto"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:background="@color/ColorPrimary"
     android:layout_width="match_parent"
@@ -62,7 +63,7 @@
                 android:layout_height="wrap_content"
                 android:paddingLeft="30dp"
                 android:paddingRight="30dp"
-                android:paddingTop="30dp"
+                android:paddingTop="20dp"
                 custom_text:bold="true"
                 android:textColor="@color/ColorBlack"
                 android:textSize="15sp"
@@ -81,17 +82,51 @@
             <com.example.dylan.ourcloud.CustomTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="30dp"
+                android:paddingLeft="30dp"
+                android:paddingRight="30dp"
+                android:layout_marginTop="20dp"
                 custom_text:bold="true"
                 android:textColor="@color/ColorBlack"
                 android:textSize="15sp"
                 android:text="Photo:"
                 />
 
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/ic_photo_camera_black_48dp"
+                android:id="@+id/photoAddButton"
+                />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:paddingLeft="30dp"
+                android:paddingRight="30dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:visibility="gone"
+                android:id="@+id/selectedImageContainer"
+                />
+
+            <!-- need to add imagview container for selected image, set visibility gone to start and then show if user adds an image -->
+
 
 
         </LinearLayout>
 
+        <com.melnykov.fab.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_margin="16dp"
+            fab:fab_colorNormal="@color/ColorPrimary"
+            fab:fab_colorPressed="@color/ColorPrimaryDark"
+            android:src="@drawable/ic_check_white_24dp"
+            android:id="@+id/postSubmitButton"
+            />
 
     </RelativeLayout>
 </LinearLayout>
