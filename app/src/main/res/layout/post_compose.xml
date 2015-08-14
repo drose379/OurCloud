@@ -15,7 +15,7 @@
         android:orientation="vertical"
         />
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#ECEDF0"
@@ -44,11 +44,54 @@
                 android:layout_alignParentRight="true"
                 custom_text:bold="true"
                 android:textSize="16sp"
+                android:textColor="@color/ColorBlack"
                 android:id="@+id/userName"
                 />
 
         </RelativeLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_below="@+id/userInfoContainer"
+            >
 
-    </LinearLayout>
+            <com.example.dylan.ourcloud.CustomTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="30dp"
+                android:paddingRight="30dp"
+                android:paddingTop="30dp"
+                custom_text:bold="true"
+                android:textColor="@color/ColorBlack"
+                android:textSize="15sp"
+                android:text="Post:"
+                />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:lines="2"
+                android:inputType="textMultiLine"
+                />
+
+            <com.example.dylan.ourcloud.CustomTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="30dp"
+                custom_text:bold="true"
+                android:textColor="@color/ColorBlack"
+                android:textSize="15sp"
+                android:text="Photo:"
+                />
+
+
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
 </LinearLayout>

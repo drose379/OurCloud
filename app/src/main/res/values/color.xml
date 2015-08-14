@@ -11,4 +11,6 @@
     <color name="ColorStart">#00bfa5</color>
     <color name="ColorHighlight">#00E676</color>
 
+    <color name="ActivityBackground">#ECEDF0</color>
+
 </resources>
