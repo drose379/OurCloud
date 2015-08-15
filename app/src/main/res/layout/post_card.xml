@@ -63,11 +63,21 @@
             <com.example.dylan.ourcloud.CustomTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
+                android:layout_centerHorizontal="true"
                 android:padding="15dp"
                 android:textSize="16sp"
                 android:textColor="@color/ColorBlack"
                 android:id="@+id/postText"
+                />
+
+            <ImageView
+                android:layout_width="250dp"
+                android:layout_height="250dp"
+                android:layout_below="@+id/postText"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="15dp"
+                android:visibility="gone"
+                android:id="@+id/postImage"
                 />
 
         </RelativeLayout>

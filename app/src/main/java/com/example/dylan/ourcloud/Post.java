@@ -44,6 +44,10 @@ public class Post {
     public String getPostText() {
         return postText;
     }
+    public String getPostImageUrl() {
+        postImageUrl = postImageUrl.equals("null") ? null : postImageUrl;
+        return postImageUrl;
+    }
 
     public boolean isCurrentUser() {
         boolean isCurrentUser = user.equals(UserInfo.getInstance().getDisplayName()) ? true : false;

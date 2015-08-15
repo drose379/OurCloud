@@ -4,6 +4,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
@@ -24,6 +25,7 @@ import com.soundcloud.android.crop.Crop;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 
 
@@ -110,9 +112,16 @@ public class PostComposeActivity extends AppCompatActivity implements View.OnCli
         int rotation = imageExif.getAttributeInt(ExifInterface.TAG_ORIENTATION,6);
 
         if (rotation != ExifInterface.ORIENTATION_NORMAL && rotation != ExifInterface.ORIENTATION_UNDEFINED) {
-            Log.i("imageOri", "Not normal");
-            Log.i("imageOri",imageExif.getAttribute(ExifInterface.TAG_ORIENTATION));
-            uploadedImageContainer.setRotation(90);
+
+            Matrix m = new Matrix();
+            m.setRotate(90);
+
+            Bitmap original = BitmapFactory.decodeFile(postImage.getAbsolutePath());
+            Bitmap rotated = Bitmap.createBitmap(original, 0, 0, original.getWidth(), original.getHeight(), m, true);
+
+            FileOutputStream os = new FileOutputStream(postImage);
+            rotated.compress(Bitmap.CompressFormat.JPEG,100,os);
+
         }
 
         uploadedImageContainer.setImageBitmap(BitmapFactory.decodeFile(postImage.getAbsolutePath()));

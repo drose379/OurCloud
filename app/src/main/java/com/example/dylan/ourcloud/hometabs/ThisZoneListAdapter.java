@@ -1,7 +1,11 @@
 package com.example.dylan.ourcloud.hometabs;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.media.ExifInterface;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,9 +15,17 @@ import android.widget.TextView;
 
 import com.example.dylan.ourcloud.Post;
 import com.example.dylan.ourcloud.R;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
 import java.awt.font.TextAttribute;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.List;
 
 /**
@@ -60,6 +72,8 @@ public class ThisZoneListAdapter extends BaseAdapter {
         ImageView userImage = (ImageView) v.findViewById(R.id.userImage);
 
         TextView postText = (TextView) v.findViewById(R.id.postText);
+        final ImageView postImage = (ImageView) v.findViewById(R.id.postImage);
+
 
         Picasso.with(context).load(currentPost.getUserImage()).into(userImage);
 
@@ -67,6 +81,12 @@ public class ThisZoneListAdapter extends BaseAdapter {
         userName.setTextColor(currentPost.isCurrentUser() ? context.getResources().getColor(R.color.ColorStart) : Color.parseColor("#000000"));
 
         postText.setText(currentPost.getPostText());
+
+        if (currentPost.getPostImageUrl() != null) {
+            postImage.setVisibility(View.VISIBLE);
+            Picasso.with(context).load(currentPost.getPostImageUrl()).into(postImage);
+        }
+
 
             //need to show post image (add functionality)
             //need to give comment option

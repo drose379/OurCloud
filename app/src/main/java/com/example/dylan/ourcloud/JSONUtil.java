@@ -39,7 +39,8 @@ public class JSONUtil {
                 Post currentPost = new Post()
                         .setUser(currentObject.getString("user"))
                         .setUserImage(currentObject.getString("user_photo"))
-                        .setPostText(currentObject.getString("postText"));
+                        .setPostText(currentObject.getString("postText"))
+                        .setPostImage(currentObject.getString("postImage"));
                 posts.add(currentPost);
             }
 

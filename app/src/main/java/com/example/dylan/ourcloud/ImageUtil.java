@@ -7,6 +7,7 @@ import android.media.Image;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 
 import com.squareup.okhttp.Call;
 import com.squareup.okhttp.MediaType;
@@ -65,7 +66,7 @@ public class ImageUtil {
 
             @Override
             public void onResponse(Response response) throws IOException {
-                callback.imageUploaded(status,response.body().string());
+                callback.imageUploaded(status,response.body().string().trim());
             }
         });
 
