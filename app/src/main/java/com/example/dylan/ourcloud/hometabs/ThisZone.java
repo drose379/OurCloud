@@ -44,12 +44,15 @@ import java.util.zip.Inflater;
 /**
  * Created by dylan on 8/6/15.
  */
-public class ThisZone extends Fragment implements View.OnClickListener,ListView.OnScrollListener,SwipeRefreshLayout.OnRefreshListener,ThisZoneController.Callback {
+public class ThisZone extends Fragment implements View.OnClickListener,ListView.OnScrollListener,SwipeRefreshLayout.OnRefreshListener,ThisZoneController.Callback,
+    ImageUtil.ImageCallback{
 
     private Context context;
     private WifiController wifiController;
     private ThisZoneController thisZoneController;
     File newPostImage = null;
+
+    Intent newPostTempData;
 
     SwipeRefreshLayout refreshLayout;
     FloatingActionButton newPostButton;
@@ -220,20 +223,34 @@ public class ThisZone extends Fragment implements View.OnClickListener,ListView.
     @Override
     public void onActivityResult(int requestCode,int resultCode,Intent data) {
         switch (resultCode) {
-            case 1 :
-                //just text
-
+            case PostComposeActivity.POST_TEXT_ONLY :
+                thisZoneController.newPost(data.getStringExtra("postText"));
                 break;
-            case 2:
-                //both
-
+            case PostComposeActivity.POST_BOTH:
+                newPostTempData = data;
+                ImageUtil.getInstance().uploadImage(this,PostComposeActivity.POST_BOTH,(File)data.getSerializableExtra("postImage"));
+                //will receive callback with image url, call newpost with text and url there
                 break;
-            case 3:
+            case PostComposeActivity.POST_PHOTO_ONLY:
+                newPostTempData = data;
                 //just image
 
                 break;
         }
     }
+
+    @Override
+    public void imageUploaded(int status,String url) {
+        switch (status) {
+            case PostComposeActivity.POST_BOTH :
+                thisZoneController.newPostWithImage(newPostTempData.getStringExtra("postText"),url);
+                break;
+            case PostComposeActivity.POST_PHOTO_ONLY :
+
+                break;
+        }
+    }
+
 
 
     @Override
@@ -241,7 +258,7 @@ public class ThisZone extends Fragment implements View.OnClickListener,ListView.
         switch(v.getId()) {
             case R.id.newPostButton:
                 Intent i = new Intent(context, PostComposeActivity.class);
-                startActivityForResult(i,1);
+                startActivityForResult(i, 1);
                 break;
         }
 

@@ -32,6 +32,10 @@ import java.io.IOException;
  */
 public class PostComposeActivity extends AppCompatActivity implements View.OnClickListener {
 
+    public static final int POST_TEXT_ONLY = 1;
+    public static final int POST_BOTH = 2;
+    public static final int POST_PHOTO_ONLY = 3;
+
     EditText postTextArea;
 
     ImageView selectImageIcon;
@@ -131,7 +135,6 @@ public class PostComposeActivity extends AppCompatActivity implements View.OnCli
                 case 1 :
                     //from camera
                     break;
-
                 case 2:
                     Crop.of(data.getData(),finalImageUri).asSquare().start(this);
                     break;
@@ -168,16 +171,16 @@ public class PostComposeActivity extends AppCompatActivity implements View.OnCli
                         break;
                     case 1:
                         results.putExtra("postText",postTextArea.getText().toString());
-                        resultCode = 1;
+                        resultCode = POST_TEXT_ONLY;
                         break;
                     case 2:
                         results.putExtra("postText",postTextArea.getText().toString());
                         results.putExtra("postImage",postImage);
-                        resultCode = 2;
+                        resultCode = POST_BOTH;
                         break;
                     case 3:
                         results.putExtra("postImage",postImage);
-                        resultCode = 3;
+                        resultCode = POST_PHOTO_ONLY;
                         break;
                 }
 

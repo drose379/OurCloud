@@ -10,6 +10,7 @@ import com.example.dylan.ourcloud.UserInfo;
 import com.squareup.okhttp.Call;
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.MediaType;
+import com.squareup.okhttp.MultipartBuilder;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.RequestBody;
@@ -17,6 +18,7 @@ import com.squareup.okhttp.Response;
 
 import org.json.JSONArray;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
@@ -74,6 +76,29 @@ public class ThisZoneController {
         RequestBody rBody = RequestBody.create(MediaType.parse("text/plain"), jsonItems);
         Request request = new Request.Builder()
                 .url("http://104.236.15.47/OurCloudAPI/index.php/newPost")
+                .post(rBody)
+                .build();
+        Call newCall = httpClient.newCall(request);
+        newCall.enqueue(new com.squareup.okhttp.Callback() {
+            @Override
+            public void onFailure(Request request, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Response response) throws IOException {
+                callback.postSubmitted();
+            }
+        });
+    }
+
+    public void newPostWithImage(String postText,String postImageUrl) {
+        UserInfo currentUser = UserInfo.getInstance();
+        String jsonItems = JSONUtil.generateJSONArray(currentUser.getDisplayName(), currentUser.getProfileImage(), currentUser.getWifiId(), postText.trim(),postImageUrl);
+        Log.i("jsonVals", jsonItems);
+        RequestBody rBody = RequestBody.create(MediaType.parse("text/plain"), jsonItems);
+        Request request = new Request.Builder()
+                .url("http://104.236.15.47/OurCloudAPI/index.php/newPostWithImage")
                 .post(rBody)
                 .build();
         Call newCall = httpClient.newCall(request);
