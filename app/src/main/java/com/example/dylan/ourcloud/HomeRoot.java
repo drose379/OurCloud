@@ -44,7 +44,6 @@ public class HomeRoot extends AppCompatActivity {
          */
         super.onStart();
         initHomeView();
-        Log.i("userInfo",String.valueOf(UserInfo.getInstance().getInDatabase()));
     }
 
     public void initHomeView() {

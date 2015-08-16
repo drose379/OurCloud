@@ -58,6 +58,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/profileInfoContainer"
+            android:id="@+id/postContainer"
             >
 
             <com.example.dylan.ourcloud.CustomTextView
@@ -81,6 +82,26 @@
                 />
 
         </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/postContainer"
+                android:background="#E0E0E0"
+                >
+
+                <com.example.dylan.ourcloud.CustomTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="15dp"
+                    android:textColor="@color/ColorBlack"
+                    android:textSize="12sp"
+                    custom_text:bold="true"
+                    android:layout_alignParentRight="true"
+                    android:id="@+id/postDate"
+                    />
+
+            </RelativeLayout>
 
         </RelativeLayout>
 

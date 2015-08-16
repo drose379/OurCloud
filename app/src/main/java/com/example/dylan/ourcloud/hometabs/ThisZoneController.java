@@ -21,6 +21,7 @@ import org.json.JSONArray;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -71,7 +72,10 @@ public class ThisZoneController {
 
     public void newPost(String postText) {
         UserInfo currentUser = UserInfo.getInstance();
-        String jsonItems = JSONUtil.generateJSONArray(currentUser.getId(),currentUser.getDisplayName(), currentUser.getProfileImage(), currentUser.getWifiId(), postText.trim());
+
+        //add time millis to new post data, save millis in db
+
+        String jsonItems = JSONUtil.generateJSONArray(currentUser.getId(), currentUser.getWifiId(), postText.trim(),String.valueOf(getCurrentTimeMillis()));
         RequestBody rBody = RequestBody.create(MediaType.parse("text/plain"), jsonItems);
         Request request = new Request.Builder()
                 .url("http://104.236.15.47/OurCloudAPI/index.php/newPost")
@@ -94,6 +98,7 @@ public class ThisZoneController {
     public void newPostWithImage(String postText,String postImageUrl) {
 
         UserInfo currentUser = UserInfo.getInstance();
+
         String jsonItems = JSONUtil.generateJSONArray(currentUser.getId(),
                 currentUser.getDisplayName(), currentUser.getProfileImage(), currentUser.getWifiId(), postText.trim(),postImageUrl);
 
@@ -114,6 +119,11 @@ public class ThisZoneController {
                 callback.postSubmitted();
             }
         });
+    }
+
+    public long getCurrentTimeMillis() {
+        Calendar currentCal = Calendar.getInstance();
+        return currentCal.getTimeInMillis();
     }
 
 }
