@@ -22,7 +22,7 @@ public class UserUtil {
      */
 
 
-    public static void userSignIn(Person person) {
+    public static void userSignIn(final SignInController.UICallback callback,final Person person) {
         OkHttpClient httpClient = new OkHttpClient();
         RequestBody body = RequestBody.create(MediaType.parse("text/plain"), JSONUtil.generateJSONArray(person.getId(),person.getDisplayName(),person.getImage().getUrl()));
         Request request = new Request.Builder()
@@ -39,7 +39,7 @@ public class UserUtil {
             @Override
             public void onResponse(Response response) throws IOException {
                 UserInfo.getInstance().setInDatabase(true);
-                Log.i("isUserIn","user status updated");
+                callback.signInSuccess(person);
             }
         });
     }
