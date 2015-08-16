@@ -71,8 +71,7 @@ public class ThisZoneController {
 
     public void newPost(String postText) {
         UserInfo currentUser = UserInfo.getInstance();
-        String jsonItems = JSONUtil.generateJSONArray(currentUser.getDisplayName(), currentUser.getProfileImage(), currentUser.getWifiId(), postText.trim());
-        Log.i("jsonVals", jsonItems);
+        String jsonItems = JSONUtil.generateJSONArray(currentUser.getId(),currentUser.getDisplayName(), currentUser.getProfileImage(), currentUser.getWifiId(), postText.trim());
         RequestBody rBody = RequestBody.create(MediaType.parse("text/plain"), jsonItems);
         Request request = new Request.Builder()
                 .url("http://104.236.15.47/OurCloudAPI/index.php/newPost")
@@ -95,7 +94,7 @@ public class ThisZoneController {
     public void newPostWithImage(String postText,String postImageUrl) {
 
         UserInfo currentUser = UserInfo.getInstance();
-        String jsonItems = JSONUtil.generateJSONArray(currentUser.getDisplayName(), currentUser.getProfileImage(), currentUser.getWifiId(), postText.trim(),postImageUrl);
+        String jsonItems = JSONUtil.generateJSONArray(currentUser.getId(),currentUser.getDisplayName(), currentUser.getProfileImage(), currentUser.getWifiId(), postText.trim(),postImageUrl);
 
         RequestBody rBody = RequestBody.create(MediaType.parse("text/plain"), jsonItems);
         Request request = new Request.Builder()

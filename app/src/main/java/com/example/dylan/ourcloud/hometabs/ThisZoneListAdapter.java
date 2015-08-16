@@ -82,9 +82,12 @@ public class ThisZoneListAdapter extends BaseAdapter {
 
         postText.setText(currentPost.getPostText());
 
-        if (currentPost.getPostImageUrl() != null) {
+        if (!currentPost.getPostImageUrl().equals("null")) {
+            Log.i("postBody","post" + currentPost.getPostText() + " " + currentPost.getPostImageUrl());
             postImage.setVisibility(View.VISIBLE);
             Picasso.with(context).load(currentPost.getPostImageUrl()).into(postImage);
+        } else {
+            postImage.setVisibility(View.GONE);
         }
 
 

@@ -45,7 +45,6 @@ public class Post {
         return postText;
     }
     public String getPostImageUrl() {
-        postImageUrl = postImageUrl.equals("null") ? null : postImageUrl;
         return postImageUrl;
     }
 

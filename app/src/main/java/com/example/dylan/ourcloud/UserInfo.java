@@ -49,5 +49,8 @@ public class UserInfo {
 
         return splitUrl[0] + "=" + String.valueOf(size);
     }
+    public String getId() {
+        return person.getId();
+    }
 
 }
