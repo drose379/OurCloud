@@ -18,6 +18,7 @@ public class UserInfo {
 
     private Person person;
     private String wifiId;
+    private boolean inDatabase;
 
     private static UserInfo userInfo;
 
@@ -32,6 +33,7 @@ public class UserInfo {
     public void setWifiId(String id) {
         wifiId = id;
     }
+    public void setInDatabase(boolean exists) {inDatabase = exists;}
 
     public Person getPerson() {
         return person;
@@ -52,5 +54,6 @@ public class UserInfo {
     public String getId() {
         return person.getId();
     }
+    public boolean getInDatabase() {return inDatabase;}
 
 }

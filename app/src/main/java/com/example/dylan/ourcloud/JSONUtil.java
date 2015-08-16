@@ -37,8 +37,8 @@ public class JSONUtil {
             for(int i = 0;i<postsParent.length();i++) {
                 JSONObject currentObject = postsParent.getJSONObject(i);
                 Post currentPost = new Post()
-                        .setUser(currentObject.getString("user"))
-                        .setUserImage(currentObject.getString("user_photo"))
+                        .setUser(currentObject.getString("user_name"))
+                        .setUserImage(currentObject.getString("user_image"))
                         .setPostText(currentObject.getString("postText"))
                         .setPostImage(currentObject.getString("postImage"));
                 posts.add(currentPost);

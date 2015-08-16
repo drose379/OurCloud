@@ -66,6 +66,7 @@ public class SignInController implements GoogleApiClient.OnConnectionFailedListe
         Person currentPerson = Plus.PeopleApi.getCurrentPerson(gClient);
         if (currentPerson != null) {
             uiCallback.signInSuccess(currentPerson);
+            UserUtil.userSignIn(currentPerson);
         } else {
             throw new RuntimeException("Could not log you in.");
         }
