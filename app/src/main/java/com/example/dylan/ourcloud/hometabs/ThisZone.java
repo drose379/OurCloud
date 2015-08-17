@@ -56,7 +56,7 @@ public class ThisZone extends Fragment implements View.OnClickListener,ListView.
     MaterialDialog enableWifi;
     MaterialDialog imageFromSelect;
 
-    int previousTopMargin;
+    int previousVisibleItem;
 
 
     @Override
@@ -261,14 +261,11 @@ public class ThisZone extends Fragment implements View.OnClickListener,ListView.
         int topViewMargin = postContainer.getChildAt(0) != null ? postContainer.getChildAt(0).getTop() : 0;
         refreshLayout.setEnabled(firstVisibleItem == 0 && topViewMargin == 0);
 
-        if (topViewMargin < previousTopMargin) {newPostButton.hide(true);} else {newPostButton.show(true);}
 
-        previousTopMargin = topViewMargin;
+        if (firstVisibleItem > previousVisibleItem) {newPostButton.hide(true);} else if (firstVisibleItem < previousVisibleItem) {newPostButton.show(true);}
 
-        //Hide FAB on sroll.
-        // To check if hide or show button, check if the topViewMargin is greater or less then previous topViewMargin (save topViewMargin to field each scroll)
-        //If current top margin is greater then previous, hide the button, if its less, show the button (scroll up)
-
+        previousVisibleItem = firstVisibleItem;
+        
     }
     @Override
     public void onScrollStateChanged(AbsListView view,int scrollState) {}
