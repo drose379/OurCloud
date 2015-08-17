@@ -12,6 +12,7 @@ public class Post {
     private String userImageUrl;
     private String postText;
     private String postImageUrl;
+    private long postTimeMillis;
     private List<Comment> comments;
 
     public Post setUser(String user) {
@@ -34,6 +35,10 @@ public class Post {
         this.comments = comments;
         return this;
     }
+    public Post setPostTimeMillis(long millis)  {
+        postTimeMillis = millis;
+        return this;
+    }
 
     public String getUser() {
         return user;
@@ -46,6 +51,9 @@ public class Post {
     }
     public String getPostImageUrl() {
         return postImageUrl;
+    }
+    public long getPostTimeMillis() {
+        return postTimeMillis;
     }
 
     public boolean isCurrentUser() {

@@ -1,28 +1,21 @@
 package com.example.dylan.ourcloud.hometabs;
 
-import android.content.Context;
 import android.os.Handler;
-import android.util.Log;
 
-import com.example.dylan.ourcloud.JSONUtil;
 import com.example.dylan.ourcloud.Post;
 import com.example.dylan.ourcloud.UserInfo;
+import com.example.dylan.ourcloud.util.JSONUtil;
 import com.squareup.okhttp.Call;
-import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.MediaType;
-import com.squareup.okhttp.MultipartBuilder;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.RequestBody;
 import com.squareup.okhttp.Response;
 
-import org.json.JSONArray;
-
-import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
+
 
 /**
  * Created by dylan on 8/6/15.
@@ -48,7 +41,7 @@ public class ThisZoneController {
         String currentZone = UserInfo.getInstance().getWifiId();
         //grab items that user is OP off, but change the author name to "Me"
 
-        RequestBody rBody = RequestBody.create(MediaType.parse("text/plain"),JSONUtil.generateJSONArray(currentZone));
+        RequestBody rBody = RequestBody.create(MediaType.parse("text/plain"), JSONUtil.generateJSONArray(currentZone));
         Request request = new Request.Builder()
                 .post(rBody)
                 .url("http://104.236.15.47/OurCloudAPI/index.php/getZonePosts")
@@ -73,9 +66,7 @@ public class ThisZoneController {
     public void newPost(String postText) {
         UserInfo currentUser = UserInfo.getInstance();
 
-        //add time millis to new post data, save millis in db
-
-        String jsonItems = JSONUtil.generateJSONArray(currentUser.getId(), currentUser.getWifiId(), postText.trim(),String.valueOf(getCurrentTimeMillis()));
+        String jsonItems = JSONUtil.generateJSONArray(currentUser.getId(), currentUser.getWifiId(), postText.trim(), String.valueOf(getCurrentTimeMillis()));
         RequestBody rBody = RequestBody.create(MediaType.parse("text/plain"), jsonItems);
         Request request = new Request.Builder()
                 .url("http://104.236.15.47/OurCloudAPI/index.php/newPost")
@@ -99,8 +90,7 @@ public class ThisZoneController {
 
         UserInfo currentUser = UserInfo.getInstance();
 
-        String jsonItems = JSONUtil.generateJSONArray(currentUser.getId(),
-                currentUser.getDisplayName(), currentUser.getProfileImage(), currentUser.getWifiId(), postText.trim(),postImageUrl);
+        String jsonItems = JSONUtil.generateJSONArray(currentUser.getId(),currentUser.getWifiId(), postText.trim(), postImageUrl,String.valueOf(getCurrentTimeMillis()));
 
         RequestBody rBody = RequestBody.create(MediaType.parse("text/plain"), jsonItems);
         Request request = new Request.Builder()

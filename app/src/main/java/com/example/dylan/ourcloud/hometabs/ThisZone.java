@@ -4,43 +4,32 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.BitmapFactory;
-import android.media.ExifInterface;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.example.dylan.ourcloud.ImageUtil;
+import com.example.dylan.ourcloud.util.ImageUtil;
 import com.example.dylan.ourcloud.Post;
 import com.example.dylan.ourcloud.PostComposeActivity;
 import com.example.dylan.ourcloud.R;
 import com.example.dylan.ourcloud.UserInfo;
 import com.example.dylan.ourcloud.WifiController;
-import com.melnykov.fab.FloatingActionButton;
+
+import com.github.clans.fab.FloatingActionButton;
 
 import java.io.File;
-import java.io.IOException;
-import java.util.Calendar;
 import java.util.List;
-import java.util.zip.Inflater;
 
 /**
  * Created by dylan on 8/6/15.
@@ -66,6 +55,8 @@ public class ThisZone extends Fragment implements View.OnClickListener,ListView.
     MaterialDialog loading;
     MaterialDialog enableWifi;
     MaterialDialog imageFromSelect;
+
+    int previousTopMargin;
 
 
     @Override
@@ -97,7 +88,6 @@ public class ThisZone extends Fragment implements View.OnClickListener,ListView.
 
         refreshLayout.setOnRefreshListener(this);
         newPostButton.setOnClickListener(this);
-        newPostButton.attachToListView(postContainer);
 
         if(!dialogsInflated) {initDialogs();}
 
@@ -270,6 +260,15 @@ public class ThisZone extends Fragment implements View.OnClickListener,ListView.
     public void onScroll(AbsListView view,int firstVisibleItem,int visibleItemCount,int totalItemCount) {
         int topViewMargin = postContainer.getChildAt(0) != null ? postContainer.getChildAt(0).getTop() : 0;
         refreshLayout.setEnabled(firstVisibleItem == 0 && topViewMargin == 0);
+
+        if (topViewMargin < previousTopMargin) {newPostButton.hide(true);} else {newPostButton.show(true);}
+
+        previousTopMargin = topViewMargin;
+
+        //Hide FAB on sroll.
+        // To check if hide or show button, check if the topViewMargin is greater or less then previous topViewMargin (save topViewMargin to field each scroll)
+        //If current top margin is greater then previous, hide the button, if its less, show the button (scroll up)
+
     }
     @Override
     public void onScrollStateChanged(AbsListView view,int scrollState) {}

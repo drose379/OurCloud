@@ -29,4 +29,5 @@ dependencies {
     compile 'com.melnykov:floatingactionbutton:1.3.0'
     compile 'com.afollestad:material-dialogs:0.7.8.1'
     compile 'com.soundcloud.android:android-crop:1.0.0@aar'
+    compile 'com.github.clans:fab:1.5.5'
 }

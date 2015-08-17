@@ -2,11 +2,11 @@
 <items version="2" >
 
     <item
-        jar="/home/dylan/Documents/Programming/OurCloud/app/build/intermediates/exploded-aar/com.soundcloud.android/android-crop/1.0.0/jars/classes.jar"
+        jar="/home/dylan/Documents/Programming/OurCloud/app/build/intermediates/exploded-aar/com.github.clans/fab/1.5.5/jars/classes.jar"
         jumboMode="false"
         revision="22.0.1"
-        sha1="7d59ba36bdb53bd81f4d16ed7e2abb47de5c53bd">
-        <dex dex="/home/dylan/Documents/Programming/OurCloud/app/build/intermediates/pre-dexed/debug/classes-3e95f57ce3eaeae3607484d251d92c8ad2af9e49.jar" />
+        sha1="aaa2fcc429aaad555dbb17ac914b846ca234a3a5">
+        <dex dex="/home/dylan/Documents/Programming/OurCloud/app/build/intermediates/pre-dexed/debug/classes-5fc67b6744d70c1c6bb5366904cd4ac622ae8d38.jar" />
     </item>
 
 </items>
