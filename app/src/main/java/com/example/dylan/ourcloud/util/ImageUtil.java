@@ -1,5 +1,6 @@
 package com.example.dylan.ourcloud.util;
 
+import android.os.Environment;
 import android.support.v4.app.Fragment;
 
 import com.squareup.okhttp.Call;
@@ -12,6 +13,8 @@ import com.squareup.okhttp.Response;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Created by dylan on 8/10/15.
@@ -63,6 +66,16 @@ public class ImageUtil {
             }
         });
 
+    }
+
+    public static File newImageFile() throws IOException {
+        String timeStamp = new SimpleDateFormat("yMd_ms").format(new Date());
+        String fileName = "JPEG_" + timeStamp;
+        File storageDirectory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+
+        File image = File.createTempFile(fileName,".jpg",storageDirectory);
+
+        return image;
     }
 
 

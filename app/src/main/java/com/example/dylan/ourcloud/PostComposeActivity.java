@@ -8,6 +8,7 @@ import android.graphics.Matrix;
 import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Gravity;
@@ -20,6 +21,7 @@ import android.widget.TextView;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.example.dylan.ourcloud.hometabs.ThisZoneController;
 import com.example.dylan.ourcloud.hometabs.ThisZoneListAdapter;
+import com.example.dylan.ourcloud.util.ImageUtil;
 import com.melnykov.fab.FloatingActionButton;
 import com.soundcloud.android.crop.Crop;
 import com.squareup.picasso.Picasso;
@@ -33,6 +35,9 @@ import java.io.IOException;
  * Created by dylan on 8/12/15.
  */
 public class PostComposeActivity extends AppCompatActivity implements View.OnClickListener {
+
+    public static final int PHOTO_FROM_CAMERA = 1;
+    public static final int PHOTO_FROM_GALLERY = 2;
 
     public static final int POST_TEXT_ONLY = 1;
     public static final int POST_BOTH = 2;
@@ -77,7 +82,7 @@ public class PostComposeActivity extends AppCompatActivity implements View.OnCli
     @Override
     public void onStart() {
         super.onStart();
-        finalImageUri = Uri.fromFile(new File(getFilesDir(),"cropped"));
+        finalImageUri = Uri.fromFile(new File(getFilesDir(), "cropped"));
 
     }
 
@@ -90,13 +95,13 @@ public class PostComposeActivity extends AppCompatActivity implements View.OnCli
                     public void onSelection(MaterialDialog materialDialog, View view, int i, CharSequence charSequence) {
                         switch (i) {
                             case 0:
-                                //camera
+                                //need to implement camera api to take photo
                                 break;
                             case 1:
                                 Intent imagePicker = new Intent();
                                 imagePicker.setType("image/*");
                                 imagePicker.setAction(Intent.ACTION_GET_CONTENT);
-                                startActivityForResult(imagePicker, 2);
+                                startActivityForResult(imagePicker, PHOTO_FROM_GALLERY);
                                 break;
                         }
                     }
@@ -120,7 +125,7 @@ public class PostComposeActivity extends AppCompatActivity implements View.OnCli
             Bitmap rotated = Bitmap.createBitmap(original, 0, 0, original.getWidth(), original.getHeight(), m, true);
 
             FileOutputStream os = new FileOutputStream(postImage);
-            rotated.compress(Bitmap.CompressFormat.JPEG,100,os);
+            rotated.compress(Bitmap.CompressFormat.JPEG, 100, os);
 
         }
 
@@ -141,10 +146,11 @@ public class PostComposeActivity extends AppCompatActivity implements View.OnCli
     @Override
     public void onActivityResult(int requestCode,int resultCode,Intent data) {
             switch (requestCode) {
-                case 1 :
-                    //from camera
+                case PHOTO_FROM_CAMERA :
+                    //need to crop
+
                     break;
-                case 2:
+                case PHOTO_FROM_GALLERY:
                     Crop.of(data.getData(),finalImageUri).asSquare().start(this);
                     break;
                 case Crop.REQUEST_CROP :

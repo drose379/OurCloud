@@ -89,6 +89,8 @@ public class ThisZone extends Fragment implements View.OnClickListener,ListView.
         refreshLayout.setOnRefreshListener(this);
         newPostButton.setOnClickListener(this);
 
+        refreshLayout.setColorSchemeColors(R.color.indicator,R.color.ColorPrimary,R.color.ColorPrimaryDark);
+
         if(!dialogsInflated) {initDialogs();}
 
         return v;
@@ -265,7 +267,7 @@ public class ThisZone extends Fragment implements View.OnClickListener,ListView.
         if (firstVisibleItem > previousVisibleItem) {newPostButton.hide(true);} else if (firstVisibleItem < previousVisibleItem) {newPostButton.show(true);}
 
         previousVisibleItem = firstVisibleItem;
-        
+
     }
     @Override
     public void onScrollStateChanged(AbsListView view,int scrollState) {}

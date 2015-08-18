@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -32,8 +33,11 @@ public class HomeRoot extends AppCompatActivity {
         setContentView(R.layout.home_root);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("Home");
+        TextView toolbarText = (TextView) toolbar.findViewById(R.id.toolbarTitle);
+        toolbarText.setText("Home");
+        toolbarText.setTypeface(TypeHelper.getTypefaceBold(this));
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
     }
 
     @Override
@@ -57,7 +61,7 @@ public class HomeRoot extends AppCompatActivity {
         tabs.setCustomTabColorizer(new SlidingTabLayout.TabColorizer() {
             @Override
             public int getIndicatorColor(int position) {
-                return getResources().getColor(R.color.ColorPrimaryDark);
+                return getResources().getColor(R.color.indicator);
             }
 
             @Override
