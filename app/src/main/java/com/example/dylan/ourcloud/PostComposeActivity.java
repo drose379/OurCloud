@@ -50,13 +50,23 @@ public class PostComposeActivity extends AppCompatActivity implements View.OnCli
 
     private MaterialDialog photoSourceSelect;
     private Uri finalImageUri;
-    private File postImage = null;
+    private File postImage;
+
+    private int photoSource;
 
     @Override
     public void onCreate(Bundle savedInstance) {
+
+        Log.i("onCreate","Activity restarted");
+
         super.onCreate(savedInstance);
+        postImage = savedInstance != null ? (File)savedInstance.getSerializable("postImage") : null;
+
         setContentView(R.layout.post_compose);
         initDialogs();
+
+
+
         /**
          * Show current users photo and their name in header at top of layout (darker background then rest of layout)
          * Set listeners for image select button and done button
@@ -80,6 +90,12 @@ public class PostComposeActivity extends AppCompatActivity implements View.OnCli
     }
 
     @Override
+    public void onSaveInstanceState(Bundle savedInstance) {
+        savedInstance.putSerializable("postImage", postImage);
+        super.onSaveInstanceState(savedInstance);
+    }
+
+    @Override
     public void onStart() {
         super.onStart();
         finalImageUri = Uri.fromFile(new File(getFilesDir(), "cropped"));
@@ -95,7 +111,14 @@ public class PostComposeActivity extends AppCompatActivity implements View.OnCli
                     public void onSelection(MaterialDialog materialDialog, View view, int i, CharSequence charSequence) {
                         switch (i) {
                             case 0:
-                                //need to implement camera api to take photo
+                                try {
+                                    postImage = ImageUtil.newImageFile();
+                                    Intent takePhoto = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                                    takePhoto.putExtra(MediaStore.EXTRA_OUTPUT,Uri.fromFile(postImage));
+                                    startActivityForResult(takePhoto,1);
+                                } catch (IOException e) {
+                                    throw new RuntimeException(e);
+                                }
                                 break;
                             case 1:
                                 Intent imagePicker = new Intent();
@@ -113,21 +136,37 @@ public class PostComposeActivity extends AppCompatActivity implements View.OnCli
        selectImageIcon.setVisibility(View.GONE);
        uploadedImageContainer.setVisibility(View.VISIBLE);
 
+
         ExifInterface imageExif = new ExifInterface(postImage.getAbsolutePath());
         int rotation = imageExif.getAttributeInt(ExifInterface.TAG_ORIENTATION,6);
 
         if (rotation != ExifInterface.ORIENTATION_NORMAL && rotation != ExifInterface.ORIENTATION_UNDEFINED) {
 
-            Matrix m = new Matrix();
-            m.setRotate(90);
+            Matrix matrix = new Matrix();
+
+            switch(rotation) {
+                case ExifInterface.ORIENTATION_ROTATE_90 :
+                    matrix.setRotate(90);
+                    break;
+                case ExifInterface.ORIENTATION_ROTATE_270 :
+                    matrix.setRotate(270);
+                    break;
+            }
+
+
 
             Bitmap original = BitmapFactory.decodeFile(postImage.getAbsolutePath());
-            Bitmap rotated = Bitmap.createBitmap(original, 0, 0, original.getWidth(), original.getHeight(), m, true);
+            Bitmap rotated = Bitmap.createBitmap(original, 0, 0, original.getWidth(), original.getHeight(), matrix, true);
 
             FileOutputStream os = new FileOutputStream(postImage);
             rotated.compress(Bitmap.CompressFormat.JPEG, 100, os);
 
         }
+
+
+
+
+
 
         uploadedImageContainer.setImageBitmap(BitmapFactory.decodeFile(postImage.getAbsolutePath()));
     }
@@ -147,11 +186,12 @@ public class PostComposeActivity extends AppCompatActivity implements View.OnCli
     public void onActivityResult(int requestCode,int resultCode,Intent data) {
             switch (requestCode) {
                 case PHOTO_FROM_CAMERA :
-                    //need to crop
-
+                    Crop.of(Uri.fromFile(postImage),finalImageUri).asSquare().start(this);
+                    photoSource = PHOTO_FROM_CAMERA;
                     break;
                 case PHOTO_FROM_GALLERY:
                     Crop.of(data.getData(),finalImageUri).asSquare().start(this);
+                    photoSource = PHOTO_FROM_GALLERY;
                     break;
                 case Crop.REQUEST_CROP :
                     try {

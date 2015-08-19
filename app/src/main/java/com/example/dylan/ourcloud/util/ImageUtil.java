@@ -15,6 +15,7 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Random;
 
 /**
  * Created by dylan on 8/10/15.
@@ -69,8 +70,10 @@ public class ImageUtil {
     }
 
     public static File newImageFile() throws IOException {
-        String timeStamp = new SimpleDateFormat("yMd_ms").format(new Date());
-        String fileName = "JPEG_" + timeStamp;
+        Random r = new Random();
+        r.nextInt(1000000);
+
+        String fileName = "JPEG_" + r.nextInt();
         File storageDirectory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
 
         File image = File.createTempFile(fileName,".jpg",storageDirectory);

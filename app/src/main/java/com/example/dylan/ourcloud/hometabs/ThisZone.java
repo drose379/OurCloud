@@ -125,7 +125,7 @@ public class ThisZone extends Fragment implements View.OnClickListener,ListView.
         refreshLayout.setRefreshing(false);
         if (posts.size() > 0) {
             postContainer.setVisibility(View.VISIBLE);
-            postContainer.setAdapter(new ThisZoneListAdapter(getActivity(), posts));
+            postContainer.setAdapter(new ThisZoneListAdapter(context, posts));
             noPostsText.setVisibility(View.GONE);
         }
         else {

@@ -16,7 +16,7 @@ public class DateUtil {
         calendar.setTimeInMillis(milliseconds);
         Date currentDate = calendar.getTime();
 
-        SimpleDateFormat dateFormatter = new SimpleDateFormat("M/d/y @ h:ma",Locale.US);
+        SimpleDateFormat dateFormatter = new SimpleDateFormat("M/d/y @ h:mma",Locale.US);
 
         return dateFormatter.format(currentDate);
     }
