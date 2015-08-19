@@ -221,6 +221,7 @@ public class ThisZone extends Fragment implements View.OnClickListener,ListView.
                 break;
             case PostComposeActivity.POST_BOTH:
                 newPostTempData = data;
+                File f = (File) data.getSerializableExtra("postImage");
                 ImageUtil.getInstance().uploadImage(this,PostComposeActivity.POST_BOTH,(File)data.getSerializableExtra("postImage"));
                 //will receive callback with image url, call newpost with text and url there
                 break;

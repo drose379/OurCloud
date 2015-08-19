@@ -186,12 +186,16 @@ public class PostComposeActivity extends AppCompatActivity implements View.OnCli
     public void onActivityResult(int requestCode,int resultCode,Intent data) {
             switch (requestCode) {
                 case PHOTO_FROM_CAMERA :
-                    Crop.of(Uri.fromFile(postImage),finalImageUri).asSquare().start(this);
-                    photoSource = PHOTO_FROM_CAMERA;
+                    if (postImage.length() > 0) {
+                        Crop.of(Uri.fromFile(postImage),finalImageUri).asSquare().start(this);
+                        photoSource = PHOTO_FROM_CAMERA;
+                    }
                     break;
                 case PHOTO_FROM_GALLERY:
-                    Crop.of(data.getData(),finalImageUri).asSquare().start(this);
-                    photoSource = PHOTO_FROM_GALLERY;
+                    if (data != null) {
+                        Crop.of(data.getData(),finalImageUri).asSquare().start(this);
+                        photoSource = PHOTO_FROM_GALLERY;
+                    }
                     break;
                 case Crop.REQUEST_CROP :
                     try {
@@ -201,6 +205,8 @@ public class PostComposeActivity extends AppCompatActivity implements View.OnCli
                         throw new RuntimeException(e);
                     }
                     break;
+                case RESULT_CANCELED :
+                    postImage = null;
             }
     }
 

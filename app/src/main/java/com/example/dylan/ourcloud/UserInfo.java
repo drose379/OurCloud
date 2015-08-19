@@ -13,7 +13,7 @@ import com.google.android.gms.plus.model.people.Person;
 public class UserInfo {
 
     /**
-     * Instead of all static, create singleton and use throughout application
+     * Once twitter login is implemented, UserInfo needs to hold a reference to the login method, TWITTER or GOOGLE
      */
 
     private Person person;

@@ -2,6 +2,7 @@ package com.example.dylan.ourcloud.util;
 
 import android.os.Environment;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 
 import com.squareup.okhttp.Call;
 import com.squareup.okhttp.MediaType;
@@ -42,7 +43,7 @@ public class ImageUtil {
     }
 
     public void uploadImage(Fragment context,final int status,File postImage) {
-
+        Log.i("postImage",postImage.getName());
         final ImageCallback callback = (ImageCallback) context;
 
         MediaType MEDIA_TYPE_JPG = MediaType.parse("image/jpeg");
