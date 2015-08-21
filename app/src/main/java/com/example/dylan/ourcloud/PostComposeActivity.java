@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
+import android.graphics.Typeface;
 import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
@@ -13,6 +14,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -29,6 +32,8 @@ import com.squareup.picasso.Picasso;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Calendar;
+import java.util.Date;
 
 
 /**
@@ -49,6 +54,7 @@ public class PostComposeActivity extends AppCompatActivity implements View.OnCli
     ImageView uploadedImageContainer;
 
     private MaterialDialog photoSourceSelect;
+    private MaterialDialog expDateDialog;
     private Uri finalImageUri;
     private File postImage;
 
@@ -81,11 +87,13 @@ public class PostComposeActivity extends AppCompatActivity implements View.OnCli
         selectImageIcon = (ImageView) findViewById(R.id.photoAddButton);
         uploadedImageContainer = (ImageView) findViewById(R.id.selectedImageContainer);
 
+
         userName.setText(UserInfo.getInstance().getDisplayName());
-        Picasso.with(this).load(UserInfo.getInstance().getProfileImageSized(100)).into(userImage);
+        Picasso.with(this).load(UserInfo.getInstance().getProfileImageSized(90)).into(userImage);
 
         selectImageIcon.setOnClickListener(this);
         postSubmitButton.setOnClickListener(this);
+
 
     }
 
@@ -130,6 +138,34 @@ public class PostComposeActivity extends AppCompatActivity implements View.OnCli
                     }
                 })
                 .build();
+
+        final DatePicker datePicker = new DatePicker(this);
+        datePicker.setSpinnersShown(false);
+        expDateDialog = new MaterialDialog.Builder(this)
+                .title("Expiration Date?")
+                .customView(datePicker, true)
+                .positiveText("Done")
+                .negativeText("None")
+                .callback(new MaterialDialog.ButtonCallback() {
+                    @Override
+                    public void onPositive(MaterialDialog dialog) {
+                        /**
+                         * Grab year,month,day, convert to millis, submit with rest of new post.
+                         * Create method that calls the result intent to pass all data back to the activity (basically same as whats found in onClick here for submit button)
+                         */
+
+                        Calendar selectedDate = Calendar.getInstance();
+                        selectedDate.set(datePicker.getYear(), datePicker.getMonth(), datePicker.getDayOfMonth());
+                        //call mehtod that compiles all info, have one method that acceps expdate and one that doesnt, if user wants post to never expire
+                    }
+
+                    @Override
+                    public void onNegative(MaterialDialog dialog) {
+                        //submit without a exp date
+                    }
+                })
+                .build();
+
     }
 
     public void updateUserSelectedImage() throws IOException {
@@ -222,7 +258,7 @@ public class PostComposeActivity extends AppCompatActivity implements View.OnCli
                  * Call different thisZoneController.newPost depending on if there is a photo to be uploaded or not
                  * NEED TO GENERATE DIFFERENT RESULT CODES FOR EACH SCENARIO, 1 FOR JUST TEXT, 2 FOR BOTH, 3 FOR JUST IMAGE
                  */
-
+                expDateDialog.show();
                 Intent results = new Intent();
                 int resultCode = 0;
 
@@ -236,7 +272,7 @@ public class PostComposeActivity extends AppCompatActivity implements View.OnCli
                         break;
                     case 2:
                         results.putExtra("postText",postTextArea.getText().toString());
-                        results.putExtra("postImage",postImage);
+                        results.putExtra("postImage", postImage);
                         resultCode = POST_BOTH;
                         break;
                     case 3:
@@ -249,8 +285,14 @@ public class PostComposeActivity extends AppCompatActivity implements View.OnCli
                     setResult(resultCode,results);
                     finish();
                 }
-
         }
+    }
+
+    public void submitPost(long expirationDate) {
+        //with exp date, grab code from onClick
+    }
+    public void submitPost() {
+        //with null exp date
     }
 
 }

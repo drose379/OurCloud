@@ -25,7 +25,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="20dp"
+            android:padding="15dp"
             android:background="#E0E0E0"
             android:id="@+id/userInfoContainer"
             >
@@ -63,7 +63,7 @@
                 android:layout_height="wrap_content"
                 android:paddingLeft="30dp"
                 android:paddingRight="30dp"
-                android:paddingTop="20dp"
+                android:paddingTop="15dp"
                 custom_text:bold="true"
                 android:textColor="@color/ColorBlack"
                 android:textSize="15sp"
@@ -85,12 +85,13 @@
                 android:layout_height="wrap_content"
                 android:paddingLeft="30dp"
                 android:paddingRight="30dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="15dp"
                 custom_text:bold="true"
                 android:textColor="@color/ColorBlack"
                 android:textSize="15sp"
                 android:text="Photo:"
                 />
+
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -104,7 +105,7 @@
                 android:layout_width="250dp"
                 android:layout_height="250dp"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="5dp"
                 android:layout_marginBottom="20dp"
                 android:visibility="gone"
                 android:id="@+id/selectedImageContainer"
