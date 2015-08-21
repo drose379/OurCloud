@@ -7,6 +7,8 @@ import android.util.Log;
 
 import com.google.android.gms.plus.model.people.Person;
 
+import java.util.List;
+
 /**
  * Created by dylan on 8/6/15.
  */
@@ -18,6 +20,7 @@ public class UserInfo {
 
     private Person person;
     private String wifiId;
+    private List<String> networksInRange;
     private boolean inDatabase;
 
     private static UserInfo userInfo;
@@ -33,6 +36,7 @@ public class UserInfo {
     public void setWifiId(String id) {
         wifiId = id;
     }
+    public void setNetworksInRange(List<String> networks) {networksInRange = networks;}
     public void setInDatabase(boolean exists) {inDatabase = exists;}
 
     public Person getPerson() {
@@ -42,6 +46,7 @@ public class UserInfo {
     public String getWifiId() {
         return wifiId;
     }
+    public List<String> getNetworksInRange() {return networksInRange;}
     public String getProfileImage() {
         return person.getImage().getUrl();
     }

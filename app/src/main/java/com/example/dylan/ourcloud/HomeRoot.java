@@ -8,6 +8,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.location.LocationProvider;
+import android.net.wifi.ScanResult;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
@@ -28,8 +29,6 @@ import java.util.List;
  * Created by dylan on 8/6/15.
  */
 public class HomeRoot extends AppCompatActivity {
-
-    WifiController wifiController;
 
     SlidingTabLayout tabs;
     ViewPager pager;
@@ -55,7 +54,6 @@ public class HomeRoot extends AppCompatActivity {
          */
         super.onStart();
         initHomeView();
-
 
     }
 

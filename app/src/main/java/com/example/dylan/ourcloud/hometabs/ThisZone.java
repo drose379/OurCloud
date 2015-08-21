@@ -41,6 +41,7 @@ public class ThisZone extends Fragment implements View.OnClickListener,ListView.
     private WifiController wifiController;
     private ThisZoneController thisZoneController;
     File newPostImage = null;
+    int newPostType;
 
     Intent newPostTempData;
 
@@ -109,6 +110,7 @@ public class ThisZone extends Fragment implements View.OnClickListener,ListView.
     public void initWifiConnect() {
         if (wifiController.isConnected()) {
             UserInfo.getInstance().setWifiId(wifiController.getWifiId());
+            UserInfo.getInstance().setNetworksInRange(wifiController.getNetworksInRange());
             thisZoneController.grabZonePosts();
         } else {
             enableWifi.show();
@@ -215,22 +217,31 @@ public class ThisZone extends Fragment implements View.OnClickListener,ListView.
 
     @Override
     public void onActivityResult(int requestCode,int resultCode,Intent data) {
+
         switch (resultCode) {
             case PostComposeActivity.POST_TEXT_ONLY :
-                thisZoneController.newPost(data.getStringExtra("postText"));
+                newPostType = PostComposeActivity.POST_TEXT_ONLY;
+                newPostTempData = data;
+                //thisZoneController.newPost(data.getStringExtra("postText"));
                 break;
             case PostComposeActivity.POST_BOTH:
+                newPostType = PostComposeActivity.POST_BOTH;
                 newPostTempData = data;
-                File f = (File) data.getSerializableExtra("postImage");
-                ImageUtil.getInstance().uploadImage(this,PostComposeActivity.POST_BOTH,(File)data.getSerializableExtra("postImage"));
+                //File f = (File) data.getSerializableExtra("postImage");
+                //ImageUtil.getInstance().uploadImage(this,PostComposeActivity.POST_BOTH,(File)data.getSerializableExtra("postImage"));
                 //will receive callback with image url, call newpost with text and url there
                 break;
             case PostComposeActivity.POST_PHOTO_ONLY:
+                newPostType = PostComposeActivity.POST_PHOTO_ONLY;
                 newPostTempData = data;
                 //just image
 
                 break;
         }
+
+        //call thisZoneController.getZoneId(Userinfo.getWifiId(),UserInfo.getNetworksInRange);
+        //when that method calls back with zoneId, use the logic above (commented out in switch) to create the new post
+            // use newPostType and newPostTempData to save the new post, run a swtich on newPostType and use newPostTempData and zoneId for new post
     }
 
     @Override

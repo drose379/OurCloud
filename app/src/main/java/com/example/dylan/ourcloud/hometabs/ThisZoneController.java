@@ -63,7 +63,15 @@ public class ThisZoneController {
 
     }
 
+    public void getZoneId(String ssid,List<String> networksInRange) {
+        //grab zoneId and call callback with it
+    }
+
     public void newPost(String postText) {
+
+        //need to construct a json array of just the values that are in range, add that as an item in jsonItems below. remember to json_decode it in the API
+
+
         UserInfo currentUser = UserInfo.getInstance();
 
         String jsonItems = JSONUtil.generateJSONArray(currentUser.getId(), currentUser.getWifiId(), postText.trim(), String.valueOf(getCurrentTimeMillis()));
