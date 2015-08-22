@@ -40,6 +40,7 @@ public class ThisZone extends Fragment implements View.OnClickListener,ListView.
     private Context context;
     private WifiController wifiController;
     private ThisZoneController thisZoneController;
+    private String zoneId;
     File newPostImage = null;
     int newPostType;
 
@@ -111,6 +112,7 @@ public class ThisZone extends Fragment implements View.OnClickListener,ListView.
         if (wifiController.isConnected()) {
             UserInfo.getInstance().setWifiId(wifiController.getWifiId());
             UserInfo.getInstance().setNetworksInRange(wifiController.getNetworksInRange());
+
             thisZoneController.grabZonePosts();
         } else {
             enableWifi.show();
@@ -150,42 +152,6 @@ public class ThisZone extends Fragment implements View.OnClickListener,ListView.
     public void initDialogs() {
 
         dialogsInflated = true;
-
-        newPost = new MaterialDialog.Builder(context)
-                .title("New Post")
-                .customView(R.layout.new_post_dialog, true)
-                .positiveText("Post")
-                .positiveColor(getResources().getColor(R.color.ColorPrimary))
-                .negativeText("Cancel")
-                .negativeColor(getResources().getColor(R.color.indicator))
-                .autoDismiss(false)
-                .callback(new MaterialDialog.ButtonCallback() {
-                    @Override
-                    public void onPositive(MaterialDialog dialog) {
-                        EditText postInput = (EditText) dialog.getCustomView().findViewById(R.id.postInput);
-                        String input = postInput.getText().toString();
-                        if (!input.isEmpty()) {
-                            thisZoneController.newPost(input);
-
-                            dialog.dismiss();
-                            loading.show();
-                        }
-                        //create method to clear edittext of dialogs
-                        postInput.setText("");
-                    }
-
-                    @Override
-                    public void onNegative(MaterialDialog dialog) {
-                        dialog.dismiss();
-                        EditText postInput = (EditText) dialog.getCustomView().findViewById(R.id.postInput);
-                        postInput.setText("");
-                    }
-                })
-                .build();
-
-        ImageView addImageButton = (ImageView) newPost.getCustomView().findViewById(R.id.image);
-        addImageButton.setOnClickListener(this);
-
 
         loading = new MaterialDialog.Builder(context)
                 .title("Publishing")
@@ -239,16 +205,34 @@ public class ThisZone extends Fragment implements View.OnClickListener,ListView.
                 break;
         }
 
+        thisZoneController.getZoneId(UserInfo.getInstance().getWifiId(), UserInfo.getInstance().getNetworksInRange());
+
         //call thisZoneController.getZoneId(Userinfo.getWifiId(),UserInfo.getNetworksInRange);
         //when that method calls back with zoneId, use the logic above (commented out in switch) to create the new post
             // use newPostType and newPostTempData to save the new post, run a swtich on newPostType and use newPostTempData and zoneId for new post
     }
 
     @Override
+    public void getZoneId(String zoneId) {
+        this.zoneId = zoneId;
+        switch (newPostType) {
+            case PostComposeActivity.POST_TEXT_ONLY :
+                thisZoneController.newPost(newPostTempData.getStringExtra("postText"),zoneId);
+                break;
+            case PostComposeActivity.POST_BOTH :
+
+                break;
+            case PostComposeActivity.POST_PHOTO_ONLY :
+
+                break;
+        }
+    }
+
+    @Override
     public void imageUploaded(int status,String url) {
         switch (status) {
             case PostComposeActivity.POST_BOTH :
-                thisZoneController.newPostWithImage(newPostTempData.getStringExtra("postText"),url);
+                thisZoneController.newPostWithImage(newPostTempData.getStringExtra("postText"),url,zoneId);
                 break;
             case PostComposeActivity.POST_PHOTO_ONLY :
 

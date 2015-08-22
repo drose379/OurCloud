@@ -1,16 +1,20 @@
 package com.example.dylan.ourcloud.hometabs;
 
 import android.os.Handler;
+import android.util.Log;
 
 import com.example.dylan.ourcloud.Post;
 import com.example.dylan.ourcloud.UserInfo;
 import com.example.dylan.ourcloud.util.JSONUtil;
 import com.squareup.okhttp.Call;
+import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.MediaType;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.RequestBody;
 import com.squareup.okhttp.Response;
+
+import org.json.JSONArray;
 
 import java.io.IOException;
 import java.util.Calendar;
@@ -23,6 +27,7 @@ import java.util.List;
 public class ThisZoneController {
 
     public interface Callback {
+        void getZoneId(String zoneId);
         void getZonePosts(List<Post> posts);
         void postSubmitted();
     }
@@ -63,11 +68,28 @@ public class ThisZoneController {
 
     }
 
-    public void getZoneId(String ssid,List<String> networksInRange) {
-        //grab zoneId and call callback with it
+    public void getZoneId(String ssid,JSONArray networksInRange) {
+        String jsonItems = JSONUtil.generateJSONArray(ssid,networksInRange.toString());
+        RequestBody body = RequestBody.create(MediaType.parse("text/plain"), jsonItems);
+        Request request = new Request.Builder()
+                .post(body)
+                .url("http://104.236.15.47/OurCloudAPI/index.php/getZoneId")
+                .build();
+        httpClient.newCall(request).enqueue(new com.squareup.okhttp.Callback() {
+            @Override
+            public void onFailure(Request request, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Response response) throws IOException {
+                Log.i("zoneId",response.body().string());
+                //callback with zoneId
+            }
+        });
     }
 
-    public void newPost(String postText) {
+    public void newPost(String postText,String zoneId) {
 
         //need to construct a json array of just the values that are in range, add that as an item in jsonItems below. remember to json_decode it in the API
 
@@ -94,7 +116,7 @@ public class ThisZoneController {
         });
     }
 
-    public void newPostWithImage(String postText,String postImageUrl) {
+    public void newPostWithImage(String postText,String postImageUrl,String zoneId) {
 
         UserInfo currentUser = UserInfo.getInstance();
 

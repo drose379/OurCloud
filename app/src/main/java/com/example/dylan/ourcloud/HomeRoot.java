@@ -55,6 +55,7 @@ public class HomeRoot extends AppCompatActivity {
         super.onStart();
         initHomeView();
 
+
     }
 
     public void initHomeView() {
