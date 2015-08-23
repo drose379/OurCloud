@@ -43,7 +43,7 @@ public class ThisZoneController {
     }
 
     public void grabZonePosts() {
-        String currentZone = UserInfo.getInstance().getWifiId();
+        String currentZone = UserInfo.getInstance().getZoneId();
         //grab items that user is OP off, but change the author name to "Me"
 
         RequestBody rBody = RequestBody.create(MediaType.parse("text/plain"), JSONUtil.generateJSONArray(currentZone));
@@ -83,20 +83,17 @@ public class ThisZoneController {
 
             @Override
             public void onResponse(Response response) throws IOException {
-                Log.i("zoneId",response.body().string());
-                //callback with zoneId
+                callback.getZoneId(response.body().string().trim());
             }
         });
     }
 
-    public void newPost(String postText,String zoneId) {
+    public void newPost(String postText) {
 
         //need to construct a json array of just the values that are in range, add that as an item in jsonItems below. remember to json_decode it in the API
-
-
         UserInfo currentUser = UserInfo.getInstance();
 
-        String jsonItems = JSONUtil.generateJSONArray(currentUser.getId(), currentUser.getWifiId(), postText.trim(), String.valueOf(getCurrentTimeMillis()));
+        String jsonItems = JSONUtil.generateJSONArray(currentUser.getId(), currentUser.getZoneId(), postText.trim(), String.valueOf(getCurrentTimeMillis()));
         RequestBody rBody = RequestBody.create(MediaType.parse("text/plain"), jsonItems);
         Request request = new Request.Builder()
                 .url("http://104.236.15.47/OurCloudAPI/index.php/newPost")
@@ -116,11 +113,11 @@ public class ThisZoneController {
         });
     }
 
-    public void newPostWithImage(String postText,String postImageUrl,String zoneId) {
+    public void newPostWithImage(String postText,String postImageUrl) {
 
         UserInfo currentUser = UserInfo.getInstance();
 
-        String jsonItems = JSONUtil.generateJSONArray(currentUser.getId(),currentUser.getWifiId(), postText.trim(), postImageUrl,String.valueOf(getCurrentTimeMillis()));
+        String jsonItems = JSONUtil.generateJSONArray(currentUser.getId(),currentUser.getWifiSSID(), postText.trim(), postImageUrl,String.valueOf(getCurrentTimeMillis()));
 
         RequestBody rBody = RequestBody.create(MediaType.parse("text/plain"), jsonItems);
         Request request = new Request.Builder()

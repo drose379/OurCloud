@@ -24,6 +24,7 @@ public class UserInfo {
     private String wifiId;
     private List<String> networksInRange;
     private boolean inDatabase;
+    private String zoneId;
 
     private static UserInfo userInfo;
 
@@ -40,12 +41,13 @@ public class UserInfo {
     }
     public void setNetworksInRange(List<String> networks) {networksInRange = networks;}
     public void setInDatabase(boolean exists) {inDatabase = exists;}
+    public void setZoneId(String zoneId) {this.zoneId = zoneId;}
 
     public Person getPerson() {
         return person;
     }
     public String getDisplayName() {return person.getDisplayName();}
-    public String getWifiId() {
+    public String getWifiSSID() {
         return wifiId.replace("\"","");
     }
     public JSONArray getNetworksInRange() {
@@ -70,5 +72,6 @@ public class UserInfo {
         return person.getId();
     }
     public boolean getInDatabase() {return inDatabase;}
+    public String getZoneId() {return zoneId;}
 
 }

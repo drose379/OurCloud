@@ -40,7 +40,6 @@ public class ThisZone extends Fragment implements View.OnClickListener,ListView.
     private Context context;
     private WifiController wifiController;
     private ThisZoneController thisZoneController;
-    private String zoneId;
     File newPostImage = null;
     int newPostType;
 
@@ -73,6 +72,7 @@ public class ThisZone extends Fragment implements View.OnClickListener,ListView.
     public View onCreateView(LayoutInflater inflater,ViewGroup parent,Bundle savedInstance) {
         super.onCreateView(inflater, parent, savedInstance);
         View v = inflater.inflate(R.layout.this_zone,parent,false);
+        if(!dialogsInflated) {initDialogs();}
 
         /**
          * Need a controller to grab this zones posts and have callback to this fragment.
@@ -91,9 +91,7 @@ public class ThisZone extends Fragment implements View.OnClickListener,ListView.
         refreshLayout.setOnRefreshListener(this);
         newPostButton.setOnClickListener(this);
 
-        refreshLayout.setColorSchemeColors(R.color.indicator,R.color.ColorPrimary,R.color.ColorPrimaryDark);
-
-        if(!dialogsInflated) {initDialogs();}
+        refreshLayout.setColorSchemeColors(R.color.indicator, R.color.ColorPrimary, R.color.ColorPrimaryDark);
 
         return v;
     }
@@ -106,14 +104,19 @@ public class ThisZone extends Fragment implements View.OnClickListener,ListView.
          * Call this same method and wifi checkpoint when user refreshes feed
          */
         initWifiConnect();
+        //why is onStart called twice when setResult is called from PostCompseActivity, is onCreateView also called twice?
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
     }
 
     public void initWifiConnect() {
         if (wifiController.isConnected()) {
             UserInfo.getInstance().setWifiId(wifiController.getWifiId());
             UserInfo.getInstance().setNetworksInRange(wifiController.getNetworksInRange());
-
-            thisZoneController.grabZonePosts();
+            thisZoneController.getZoneId(UserInfo.getInstance().getWifiSSID(), UserInfo.getInstance().getNetworksInRange());
         } else {
             enableWifi.show();
         }
@@ -183,12 +186,10 @@ public class ThisZone extends Fragment implements View.OnClickListener,ListView.
 
     @Override
     public void onActivityResult(int requestCode,int resultCode,Intent data) {
-
+        super.onActivityResult(requestCode,resultCode,data);
         switch (resultCode) {
             case PostComposeActivity.POST_TEXT_ONLY :
-                newPostType = PostComposeActivity.POST_TEXT_ONLY;
-                newPostTempData = data;
-                //thisZoneController.newPost(data.getStringExtra("postText"));
+                thisZoneController.newPost(data.getStringExtra("postText"));
                 break;
             case PostComposeActivity.POST_BOTH:
                 newPostType = PostComposeActivity.POST_BOTH;
@@ -205,7 +206,7 @@ public class ThisZone extends Fragment implements View.OnClickListener,ListView.
                 break;
         }
 
-        thisZoneController.getZoneId(UserInfo.getInstance().getWifiId(), UserInfo.getInstance().getNetworksInRange());
+        thisZoneController.getZoneId(UserInfo.getInstance().getWifiSSID(), UserInfo.getInstance().getNetworksInRange());
 
         //call thisZoneController.getZoneId(Userinfo.getWifiId(),UserInfo.getNetworksInRange);
         //when that method calls back with zoneId, use the logic above (commented out in switch) to create the new post
@@ -214,32 +215,21 @@ public class ThisZone extends Fragment implements View.OnClickListener,ListView.
 
     @Override
     public void getZoneId(String zoneId) {
-        this.zoneId = zoneId;
-        switch (newPostType) {
-            case PostComposeActivity.POST_TEXT_ONLY :
-                thisZoneController.newPost(newPostTempData.getStringExtra("postText"),zoneId);
-                break;
-            case PostComposeActivity.POST_BOTH :
-
-                break;
-            case PostComposeActivity.POST_PHOTO_ONLY :
-
-                break;
-        }
+        UserInfo.getInstance().setZoneId(zoneId);
+        thisZoneController.grabZonePosts();
     }
 
     @Override
     public void imageUploaded(int status,String url) {
         switch (status) {
             case PostComposeActivity.POST_BOTH :
-                thisZoneController.newPostWithImage(newPostTempData.getStringExtra("postText"),url,zoneId);
+                thisZoneController.newPostWithImage(newPostTempData.getStringExtra("postText"),url);
                 break;
             case PostComposeActivity.POST_PHOTO_ONLY :
 
                 break;
         }
     }
-
 
 
     @Override
