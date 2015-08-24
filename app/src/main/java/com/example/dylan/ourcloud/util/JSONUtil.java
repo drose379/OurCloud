@@ -1,5 +1,7 @@
 package com.example.dylan.ourcloud.util;
 
+import android.util.Log;
+
 import com.example.dylan.ourcloud.Post;
 
 import org.json.JSONArray;

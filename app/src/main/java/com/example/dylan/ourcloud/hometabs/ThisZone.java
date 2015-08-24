@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -41,7 +42,6 @@ public class ThisZone extends Fragment implements View.OnClickListener,ListView.
     private WifiController wifiController;
     private ThisZoneController thisZoneController;
     File newPostImage = null;
-    int newPostType;
 
     Intent newPostTempData;
 
@@ -104,7 +104,6 @@ public class ThisZone extends Fragment implements View.OnClickListener,ListView.
          * Call this same method and wifi checkpoint when user refreshes feed
          */
         initWifiConnect();
-        //why is onStart called twice when setResult is called from PostCompseActivity, is onCreateView also called twice?
     }
 
     @Override
@@ -128,6 +127,7 @@ public class ThisZone extends Fragment implements View.OnClickListener,ListView.
      */
     @Override
     public void getZonePosts(final List<Post> posts) {
+        postContainer.setVisibility(View.VISIBLE);
         loadingSpinner.setVisibility(View.GONE);
         refreshLayout.setRefreshing(false);
         if (posts.size() > 0) {
@@ -141,13 +141,24 @@ public class ThisZone extends Fragment implements View.OnClickListener,ListView.
         }
 
         postContainer.setOnScrollListener(this);
+        postContainer.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                //see which item was clicked, grab corresponding Post object from List<Posts>, open detail activity
+            }
+        });
 
+    }
+
+    @Override
+    public void getZoneId(String zoneId) {
+        UserInfo.getInstance().setZoneId(zoneId);
+        thisZoneController.grabZonePosts();
     }
 
     @Override
     public void postSubmitted() {
 
-        loading.dismiss();
         thisZoneController.grabZonePosts();
         //refresh feed
     }
@@ -155,12 +166,6 @@ public class ThisZone extends Fragment implements View.OnClickListener,ListView.
     public void initDialogs() {
 
         dialogsInflated = true;
-
-        loading = new MaterialDialog.Builder(context)
-                .title("Publishing")
-                .customView(R.layout.load_dialog, true)
-                .autoDismiss(false)
-                .build();
 
         enableWifi = new MaterialDialog.Builder(context)
                 .title("Enable Wifi")
@@ -186,47 +191,40 @@ public class ThisZone extends Fragment implements View.OnClickListener,ListView.
 
     @Override
     public void onActivityResult(int requestCode,int resultCode,Intent data) {
-        super.onActivityResult(requestCode,resultCode,data);
+        super.onActivityResult(requestCode, resultCode, data);
+
         switch (resultCode) {
             case PostComposeActivity.POST_TEXT_ONLY :
-                thisZoneController.newPost(data.getStringExtra("postText"));
+                String postText = data.getStringExtra("postText");
+                long expirationDate = data.getLongExtra("expDate", 0);
+                thisZoneController.newPost(postText,expirationDate);
                 break;
-            case PostComposeActivity.POST_BOTH:
-                newPostType = PostComposeActivity.POST_BOTH;
-                newPostTempData = data;
-                //File f = (File) data.getSerializableExtra("postImage");
-                //ImageUtil.getInstance().uploadImage(this,PostComposeActivity.POST_BOTH,(File)data.getSerializableExtra("postImage"));
-                //will receive callback with image url, call newpost with text and url there
-                break;
-            case PostComposeActivity.POST_PHOTO_ONLY:
-                newPostType = PostComposeActivity.POST_PHOTO_ONLY;
-                newPostTempData = data;
-                //just image
 
+            case PostComposeActivity.POST_BOTH:
+                newPostTempData = data;
+                ImageUtil.getInstance().uploadImage(this,PostComposeActivity.POST_BOTH,(File)data.getSerializableExtra("postImage"));
+                break;
+
+            case PostComposeActivity.POST_PHOTO_ONLY:
+                newPostTempData = data;
+                ImageUtil.getInstance().uploadImage(this,PostComposeActivity.POST_PHOTO_ONLY,(File)data.getSerializableExtra("postImage"));
                 break;
         }
 
-        thisZoneController.getZoneId(UserInfo.getInstance().getWifiSSID(), UserInfo.getInstance().getNetworksInRange());
-
-        //call thisZoneController.getZoneId(Userinfo.getWifiId(),UserInfo.getNetworksInRange);
-        //when that method calls back with zoneId, use the logic above (commented out in switch) to create the new post
-            // use newPostType and newPostTempData to save the new post, run a swtich on newPostType and use newPostTempData and zoneId for new post
-    }
-
-    @Override
-    public void getZoneId(String zoneId) {
-        UserInfo.getInstance().setZoneId(zoneId);
-        thisZoneController.grabZonePosts();
     }
 
     @Override
     public void imageUploaded(int status,String url) {
+
+        long expirationDate = newPostTempData.getLongExtra("expDate",0);
+
         switch (status) {
             case PostComposeActivity.POST_BOTH :
-                thisZoneController.newPostWithImage(newPostTempData.getStringExtra("postText"),url);
+                String postText = newPostTempData.getStringExtra("postText");
+                thisZoneController.newPostWithImage(postText,url,expirationDate);
                 break;
             case PostComposeActivity.POST_PHOTO_ONLY :
-
+                thisZoneController.newPostWithImage("",url,expirationDate);
                 break;
         }
     }

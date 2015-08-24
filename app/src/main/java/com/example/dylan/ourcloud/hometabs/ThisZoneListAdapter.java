@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.dylan.ourcloud.Post;
@@ -70,6 +71,17 @@ public class ThisZoneListAdapter extends BaseAdapter {
 
         userName.setText(currentPost.isCurrentUser() ? "Me" : currentPost.getUser());
         userName.setTextColor(currentPost.isCurrentUser() ? context.getResources().getColor(R.color.ColorStart) : Color.parseColor("#000000"));
+
+        if(currentPost.getPostText().equals("")) {
+            postText.setVisibility(View.GONE);
+            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) postImage.getLayoutParams();
+            params.addRule(RelativeLayout.CENTER_HORIZONTAL,RelativeLayout.TRUE);
+            params.setMargins(0,(int)22.5,0,(int)22.5);
+            postImage.setLayoutParams(params);
+        } else {
+            postText.setVisibility(View.VISIBLE);
+            postText.setText(currentPost.getPostText());
+        }
 
         postText.setText(currentPost.getPostText());
 

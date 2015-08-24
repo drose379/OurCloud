@@ -156,12 +156,15 @@ public class PostComposeActivity extends AppCompatActivity implements View.OnCli
 
                         Calendar selectedDate = Calendar.getInstance();
                         selectedDate.set(datePicker.getYear(), datePicker.getMonth(), datePicker.getDayOfMonth());
+
+                        submitPost(selectedDate);
+
                         //call mehtod that compiles all info, have one method that acceps expdate and one that doesnt, if user wants post to never expire
                     }
 
                     @Override
                     public void onNegative(MaterialDialog dialog) {
-                        //submit without a exp date
+                        submitPost(null);
                     }
                 })
                 .build();
@@ -198,10 +201,6 @@ public class PostComposeActivity extends AppCompatActivity implements View.OnCli
             rotated.compress(Bitmap.CompressFormat.JPEG, 100, os);
 
         }
-
-
-
-
 
 
         uploadedImageContainer.setImageBitmap(BitmapFactory.decodeFile(postImage.getAbsolutePath()));
@@ -259,40 +258,46 @@ public class PostComposeActivity extends AppCompatActivity implements View.OnCli
                  * NEED TO GENERATE DIFFERENT RESULT CODES FOR EACH SCENARIO, 1 FOR JUST TEXT, 2 FOR BOTH, 3 FOR JUST IMAGE
                  */
                 expDateDialog.show();
-                Intent results = new Intent();
-                int resultCode = 0;
-
-                switch (generateResultCode()) {
-                    case 0 :
-                        results = null;
-                        break;
-                    case 1:
-                        results.putExtra("postText",postTextArea.getText().toString());
-                        resultCode = POST_TEXT_ONLY;
-                        break;
-                    case 2:
-                        results.putExtra("postText",postTextArea.getText().toString());
-                        results.putExtra("postImage", postImage);
-                        resultCode = POST_BOTH;
-                        break;
-                    case 3:
-                        results.putExtra("postImage",postImage);
-                        resultCode = POST_PHOTO_ONLY;
-                        break;
-                }
-
-                if (results != null) {
-                    setResult(resultCode,results);
-                    finish();
-                }
         }
     }
 
-    public void submitPost(long expirationDate) {
-        //with exp date, grab code from onClick
+    public void submitPost(Calendar selectedDate) {
+
+        Intent results = new Intent();
+        int resultCode = 0;
+
+        long expMillis = selectedDate != null ? selectedDate.getTimeInMillis() : 0;
+
+        Log.i("expMillis",String.valueOf(expMillis));
+
+        switch (generateResultCode()) {
+            case 0 :
+                results = null;
+                break;
+            case 1:
+                results.putExtra("postText",postTextArea.getText().toString());
+                results.putExtra("expDate",expMillis);
+                resultCode = POST_TEXT_ONLY;
+                break;
+            case 2:
+                results.putExtra("postText",postTextArea.getText().toString());
+                results.putExtra("postImage", postImage);
+                results.putExtra("expDate",expMillis);
+                resultCode = POST_BOTH;
+                break;
+            case 3:
+                results.putExtra("postImage",postImage);
+                results.putExtra("expDate",expMillis);
+                resultCode = POST_PHOTO_ONLY;
+                break;
+        }
+
+        if (results != null) {
+            setResult(resultCode,results);
+            finish();
+        }
+
     }
-    public void submitPost() {
-        //with null exp date
-    }
+
 
 }

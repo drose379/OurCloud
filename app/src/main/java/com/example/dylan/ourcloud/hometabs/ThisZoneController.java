@@ -61,7 +61,12 @@ public class ThisZoneController {
             @Override
             public void onResponse(Response response) throws IOException {
                 final List<Post> posts = JSONUtil.toPostList(response.body().string());
-                Runnable r = new Runnable() {@Override public void run() {callback.getZonePosts(posts);}};
+                Runnable r = new Runnable() {
+                    @Override
+                    public void run() {
+                        callback.getZonePosts(posts);
+                    }
+                };
                 handler.post(r);
             }
         });
@@ -69,7 +74,7 @@ public class ThisZoneController {
     }
 
     public void getZoneId(String ssid,JSONArray networksInRange) {
-        String jsonItems = JSONUtil.generateJSONArray(ssid,networksInRange.toString());
+        String jsonItems = JSONUtil.generateJSONArray(ssid, networksInRange.toString());
         RequestBody body = RequestBody.create(MediaType.parse("text/plain"), jsonItems);
         Request request = new Request.Builder()
                 .post(body)
@@ -88,12 +93,18 @@ public class ThisZoneController {
         });
     }
 
-    public void newPost(String postText) {
+    public void newPost(String postText,long expirationDate) {
 
         //need to construct a json array of just the values that are in range, add that as an item in jsonItems below. remember to json_decode it in the API
         UserInfo currentUser = UserInfo.getInstance();
 
-        String jsonItems = JSONUtil.generateJSONArray(currentUser.getId(), currentUser.getZoneId(), postText.trim(), String.valueOf(getCurrentTimeMillis()));
+        String jsonItems = JSONUtil.generateJSONArray(
+                currentUser.getId(),
+                currentUser.getZoneId(),
+                postText.trim(),
+                String.valueOf(getCurrentTimeMillis()),
+                String.valueOf(expirationDate));
+
         RequestBody rBody = RequestBody.create(MediaType.parse("text/plain"), jsonItems);
         Request request = new Request.Builder()
                 .url("http://104.236.15.47/OurCloudAPI/index.php/newPost")
@@ -113,11 +124,16 @@ public class ThisZoneController {
         });
     }
 
-    public void newPostWithImage(String postText,String postImageUrl) {
+    public void newPostWithImage(String postText,String postImageUrl,long expirationDate) {
 
         UserInfo currentUser = UserInfo.getInstance();
 
-        String jsonItems = JSONUtil.generateJSONArray(currentUser.getId(),currentUser.getWifiSSID(), postText.trim(), postImageUrl,String.valueOf(getCurrentTimeMillis()));
+        String jsonItems = JSONUtil.generateJSONArray(currentUser.getId(),
+                currentUser.getZoneId(),
+                postText.trim(),
+                postImageUrl,
+                String.valueOf(getCurrentTimeMillis()),
+                String.valueOf(expirationDate));
 
         RequestBody rBody = RequestBody.create(MediaType.parse("text/plain"), jsonItems);
         Request request = new Request.Builder()

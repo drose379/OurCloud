@@ -30,6 +30,7 @@
         android:background="#ECEDF0"
         android:divider="@null"
         android:dividerHeight="0dp"
+        android:visibility="gone"
         android:id="@+id/zonePostList"
         >
     </ListView>
