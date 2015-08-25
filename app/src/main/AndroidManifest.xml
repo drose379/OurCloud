@@ -23,6 +23,7 @@
         <activity android:name=".HomeRoot" android:label="HomeRoot" />
         <activity android:name=".PostComposeActivity" android:label="New Post" />
         <activity android:name="com.soundcloud.android.crop.CropImageActivity"/>
+        <activity android:name=".PostDetailView" android:label="Post" />
 
     </application>
 

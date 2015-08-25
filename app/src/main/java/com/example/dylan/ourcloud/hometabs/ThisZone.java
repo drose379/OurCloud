@@ -20,6 +20,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.example.dylan.ourcloud.PostDetailView;
 import com.example.dylan.ourcloud.util.ImageUtil;
 import com.example.dylan.ourcloud.Post;
 import com.example.dylan.ourcloud.PostComposeActivity;
@@ -144,7 +145,9 @@ public class ThisZone extends Fragment implements View.OnClickListener,ListView.
         postContainer.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                //see which item was clicked, grab corresponding Post object from List<Posts>, open detail activity
+                Intent detailActivity = new Intent(context,PostDetailView.class);
+                detailActivity.putExtra("selectedPost",posts.get(i));
+                startActivity(detailActivity);
             }
         });
 

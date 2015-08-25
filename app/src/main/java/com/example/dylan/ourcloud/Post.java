@@ -1,19 +1,20 @@
 package com.example.dylan.ourcloud;
 
-
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by dylan on 8/6/15.
  */
-public class Post {
+public class Post implements Serializable {
 
     private String user;
     private String userImageUrl;
     private String postText;
     private String postImageUrl;
     private long postTimeMillis;
-    private List<Comment> comments;
+    private ArrayList<Comment> comments;
 
     public Post setUser(String user) {
         this.user = user;
@@ -31,7 +32,7 @@ public class Post {
         postImageUrl = url;
         return this;
     }
-    public Post setComments(List<Comment> comments) {
+    public Post setComments(ArrayList<Comment> comments) {
         this.comments = comments;
         return this;
     }
@@ -45,6 +46,12 @@ public class Post {
     }
     public String getUserImage() {
         return userImageUrl;
+    }
+    public String getUserImageSized(int size) {
+        String fullUrl = userImageUrl;
+        String[] splitUrl = fullUrl.split("\\=");
+
+        return splitUrl[0] + "=" + String.valueOf(size);
     }
     public String getPostText() {
         return postText;
