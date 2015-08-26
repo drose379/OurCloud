@@ -17,6 +17,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:orientation="vertical"
         android:background="#ECEDF0"
         >
 
@@ -24,7 +25,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#E0E0E0"
-            android:padding="10dp"
+            android:padding="15dp"
             >
 
             <ImageView
@@ -48,6 +49,46 @@
 
         </RelativeLayout>
 
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:id="@+id/postContainer"
+            >
+
+            <com.example.dylan.ourcloud.CustomTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/ColorBlack"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="5dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                custom_text:bold="true"
+                android:textSize="14sp"
+                android:visibility="gone"
+                android:id="@+id/postText"
+                />
+            
+            <ImageView
+                android:layout_width="350dp"
+                android:layout_height="350dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="5dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:layout_marginBottom="5dp"
+                android:visibility="gone"
+                android:id="@+id/postImage"
+                />
+
+
+            </LinearLayout>
+        </ScrollView>
 
     </LinearLayout>
 

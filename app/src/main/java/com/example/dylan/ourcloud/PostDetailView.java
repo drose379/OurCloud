@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -26,10 +27,10 @@ public class PostDetailView extends AppCompatActivity {
 
         post = (Post) getIntent().getSerializableExtra("selectedPost");
 
-        toolbarTitle.setText(post.getPostText().substring(0,10) + "...");
+        toolbarTitle.setText(post.getPostText().isEmpty() ? "Post Detail" :  post.getPostText().substring(0,10) + "...");
 
         initHeaderView();
-
+        initPostView();
         //need to get rest of post info such as post text and photo, and comments
             //also show date of post, number of comments, number of views
         //also give option to add a comment to the post
@@ -39,13 +40,28 @@ public class PostDetailView extends AppCompatActivity {
 
 
     public void initHeaderView() {
-        //header view will a larger photo of the author (200) in the middle of the screen, with their name below it
-        //clicking on the photo will show full screen photo of user
         ImageView userHeader = (ImageView) findViewById(R.id.userHeaderPhoto);
         TextView userName = (TextView) findViewById(R.id.userHeaderName);
 
+        //click listener for photo to show full screen photo fragment
+
         Picasso.with(this).load(post.getUserImageSized(200)).into(userHeader);
         userName.setText(post.getUser());
+    }
+
+    public void initPostView() {
+        //need to adjust visibility of both textview and imageviews depending on post type
+
+        TextView postText = (TextView) findViewById(R.id.postText);
+        ImageView postImage = (ImageView) findViewById(R.id.postImage);
+
+        postText.setVisibility(post.getPostText().isEmpty() ? View.GONE : View.VISIBLE);
+        if(postText.getVisibility() == View.VISIBLE) {postText.setText(post.getPostText());}
+
+        postImage.setVisibility(post.getPostImageUrl() == null ? View.GONE : View.VISIBLE);
+        if(postImage.getVisibility() == View.VISIBLE) {Picasso.with(this).load(post.getPostImageUrl()).into(postImage);}
+
+        //post image
     }
 
 }
