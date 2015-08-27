@@ -18,14 +18,14 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
+
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.example.dylan.ourcloud.hometabs.ThisZoneController;
-import com.example.dylan.ourcloud.hometabs.ThisZoneListAdapter;
+
 import com.example.dylan.ourcloud.util.ImageUtil;
-import com.melnykov.fab.FloatingActionButton;
+
+import com.github.clans.fab.FloatingActionButton;
 import com.soundcloud.android.crop.Crop;
 import com.squareup.picasso.Picasso;
 
@@ -282,12 +282,12 @@ public class PostComposeActivity extends AppCompatActivity implements View.OnCli
             case 2:
                 results.putExtra("postText",postTextArea.getText().toString());
                 results.putExtra("postImage", postImage);
-                results.putExtra("expDate",expMillis);
+                results.putExtra("expDate", expMillis);
                 resultCode = POST_BOTH;
                 break;
             case 3:
                 results.putExtra("postImage",postImage);
-                results.putExtra("expDate",expMillis);
+                results.putExtra("expDate", expMillis);
                 resultCode = POST_PHOTO_ONLY;
                 break;
         }

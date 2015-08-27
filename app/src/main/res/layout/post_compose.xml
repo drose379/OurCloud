@@ -117,14 +117,12 @@
 
         </LinearLayout>
 
-        <com.melnykov.fab.FloatingActionButton
+        <com.github.clans.fab.FloatingActionButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
             android:layout_margin="16dp"
-            fab:fab_colorNormal="@color/ColorPrimary"
-            fab:fab_colorPressed="@color/ColorPrimaryDark"
             android:src="@drawable/ic_check_white_24dp"
             android:id="@+id/postSubmitButton"
             />

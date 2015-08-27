@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:custom_text="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fab="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:background="@color/ColorPrimaryDark"
     android:layout_width="match_parent"
@@ -14,10 +16,9 @@
         android:orientation="vertical"
         />
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
         android:background="#ECEDF0"
         >
 
@@ -25,13 +26,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#E0E0E0"
+            android:id="@+id/userHeaderInfo"
             android:padding="15dp"
             >
 
-            <ImageView
+            <de.hdodenhof.circleimageview.CircleImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
+                app:border_width="1dp"
+                app:border_color="#ECEDF0"
                 android:id="@+id/userHeaderPhoto"
                 />
 
@@ -49,47 +53,46 @@
 
         </RelativeLayout>
 
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:id="@+id/postContainer"
+        <!-- fragment container (FrameLayout) -->
+
+        <android.support.v4.widget.DrawerLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/userHeaderInfo"
+            android:id="@+id/postInfoLayout"
             >
 
-            <com.example.dylan.ourcloud.CustomTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/ColorBlack"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="5dp"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                custom_text:bold="true"
-                android:textSize="14sp"
-                android:visibility="gone"
-                android:id="@+id/postText"
-                />
-            
-            <ImageView
-                android:layout_width="350dp"
-                android:layout_height="350dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="5dp"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:layout_marginBottom="5dp"
-                android:visibility="gone"
-                android:id="@+id/postImage"
-                />
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/postDetailFrame"/>
+
+            <ListView
+                android:layout_width="200dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="left"
+                android:id="@+id/navDrawerItems"
+                android:background="@color/ColorStart"
+                >
 
 
-            </LinearLayout>
-        </ScrollView>
+            </ListView>
 
-    </LinearLayout>
+        </android.support.v4.widget.DrawerLayout>
+
+
+        <com.github.clans.fab.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_margin="8dp"
+            fab:fab_hideAnimation="@anim/fab_scale_down"
+            android:src="@drawable/ic_menu_white_24dp"
+            android:id="@+id/menuButton"
+            />
+
+    </RelativeLayout>
 
 </LinearLayout>

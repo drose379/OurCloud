@@ -2,11 +2,11 @@
 <items version="2" >
 
     <item
-        jar="/home/dylan/Documents/Programming/OurCloud/app/build/intermediates/exploded-aar/com.github.clans/fab/1.5.5/jars/classes.jar"
+        jar="/home/dylan/Documents/Programming/OurCloud/app/build/intermediates/exploded-aar/de.hdodenhof/circleimageview/1.3.0/jars/classes.jar"
         jumboMode="false"
         revision="22.0.1"
-        sha1="aaa2fcc429aaad555dbb17ac914b846ca234a3a5">
-        <dex dex="/home/dylan/Documents/Programming/OurCloud/app/build/intermediates/pre-dexed/debug/classes-5fc67b6744d70c1c6bb5366904cd4ac622ae8d38.jar" />
+        sha1="ac6948cce36f694f3eb3d73a135e298dc4b3527a">
+        <dex dex="/home/dylan/Documents/Programming/OurCloud/app/build/intermediates/pre-dexed/debug/classes-030143b14d0c4fd767eaaf2c4b1a48953c653da0.jar" />
     </item>
 
 </items>
