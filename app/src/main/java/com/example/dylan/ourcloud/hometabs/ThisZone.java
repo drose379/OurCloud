@@ -13,14 +13,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
-import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.example.dylan.ourcloud.PostDetailView;
+import com.example.dylan.ourcloud.post_detail.PostDetailView;
 import com.example.dylan.ourcloud.util.ImageUtil;
 import com.example.dylan.ourcloud.Post;
 import com.example.dylan.ourcloud.PostComposeActivity;
