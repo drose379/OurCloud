@@ -112,7 +112,8 @@ public class PostDetailView extends AppCompatActivity implements View.OnClickLis
                         currentDetailFrag.setArguments(postBundle);
                         break;
                     case 1:
-                        //photo
+                        currentDetailFrag = new PostPhotoFrag();
+                        currentDetailFrag.setArguments(postBundle);
                         break;
                     case 2:
                         //comments (also add conmments)
