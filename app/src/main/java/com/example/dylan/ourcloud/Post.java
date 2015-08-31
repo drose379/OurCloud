@@ -9,6 +9,7 @@ import java.util.List;
  */
 public class Post implements Serializable {
 
+    private String postId;
     private String user;
     private String userImageUrl;
     private String postType;
@@ -16,6 +17,11 @@ public class Post implements Serializable {
     private String postImageUrl;
     private long postTimeMillis;
     private ArrayList<Comment> comments;
+
+    public Post setPostId(String id) {
+        postId = id;
+        return this;
+    }
 
     public Post setUser(String user) {
         this.user = user;
@@ -46,6 +52,7 @@ public class Post implements Serializable {
         return this;
     }
 
+    public String getId() {return postId;}
     public String getUser() {
         return user;
     }

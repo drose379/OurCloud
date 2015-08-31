@@ -54,7 +54,7 @@ public class PostCommentsFrag extends Fragment implements View.OnClickListener,C
 
     @Override
     public void getComments(List<Comment> comments) {
-        //List of comments for this post, need to be sent to a ListView adapter as cards 
+        //List of comments for this post, need to be sent to a ListView adapter as cards
     }
 
     @Override

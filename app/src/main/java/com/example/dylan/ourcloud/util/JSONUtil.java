@@ -41,6 +41,7 @@ public class JSONUtil {
                 Post currentPost = new Post()
                         .setUser(currentObject.getString("user_name"))
                         .setUserImage(currentObject.getString("user_image"))
+                        .setPostId(currentObject.getString("ID"))
                         .setPostText(currentObject.getString("postText"))
                         .setPostImage(currentObject.getString("postImage"))
                         .setPostType(currentObject.getString("postType")) //left off here, need to test this with logging in the ThisZone activity

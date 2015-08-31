@@ -28,7 +28,13 @@ public class CommentController {
          * NEED:
          * User ID , Post ID ---------      ) Going into post_comments table
          * Time of comment -----------      ) Going into post_comments table
+         *
+         * Callback with callback.commentSubmitted method
          */
+    }
+
+    public void getComments(String postId) {
+        //grabs all comments for given postId
     }
 
 }

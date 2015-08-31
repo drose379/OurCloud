@@ -128,8 +128,10 @@ public class ThisZoneController {
             }
             @Override
             public void onResponse(Response response) throws IOException {
-                String zoneName = response.body().string();
-                callback.zoneNameReady(zoneName);
+                final String zoneName = response.body().string();
+
+                Runnable r = new Runnable() {@Override public void run() {callback.zoneNameReady(zoneName);}};
+                handler.post(r);
             }
         });
     }

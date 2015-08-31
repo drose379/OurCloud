@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -65,8 +66,6 @@ public class PostComposeActivity extends AppCompatActivity implements View.OnCli
     @Override
     public void onCreate(Bundle savedInstance) {
 
-        Log.i("onCreate","Activity restarted");
-
         super.onCreate(savedInstance);
         postImage = savedInstance != null ? (File)savedInstance.getSerializable("postImage") : null;
 
@@ -81,6 +80,10 @@ public class PostComposeActivity extends AppCompatActivity implements View.OnCli
          * Have image select container be 300 dp high and match_parent width, with padding of 20 dp
          * When user selects, show loading dialog, when post is submitted successfully, close this activiy with this.finish()
           */
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        TextView toolbarTitle = (TextView) toolbar.findViewById(R.id.toolbarTitle);
+        toolbarTitle.setText(UserInfo.getInstance().getZoneName());
 
         TextView userName = (TextView) findViewById(R.id.userName);
         ImageView userImage = (ImageView) findViewById(R.id.userImage);
