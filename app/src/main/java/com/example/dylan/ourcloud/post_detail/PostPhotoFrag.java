@@ -38,7 +38,7 @@ public class PostPhotoFrag extends Fragment {
 
         ImageView postPhoto = (ImageView) v.findViewById(R.id.postPhoto);
 
-        Picasso.with(context).load(post.getPostImageUrl()).fit().into(postPhoto);
+        Picasso.with(context).load(post.getPostImageUrl()).into(postPhoto);
 
         return v;
     }

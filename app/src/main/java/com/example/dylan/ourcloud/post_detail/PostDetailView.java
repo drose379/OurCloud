@@ -97,9 +97,9 @@ public class PostDetailView extends AppCompatActivity implements View.OnClickLis
     }
 
     public void initNavDrawer() {
-        String[] type1 = new String[] {"Text","Comments","More"};
-        String[] type2 = new String[] {"Text","Photo","Comments","More"};
-        String[] type3 = new String[] {"Photo","Comments","More"};
+        final String[] type1 = new String[] {"Text","Comments","More"};
+        final String[] type2 = new String[] {"Text","Photo","Comments","More"};
+        final String[] type3 = new String[] {"Photo","Comments","More"};
 
         //switch over type, set the
         switch (post.getType()) {
@@ -121,21 +121,25 @@ public class PostDetailView extends AppCompatActivity implements View.OnClickLis
 
                 getSupportFragmentManager().beginTransaction().remove(currentDetailFrag).commit();
 
-                switch (i) {
-                    case 0:
+                String itemSelected = post.getType().equals(type1) ? type1[i] : (post.getType().equals(type2) ? type2[i] : type3[i]);
+
+                switch (itemSelected) {
+                    case "Text":
                         //text
                         currentDetailFrag = new PostTextFrag();
                         currentDetailFrag.setArguments(postBundle);
                         break;
-                    case 1:
+                    case "Photo":
                         //photo
                         currentDetailFrag = new PostPhotoFrag();
                         currentDetailFrag.setArguments(postBundle);
                         break;
-                    case 2:
+                    case "Comments":
                         //comments (also add comments functionality)
+                        currentDetailFrag = new PostCommentsFrag();
+                        currentDetailFrag.setArguments(postBundle);
                         break;
-                    case 3:
+                    case "More":
                         //More (see how many views, favorite the post, etc)
                         break;
                 }
