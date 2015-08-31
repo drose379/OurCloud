@@ -43,6 +43,7 @@ public class JSONUtil {
                         .setUserImage(currentObject.getString("user_image"))
                         .setPostText(currentObject.getString("postText"))
                         .setPostImage(currentObject.getString("postImage"))
+                        .setPostType(currentObject.getString("postType")) //left off here, need to test this with logging in the ThisZone activity
                         .setPostTimeMillis(Long.decode(currentObject.getString("postTime")));
                 posts.add(currentPost);
             }

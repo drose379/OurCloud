@@ -98,6 +98,8 @@ public class ThisZoneListAdapter extends BaseAdapter {
          */
         dateText.setText(DateUtil.currentDate(currentPost.getPostTimeMillis()));
 
+        Log.i("postType",currentPost.getType());
+
             //need to show post image (add functionality)
             //need to give comment option
             //create detail view to view comments on card click

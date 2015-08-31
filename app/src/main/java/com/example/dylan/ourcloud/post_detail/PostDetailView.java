@@ -57,7 +57,7 @@ public class PostDetailView extends AppCompatActivity implements View.OnClickLis
         navDrawerItems = (ListView) findViewById(R.id.navDrawerItems);
 
         toolbarTitle.setTypeface(TypeHelper.getTypefaceBold(this));
-        toolbarTitle.setText(post.getPostText().isEmpty() ? "Post Detail" : post.getPostText().substring(0, 10) + "...");
+        toolbarTitle.setText(post.getPostText().isEmpty() ? "Post Detail" : post.getPostText().substring(0, 10) + "..."); // what if post text is fewer then 10 chars
 
         menuButton.setOnClickListener(this);
 
@@ -97,7 +97,23 @@ public class PostDetailView extends AppCompatActivity implements View.OnClickLis
     }
 
     public void initNavDrawer() {
-        navDrawerItems.setAdapter(new ArrayAdapter<String>(this, R.layout.nav_item, new String[]{"Text", "Photo", "Comments", "More"}));
+        String[] type1 = new String[] {"Text","Comments","More"};
+        String[] type2 = new String[] {"Text","Photo","Comments","More"};
+        String[] type3 = new String[] {"Photo","Comments","More"};
+
+        //switch over type, set the
+        switch (post.getType()) {
+            case "1" :
+                navDrawerItems.setAdapter(new ArrayAdapter<String>(this,R.layout.nav_item,type1));
+                break;
+            case "2" :
+                navDrawerItems.setAdapter(new ArrayAdapter<String>(this,R.layout.nav_item,type2));
+                break;
+            case "3" :
+                navDrawerItems.setAdapter(new ArrayAdapter<String>(this,R.layout.nav_item,type3));
+                break;
+        }
+
 
         navDrawerItems.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -112,11 +128,12 @@ public class PostDetailView extends AppCompatActivity implements View.OnClickLis
                         currentDetailFrag.setArguments(postBundle);
                         break;
                     case 1:
+                        //photo
                         currentDetailFrag = new PostPhotoFrag();
                         currentDetailFrag.setArguments(postBundle);
                         break;
                     case 2:
-                        //comments (also add conmments)
+                        //comments (also add comments functionality)
                         break;
                     case 3:
                         //More (see how many views, favorite the post, etc)
@@ -130,7 +147,19 @@ public class PostDetailView extends AppCompatActivity implements View.OnClickLis
     }
 
     public void initPostDetailView() {
-        currentDetailFrag = new PostTextFrag();
+        //instead of setting post text to default, switch over the postType and assign either photo or text as currentDetailFrag depending if post has text or not
+        switch (post.getType()) {
+            case "1" :
+                currentDetailFrag = new PostTextFrag();
+                break;
+            case "2" :
+                currentDetailFrag = new PostPhotoFrag();
+                break;
+            case "3"  :
+                currentDetailFrag = new PostPhotoFrag();
+                break;
+        }
+
         currentDetailFrag.setArguments(postBundle);
         getSupportFragmentManager().beginTransaction().add(R.id.postDetailFrame,currentDetailFrag).commit();
     }

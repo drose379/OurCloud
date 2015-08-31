@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -49,12 +50,12 @@ public class ThisZone extends Fragment implements View.OnClickListener,ListView.
     ProgressBar loadingSpinner;
     ListView postContainer;
     TextView noPostsText;
+    TextView toolbarTitle;
 
     boolean dialogsInflated;
     MaterialDialog newPost;
-    MaterialDialog loading;
     MaterialDialog enableWifi;
-    MaterialDialog imageFromSelect;
+    MaterialDialog newZoneName;
 
     int previousVisibleItem;
 
@@ -70,7 +71,9 @@ public class ThisZone extends Fragment implements View.OnClickListener,ListView.
     @Override
     public View onCreateView(LayoutInflater inflater,ViewGroup parent,Bundle savedInstance) {
         super.onCreateView(inflater, parent, savedInstance);
+
         View v = inflater.inflate(R.layout.this_zone,parent,false);
+        toolbarTitle = (TextView) getActivity().findViewById(R.id.toolbarTitle);
         if(!dialogsInflated) {initDialogs();}
 
         /**
@@ -152,9 +155,18 @@ public class ThisZone extends Fragment implements View.OnClickListener,ListView.
     }
 
     @Override
-    public void getZoneId(String zoneId) {
+    public void getZoneId(String zoneId,String zoneName) {
+
         UserInfo.getInstance().setZoneId(zoneId);
-        thisZoneController.grabZonePosts();
+        UserInfo.getInstance().setZoneName(zoneName);
+
+        if(UserInfo.getInstance().getZoneName() == null) {
+            newZoneName.show();
+        } else {
+            toolbarTitle.setText(zoneName);
+            thisZoneController.grabZonePosts();
+        }
+
     }
 
     @Override
@@ -188,10 +200,42 @@ public class ThisZone extends Fragment implements View.OnClickListener,ListView.
                 })
                 .build();
 
+        final View newZoneView = LayoutInflater.from(context).inflate(R.layout.new_zone_name, null);
+        newZoneName = new MaterialDialog.Builder(context)
+                .title("Please Name This Zone")
+                .customView(newZoneView, true)
+
+                .positiveText("Save")
+                .positiveColor(getResources().getColor(R.color.ColorPrimary))
+                .dismissListener(new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialog) {
+                        //need to make sure name is set, if not, re inflate the dialog
+                        EditText zoneNameArea = (EditText) newZoneView.findViewById(R.id.zoneNameArea);
+                        String zoneName = zoneNameArea.getText().toString();
+                        if (zoneName.isEmpty()) {
+                            newZoneName.show();
+                        } else {
+                            //submit the zone name, wait for callback, in that callback, assign the zone name to UserInfo, and call .getPosts();
+                            thisZoneController.createZoneName(UserInfo.getInstance().getZoneId(), zoneName);
+                        }
+                    }
+                })
+                .build();
+    }
+
+    @Override
+    public void zoneNameReady(String zoneName) {
+        UserInfo.getInstance().setZoneName(zoneName);
+        toolbarTitle.setText(zoneName);
+        thisZoneController.grabZonePosts();
     }
 
     @Override
     public void onActivityResult(int requestCode,int resultCode,Intent data) {
+
+        //save post type and send it to the PostDetailView to decide menu items for nav
+
         super.onActivityResult(requestCode, resultCode, data);
 
         switch (resultCode) {
@@ -242,7 +286,6 @@ public class ThisZone extends Fragment implements View.OnClickListener,ListView.
 
     }
 
-
     @Override
     public void onScroll(AbsListView view,int firstVisibleItem,int visibleItemCount,int totalItemCount) {
         int topViewMargin = postContainer.getChildAt(0) != null ? postContainer.getChildAt(0).getTop() : 0;
@@ -254,12 +297,13 @@ public class ThisZone extends Fragment implements View.OnClickListener,ListView.
         previousVisibleItem = firstVisibleItem;
 
     }
+
     @Override
     public void onScrollStateChanged(AbsListView view,int scrollState) {}
 
     @Override
     public void onRefresh() {
-        thisZoneController.grabZonePosts();
+        this.onStart();
     }
 
 }

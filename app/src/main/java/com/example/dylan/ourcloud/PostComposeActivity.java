@@ -9,6 +9,7 @@ import android.graphics.Typeface;
 import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -56,6 +57,7 @@ public class PostComposeActivity extends AppCompatActivity implements View.OnCli
     private MaterialDialog photoSourceSelect;
     private MaterialDialog expDateDialog;
     private Uri finalImageUri;
+
     private File postImage;
 
     private int photoSource;
@@ -113,7 +115,7 @@ public class PostComposeActivity extends AppCompatActivity implements View.OnCli
     public void initDialogs() {
         photoSourceSelect = new MaterialDialog.Builder(this)
                 .title("Choose Location")
-                .items(new String[]{"Camera", "Gallery"})
+                .items(new String[]{"Camera","Gallery"})
                 .itemsCallback(new MaterialDialog.ListCallback() {
                     @Override
                     public void onSelection(MaterialDialog materialDialog, View view, int i, CharSequence charSequence) {
@@ -208,6 +210,8 @@ public class PostComposeActivity extends AppCompatActivity implements View.OnCli
 
     public int generateResultCode() {
         int status = 0;
+
+        //Need to account for a video post also, start with posts that just have videos (to test uploading to server)
 
         if (postTextArea.length() > 0 && postImage != null) {status = 2;}
         if (postTextArea.length() > 0 && postImage == null) {status = 1;}

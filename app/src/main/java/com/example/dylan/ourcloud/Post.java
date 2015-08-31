@@ -11,6 +11,7 @@ public class Post implements Serializable {
 
     private String user;
     private String userImageUrl;
+    private String postType;
     private String postText;
     private String postImageUrl;
     private long postTimeMillis;
@@ -22,6 +23,10 @@ public class Post implements Serializable {
     }
     public Post setUserImage(String url) {
         userImageUrl = url;
+        return this;
+    }
+    public Post setPostType(String type) {
+        postType = type;
         return this;
     }
     public Post setPostText(String postText) {
@@ -59,6 +64,7 @@ public class Post implements Serializable {
     public String getPostImageUrl() {
         return postImageUrl;
     }
+    public String getType() {return postType;}
     public long getPostTimeMillis() {
         return postTimeMillis;
     }

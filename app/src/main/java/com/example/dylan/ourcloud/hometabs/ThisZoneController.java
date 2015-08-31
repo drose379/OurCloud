@@ -15,6 +15,8 @@ import com.squareup.okhttp.RequestBody;
 import com.squareup.okhttp.Response;
 
 import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.Calendar;
@@ -27,8 +29,9 @@ import java.util.List;
 public class ThisZoneController {
 
     public interface Callback {
-        void getZoneId(String zoneId);
+        void getZoneId(String zoneId,String zoneName);
         void getZonePosts(List<Post> posts);
+        void zoneNameReady(String zoneName);
         void postSubmitted();
     }
 
@@ -88,7 +91,45 @@ public class ThisZoneController {
 
             @Override
             public void onResponse(Response response) throws IOException {
-                callback.getZoneId(response.body().string().trim());
+                String responseString = response.body().string().trim();
+                final String zoneId;
+                final String zoneName;
+                JSONObject zoneObject;
+
+                try {
+                    zoneObject = new JSONObject(responseString);
+                    zoneId = zoneObject.getString("ID");
+                    zoneName = zoneObject.getString("name");
+                } catch (JSONException e) {
+                    throw new RuntimeException(e.getMessage());
+                }
+                Runnable r = new Runnable() {
+                    @Override
+                    public void run() {
+                        callback.getZoneId(zoneId, zoneName);
+                    }
+                };
+                handler.post(r);
+            }
+        });
+    }
+
+    public void createZoneName(String zoneId,String zoneName) {
+        RequestBody rBody = RequestBody.create(MediaType.parse("text/plain"),JSONUtil.generateJSONArray(zoneId,zoneName));
+        Request request = new Request.Builder()
+                .post(rBody)
+                .url("http://104.236.15.47/OurCloudAPI/index.php/updateZoneName")
+                .build();
+        Call call = httpClient.newCall(request);
+        call.enqueue(new com.squareup.okhttp.Callback() {
+            @Override
+            public void onFailure(Request request,IOException e) {
+
+            }
+            @Override
+            public void onResponse(Response response) throws IOException {
+                String zoneName = response.body().string();
+                callback.zoneNameReady(zoneName);
             }
         });
     }

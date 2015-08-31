@@ -25,6 +25,7 @@ public class UserInfo {
     private List<String> networksInRange;
     private boolean inDatabase;
     private String zoneId;
+    private String zoneName;
 
     private static UserInfo userInfo;
 
@@ -42,6 +43,7 @@ public class UserInfo {
     public void setNetworksInRange(List<String> networks) {networksInRange = networks;}
     public void setInDatabase(boolean exists) {inDatabase = exists;}
     public void setZoneId(String zoneId) {this.zoneId = zoneId;}
+    public void setZoneName(String zoneName) {this.zoneName = zoneName.equals("null") ? null : zoneName;}
 
     public Person getPerson() {
         return person;
@@ -73,5 +75,6 @@ public class UserInfo {
     }
     public boolean getInDatabase() {return inDatabase;}
     public String getZoneId() {return zoneId;}
+    public String getZoneName() {return zoneName;}
 
 }
