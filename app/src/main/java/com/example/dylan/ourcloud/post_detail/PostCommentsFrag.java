@@ -78,6 +78,12 @@ public class PostCommentsFrag extends Fragment implements View.OnClickListener,C
         }
     }
 
+    @Override
+    public void onStop() {
+        super.onStop();
+        loadingDialog.hide();
+    }
+
     public void initDialogs() {
 
         View newCommentView = LayoutInflater.from(getActivity()).inflate(R.layout.new_comment, null);
@@ -101,7 +107,8 @@ public class PostCommentsFrag extends Fragment implements View.OnClickListener,C
                         if (!commentArea.getText().toString().isEmpty()) {
                             loadingDialog.show();
                             String comment = commentArea.getText().toString();
-                            //commentController.newComment(comment,post);
+                            commentController.newComment(comment, post);
+                            //why can I not show Loading dialog here? Saying window has leaked...
                         }
                     }
                     @Override

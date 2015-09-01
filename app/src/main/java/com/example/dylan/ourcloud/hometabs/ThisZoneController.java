@@ -6,6 +6,7 @@ import android.util.Log;
 import com.example.dylan.ourcloud.Post;
 import com.example.dylan.ourcloud.UserInfo;
 import com.example.dylan.ourcloud.util.JSONUtil;
+import com.example.dylan.ourcloud.util.TimeUtil;
 import com.squareup.okhttp.Call;
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.MediaType;
@@ -145,7 +146,7 @@ public class ThisZoneController {
                 currentUser.getId(),
                 currentUser.getZoneId(),
                 postText.trim(),
-                String.valueOf(getCurrentTimeMillis()),
+                String.valueOf(TimeUtil.getCurrentTimeMillis()),
                 String.valueOf(expirationDate));
 
         RequestBody rBody = RequestBody.create(MediaType.parse("text/plain"), jsonItems);
@@ -175,7 +176,7 @@ public class ThisZoneController {
                 currentUser.getZoneId(),
                 postText.trim(),
                 postImageUrl,
-                String.valueOf(getCurrentTimeMillis()),
+                String.valueOf(TimeUtil.getCurrentTimeMillis()),
                 String.valueOf(expirationDate));
 
         RequestBody rBody = RequestBody.create(MediaType.parse("text/plain"), jsonItems);
@@ -197,9 +198,5 @@ public class ThisZoneController {
         });
     }
 
-    public long getCurrentTimeMillis() {
-        Calendar currentCal = Calendar.getInstance();
-        return currentCal.getTimeInMillis();
-    }
 
 }
