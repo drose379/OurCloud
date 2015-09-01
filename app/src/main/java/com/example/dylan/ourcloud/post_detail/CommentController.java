@@ -74,6 +74,25 @@ public class CommentController {
 
     public void getComments(String postId) {
         //grabs all comments for given postId
+        String json = JSONUtil.generateJSONArray(postId);
+        RequestBody body = RequestBody.create(MediaType.parse("text/plain"), json);
+        Request request = new Request.Builder()
+                .post(body)
+                .url("http://104.236.15.47/OurCloudAPI/index.php/getPostComments")
+                .build();
+        Call newCall = httpClient.newCall(request);
+        newCall.enqueue(new com.squareup.okhttp.Callback() {
+            @Override
+            public void onFailure(Request request, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Response response) throws IOException {
+
+            }
+        });
+
     }
 
 }

@@ -44,7 +44,6 @@ public class PostCommentsFrag extends Fragment implements View.OnClickListener,C
         super.onCreate(savedInstance);
 
         post = (Post) getArguments().getSerializable("postInfo");
-
     }
 
     @Override
@@ -58,6 +57,12 @@ public class PostCommentsFrag extends Fragment implements View.OnClickListener,C
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        commentController.getComments(post.getId());
+    }
+
+    @Override
     public void commentSubmitted() {
         //called after a comment is successfully submitted, reload now (use getComments)
         loadingDialog.hide();
@@ -66,6 +71,7 @@ public class PostCommentsFrag extends Fragment implements View.OnClickListener,C
 
     @Override
     public void getComments(List<Comment> comments) {
+
         //List of comments for this post, need to be sent to a ListView adapter as cards
     }
 

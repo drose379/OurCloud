@@ -2,6 +2,7 @@ package com.example.dylan.ourcloud.util;
 
 import android.util.Log;
 
+import com.example.dylan.ourcloud.Comment;
 import com.example.dylan.ourcloud.Post;
 
 import org.json.JSONArray;
@@ -53,6 +54,10 @@ public class JSONUtil {
             throw new RuntimeException(e.getMessage());
         }
         return posts;
+    }
+
+    public static List<Comment> toCommentList(String commentJson) {
+        return null;
     }
 
 }

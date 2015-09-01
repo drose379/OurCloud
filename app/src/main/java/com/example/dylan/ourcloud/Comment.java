@@ -4,5 +4,28 @@ package com.example.dylan.ourcloud;
  * Created by dylan on 8/9/15.
  */
 public class Comment {
-    //holds data for each comment on a Post
+
+    private String usersName;
+    private String userImageUrl;
+    private String commentText;
+
+    private long commentTime;
+
+    public Comment setUsersName(String userName) {
+        usersName = userName;
+        return this;
+    }
+    public Comment setUserImage(String userImageUrl) {
+        this.userImageUrl = userImageUrl;
+        return this;
+    }
+    public Comment setCommentTime(String milliseconds) {
+        commentTime = Long.decode(milliseconds);
+        return this;
+    }
+    public Comment setCommentText(String comment) {
+        commentText = comment;
+        return this;
+    }
+
 }
