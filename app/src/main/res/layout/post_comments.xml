@@ -13,7 +13,7 @@
         android:textAlignment="gravity"
         customText:bold="true"
         android:textColor="@color/ColorBlack"
-        android:background="@color/ColorStart"
+        android:background="#8000bfa5"
         android:id="@+id/addComButton"
         android:text="Add"
         />

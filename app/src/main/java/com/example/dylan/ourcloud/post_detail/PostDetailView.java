@@ -121,7 +121,9 @@ public class PostDetailView extends AppCompatActivity implements View.OnClickLis
 
                 getSupportFragmentManager().beginTransaction().remove(currentDetailFrag).commit();
 
-                String itemSelected = post.getType().equals(type1) ? type1[i] : (post.getType().equals(type2) ? type2[i] : type3[i]);
+                String itemSelected = post.getType().equals("1") ? type1[i] : (post.getType().equals("2") ? type2[i] : type3[i]);
+
+                Log.i("postType",itemSelected);
 
                 switch (itemSelected) {
                     case "Text":
