@@ -9,12 +9,26 @@
     android:id="@+id/refreshContainer"
     >
 
+    <android.support.v4.widget.DrawerLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/menuItems"
+        >
 
-<RelativeLayout
+        <ListView
+            android:layout_width="200dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="left"
+            android:id="@+id/menuOptions"
+            android:background="@color/ColorStart"
+            />
 
+
+
+
+        <RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
 
     <ProgressBar
         android:layout_width="50dp"
@@ -54,10 +68,13 @@
         android:layout_alignParentRight="true"
         android:layout_margin="8dp"
         fab:fab_hideAnimation="@anim/fab_scale_down"
-        android:src="@drawable/ic_add_white_24dp"
+        android:src="@drawable/ic_menu_white_24dp"
         />
 
 
     </RelativeLayout>
+
+    </android.support.v4.widget.DrawerLayout>
+
 
 </android.support.v4.widget.SwipeRefreshLayout>

@@ -57,7 +57,28 @@ public class JSONUtil {
     }
 
     public static List<Comment> toCommentList(String commentJson) {
-        return null;
+        List<Comment> comments = new ArrayList<Comment>();
+
+        try {
+
+            JSONArray jsonComments = new JSONArray(commentJson);
+
+            for(int i = 0; i < jsonComments.length();i++) {
+                JSONObject currentComment = jsonComments.getJSONObject(i);
+
+                Comment comment = new Comment()
+                        .setUsersName(currentComment.getString("user_name"))
+                        .setUserImage(currentComment.getString("user_image"))
+                        .setCommentTime(currentComment.getString("comment_time"))
+                        .setCommentText(currentComment.getString("comment"));
+
+                comments.add(comment);
+            }
+
+        } catch (JSONException e) {
+            throw new RuntimeException(e.getMessage());
+        }
+        return comments;
     }
 
 }

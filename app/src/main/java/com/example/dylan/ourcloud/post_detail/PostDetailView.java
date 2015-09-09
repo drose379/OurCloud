@@ -57,7 +57,14 @@ public class PostDetailView extends AppCompatActivity implements View.OnClickLis
         navDrawerItems = (ListView) findViewById(R.id.navDrawerItems);
 
         toolbarTitle.setTypeface(TypeHelper.getTypefaceBold(this));
-        toolbarTitle.setText(post.getPostText().isEmpty() ? "Post Detail" : post.getPostText().substring(0, 10) + "..."); // what if post text is fewer then 10 chars
+        //toolbarTitle.setText(post.getPostText().isEmpty() ? "Post Detail" : post.getPostText().substring(0, post.getPostText().length() > 10 ? post.getPostText().substring(0,10)) + "..."); // what if post text is fewer then 10 chars
+        if (post.getPostText().isEmpty()) {
+            toolbarTitle.setText("Post Detail");
+        } else if (post.getPostText().length() > 10) {
+            toolbarTitle.setText(post.getPostText().substring(0,10));
+        } else {
+            toolbarTitle.setText(post.getPostText());
+        }
 
         menuButton.setOnClickListener(this);
 
@@ -122,8 +129,6 @@ public class PostDetailView extends AppCompatActivity implements View.OnClickLis
                 getSupportFragmentManager().beginTransaction().remove(currentDetailFrag).commit();
 
                 String itemSelected = post.getType().equals("1") ? type1[i] : (post.getType().equals("2") ? type2[i] : type3[i]);
-
-                Log.i("postType",itemSelected);
 
                 switch (itemSelected) {
                     case "Text":

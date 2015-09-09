@@ -28,4 +28,14 @@ public class Comment {
         return this;
     }
 
+    public String getCommentText() {
+        return commentText;
+    }
+    public String getUserName() {
+        return usersName;
+    }
+    public String getUserImage() {
+        return userImageUrl;
+    }
+
 }

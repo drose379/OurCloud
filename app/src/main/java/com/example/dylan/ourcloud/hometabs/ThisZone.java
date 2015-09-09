@@ -6,14 +6,18 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -35,17 +39,19 @@ import java.util.List;
 /**
  * Created by dylan on 8/6/15.
  */
-public class ThisZone extends Fragment implements View.OnClickListener,ListView.OnScrollListener,SwipeRefreshLayout.OnRefreshListener,ThisZoneController.Callback,
+public class ThisZone extends Fragment implements View.OnClickListener,ListView.OnScrollListener,AdapterView.OnItemClickListener,
+        SwipeRefreshLayout.OnRefreshListener,ThisZoneController.Callback,
     ImageUtil.ImageCallback{
 
     private Context context;
     private WifiController wifiController;
     private ThisZoneController thisZoneController;
-    File newPostImage = null;
 
     Intent newPostTempData;
 
     SwipeRefreshLayout refreshLayout;
+    DrawerLayout menuLayout;
+    ListView menuOptionsList;
     FloatingActionButton newPostButton;
     ProgressBar loadingSpinner;
     ListView postContainer;
@@ -56,9 +62,11 @@ public class ThisZone extends Fragment implements View.OnClickListener,ListView.
     MaterialDialog newPost;
     MaterialDialog enableWifi;
     MaterialDialog newZoneName;
+    MaterialDialog mainOptionsMenu;
 
     int previousVisibleItem;
 
+    String[] menuItems = new String[] {"New Post","People Here","Chat"};
 
     @Override
     public void onAttach(Activity activity) {
@@ -89,6 +97,13 @@ public class ThisZone extends Fragment implements View.OnClickListener,ListView.
         noPostsText = (TextView) v.findViewById(R.id.noPosts);
         loadingSpinner = (ProgressBar) v.findViewById(R.id.initialLoader);
         newPostButton = (FloatingActionButton) v.findViewById(R.id.newPostButton);
+        menuLayout = (DrawerLayout) v.findViewById(R.id.menuItems);
+
+
+        menuOptionsList = (ListView) v.findViewById(R.id.menuOptions);
+
+        menuOptionsList.setAdapter(new ArrayAdapter<String>(context, R.layout.nav_item, menuItems));
+        menuOptionsList.setOnItemClickListener(this);
 
         refreshLayout.setOnRefreshListener(this);
         newPostButton.setOnClickListener(this);
@@ -188,7 +203,7 @@ public class ThisZone extends Fragment implements View.OnClickListener,ListView.
                 .dismissListener(new DialogInterface.OnDismissListener() {
                     @Override
                     public void onDismiss(DialogInterface dialogInterface) {
-                        Log.i("onDismiss","Dismiss called");
+                        Log.i("onDismiss", "Dismiss called");
                         initWifiConnect();
                     }
                 })
@@ -222,6 +237,8 @@ public class ThisZone extends Fragment implements View.OnClickListener,ListView.
                     }
                 })
                 .build();
+
+
     }
 
     @Override
@@ -266,10 +283,10 @@ public class ThisZone extends Fragment implements View.OnClickListener,ListView.
         switch (status) {
             case PostComposeActivity.POST_BOTH :
                 String postText = newPostTempData.getStringExtra("postText");
-                thisZoneController.newPostWithImage(postText,url,expirationDate);
+                thisZoneController.newPostWithImage(postText, url, expirationDate);
                 break;
             case PostComposeActivity.POST_PHOTO_ONLY :
-                thisZoneController.newPostWithImage("",url,expirationDate);
+                thisZoneController.newPostWithImage("", url, expirationDate);
                 break;
         }
     }
@@ -279,11 +296,29 @@ public class ThisZone extends Fragment implements View.OnClickListener,ListView.
     public void onClick(View v) {
         switch(v.getId()) {
             case R.id.newPostButton:
-                Intent i = new Intent(context, PostComposeActivity.class);
-                startActivityForResult(i, 1);
+                menuOptions.bringToFront();
+                menuLayout.requestLayout();
+                menuLayout.openDrawer(Gravity.LEFT);
+
                 break;
         }
 
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> list,View parent,int position,long id) {
+        switch (position) {
+            case 0:
+                 Intent i = new Intent(context, PostComposeActivity.class);
+                 startActivityForResult(i, 1);
+                break;
+            case 1:
+                //people here
+                break;
+            case 2:
+                //chat
+                break;
+        }
     }
 
     @Override

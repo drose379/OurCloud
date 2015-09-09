@@ -4,11 +4,15 @@ import android.app.Activity;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -16,6 +20,7 @@ import com.example.dylan.ourcloud.Comment;
 import com.example.dylan.ourcloud.Post;
 import com.example.dylan.ourcloud.R;
 import com.example.dylan.ourcloud.UserInfo;
+import com.github.clans.fab.FloatingActionButton;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -25,18 +30,25 @@ import de.hdodenhof.circleimageview.CircleImageView;
 /**
  * Created by dylan on 8/31/15.
  */
-public class PostCommentsFrag extends Fragment implements View.OnClickListener,CommentController.Callback {
+public class PostCommentsFrag extends Fragment implements View.OnClickListener,CommentController.Callback,ListView.OnScrollListener {
 
     private CommentController commentController;
     private Post post;
 
+    int previousVisibleItem;
+
+    ListView commentList;
+    TextView noCommentsText;
+
     MaterialDialog newComment;
     MaterialDialog loadingDialog;
+    FloatingActionButton menuButton;
 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         commentController = new CommentController(this);
+        menuButton = (FloatingActionButton) getActivity().findViewById(R.id.menuButton);
     }
 
     @Override
@@ -50,8 +62,13 @@ public class PostCommentsFrag extends Fragment implements View.OnClickListener,C
     public View onCreateView(LayoutInflater inflater,ViewGroup container, Bundle savedInstance) {
         View v = inflater.inflate(R.layout.post_comments,container,false);
 
+        commentList = (ListView) v.findViewById(R.id.commentListView);
         TextView addButton = (TextView) v.findViewById(R.id.addComButton);
+        noCommentsText = (TextView) v.findViewById(R.id.noCommentsText);
+
         addButton.setOnClickListener(this);
+        commentList.setOnScrollListener(this);
+
         initDialogs();
         return v;
     }
@@ -59,20 +76,29 @@ public class PostCommentsFrag extends Fragment implements View.OnClickListener,C
     @Override
     public void onStart() {
         super.onStart();
-        commentController.getComments(post.getId());
+        commentController.grabComments(post.getId());
     }
 
     @Override
     public void commentSubmitted() {
         //called after a comment is successfully submitted, reload now (use getComments)
         loadingDialog.hide();
-        //call getComments
+        commentController.grabComments(post.getId());
     }
 
     @Override
     public void getComments(List<Comment> comments) {
+        //Pass list of comments to adapter, show in listview,
+        if (!comments.isEmpty()) {
+            commentList.setVisibility(View.VISIBLE);
+            noCommentsText.setVisibility(View.GONE);
+            commentList.setAdapter(new CommentListAdapter(getActivity(), comments));
+        } else {
+            commentList.setVisibility(View.GONE);
+            noCommentsText.setVisibility(View.VISIBLE);
+        }
 
-        //List of comments for this post, need to be sent to a ListView adapter as cards
+
     }
 
     @Override
@@ -89,6 +115,15 @@ public class PostCommentsFrag extends Fragment implements View.OnClickListener,C
         super.onStop();
         loadingDialog.hide();
     }
+
+    @Override
+    public void onScroll(AbsListView list,int firstVisible,int visibleItems,int totalItems) {
+        //int topMargin = commentList.getChildAt(0) != null ? commentList.getChildAt(0).getTop() : 0;
+        if (firstVisible > previousVisibleItem) {menuButton.hide(true);} else if (firstVisible < previousVisibleItem) {menuButton.show(true);}
+        previousVisibleItem = firstVisible;
+    }
+
+    @Override public void onScrollStateChanged(AbsListView list,int state) {}
 
     public void initDialogs() {
 

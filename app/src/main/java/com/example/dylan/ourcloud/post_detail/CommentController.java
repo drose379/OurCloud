@@ -72,7 +72,7 @@ public class CommentController {
 
     }
 
-    public void getComments(String postId) {
+    public void grabComments(String postId) {
         //grabs all comments for given postId
         String json = JSONUtil.generateJSONArray(postId);
         RequestBody body = RequestBody.create(MediaType.parse("text/plain"), json);
@@ -89,7 +89,11 @@ public class CommentController {
 
             @Override
             public void onResponse(Response response) throws IOException {
+                String commentsJson = response.body().string();
+                final List<Comment> comments = JSONUtil.toCommentList(commentsJson);
 
+                Runnable r = new Runnable() {@Override public void run() {callback.getComments(comments);}};
+                handler.post(r);
             }
         });
 
