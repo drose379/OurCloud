@@ -24,6 +24,7 @@
         <activity android:name=".PostComposeActivity" android:label="New Post" />
         <activity android:name="com.soundcloud.android.crop.CropImageActivity"/>
         <activity android:name=".post_detail.PostDetailView" android:label="Post" />
+        <activity android:name=".live_zone.ZoneList"/>
 
     </application>
 

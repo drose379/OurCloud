@@ -23,6 +23,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.example.dylan.ourcloud.live_zone.ZoneList;
 import com.example.dylan.ourcloud.post_detail.PostDetailView;
 import com.example.dylan.ourcloud.util.ImageUtil;
 import com.example.dylan.ourcloud.Post;
@@ -296,7 +297,7 @@ public class ThisZone extends Fragment implements View.OnClickListener,ListView.
     public void onClick(View v) {
         switch(v.getId()) {
             case R.id.newPostButton:
-                menuOptions.bringToFront();
+                menuOptionsList.bringToFront();
                 menuLayout.requestLayout();
                 menuLayout.openDrawer(Gravity.LEFT);
 
@@ -307,13 +308,15 @@ public class ThisZone extends Fragment implements View.OnClickListener,ListView.
 
     @Override
     public void onItemClick(AdapterView<?> list,View parent,int position,long id) {
+        Intent i;
         switch (position) {
             case 0:
-                 Intent i = new Intent(context, PostComposeActivity.class);
+                 i = new Intent(context, PostComposeActivity.class);
                  startActivityForResult(i, 1);
                 break;
             case 1:
-                //people here
+                i = new Intent(context,ZoneList.class);
+                startActivity(i);
                 break;
             case 2:
                 //chat
