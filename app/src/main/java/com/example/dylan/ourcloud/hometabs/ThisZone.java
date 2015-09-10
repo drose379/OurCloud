@@ -35,6 +35,7 @@ import com.example.dylan.ourcloud.WifiController;
 import com.github.clans.fab.FloatingActionButton;
 
 import java.io.File;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -100,7 +101,6 @@ public class ThisZone extends Fragment implements View.OnClickListener,ListView.
         newPostButton = (FloatingActionButton) v.findViewById(R.id.newPostButton);
         menuLayout = (DrawerLayout) v.findViewById(R.id.menuItems);
 
-
         menuOptionsList = (ListView) v.findViewById(R.id.menuOptions);
 
         menuOptionsList.setAdapter(new ArrayAdapter<String>(context, R.layout.nav_item, menuItems));
@@ -133,9 +133,14 @@ public class ThisZone extends Fragment implements View.OnClickListener,ListView.
         if (wifiController.isConnected()) {
             UserInfo.getInstance().setWifiId(wifiController.getWifiId());
             UserInfo.getInstance().setNetworksInRange(wifiController.getNetworksInRange());
+
             thisZoneController.getZoneId(UserInfo.getInstance().getWifiSSID(), UserInfo.getInstance().getNetworksInRange());
         } else {
-            enableWifi.show();
+            //enableWifi.show();
+            //For testing with emulator
+            UserInfo.getInstance().setWifiId("UNH-Secure");
+            UserInfo.getInstance().setNetworksInRange(Arrays.asList("UNH-Public"));
+            thisZoneController.getZoneId(UserInfo.getInstance().getWifiSSID(), UserInfo.getInstance().getNetworksInRange());
         }
     }
 
@@ -309,6 +314,7 @@ public class ThisZone extends Fragment implements View.OnClickListener,ListView.
     @Override
     public void onItemClick(AdapterView<?> list,View parent,int position,long id) {
         Intent i;
+        menuLayout.closeDrawer(Gravity.LEFT);
         switch (position) {
             case 0:
                  i = new Intent(context, PostComposeActivity.class);
