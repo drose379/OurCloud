@@ -17,13 +17,13 @@ import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.example.dylan.ourcloud.live_zone.ZoneList;
+import com.example.dylan.ourcloud.live_zone.LiveUsers;
+import com.example.dylan.ourcloud.live_zone.ZoneUserList;
 import com.example.dylan.ourcloud.post_detail.PostDetailView;
 import com.example.dylan.ourcloud.util.ImageUtil;
 import com.example.dylan.ourcloud.Post;
@@ -48,6 +48,7 @@ public class ThisZone extends Fragment implements View.OnClickListener,ListView.
     private Context context;
     private WifiController wifiController;
     private ThisZoneController thisZoneController;
+    private LiveUsers liveUsers;
 
     Intent newPostTempData;
 
@@ -76,6 +77,7 @@ public class ThisZone extends Fragment implements View.OnClickListener,ListView.
         this.context = activity;
         wifiController = WifiController.getInstance(context);
         thisZoneController = new ThisZoneController(this);
+        liveUsers = new LiveUsers(context);
     }
 
     @Override
@@ -115,18 +117,27 @@ public class ThisZone extends Fragment implements View.OnClickListener,ListView.
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
+    public void onCreate(Bundle savedInstance) {
+        Log.i("onCreate","THis zone on start called");
+        super.onCreate(savedInstance);
         /**
          * Pull posts for this zone via method (must check wifi is still connected before calling method)
          * Call this same method and wifi checkpoint when user refreshes feed
          */
         initWifiConnect();
+        liveUsers.connect();
     }
 
     @Override
-    public void onStop() {
-        super.onStop();
+    public void onResume() {
+        super.onResume();
+        initWifiConnect();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        liveUsers.disconnect();
     }
 
     public void initWifiConnect() {
@@ -137,7 +148,7 @@ public class ThisZone extends Fragment implements View.OnClickListener,ListView.
             thisZoneController.getZoneId(UserInfo.getInstance().getWifiSSID(), UserInfo.getInstance().getNetworksInRange());
         } else {
             //enableWifi.show();
-            //For testing with emulator
+            //FOR TESTING WITH EMULATOR
             UserInfo.getInstance().setWifiId("UNH-Secure");
             UserInfo.getInstance().setNetworksInRange(Arrays.asList("UNH-Public"));
             thisZoneController.getZoneId(UserInfo.getInstance().getWifiSSID(), UserInfo.getInstance().getNetworksInRange());
@@ -321,7 +332,7 @@ public class ThisZone extends Fragment implements View.OnClickListener,ListView.
                  startActivityForResult(i, 1);
                 break;
             case 1:
-                i = new Intent(context,ZoneList.class);
+                i = new Intent(context,ZoneUserList.class);
                 startActivity(i);
                 break;
             case 2:
@@ -347,7 +358,7 @@ public class ThisZone extends Fragment implements View.OnClickListener,ListView.
 
     @Override
     public void onRefresh() {
-        this.onStart();
+        initWifiConnect();
     }
 
 }
