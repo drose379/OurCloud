@@ -1,5 +1,6 @@
 package com.example.dylan.ourcloud.util;
 
+import android.content.Context;
 import android.os.Environment;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -42,7 +43,7 @@ public class ImageUtil {
         httpClient = new OkHttpClient();
     }
 
-    public void uploadImage(Fragment context,final int status,File postImage) {
+    public void uploadImage(Context context,final int status,File postImage) {
         Log.i("postImage",postImage.getName());
         final ImageCallback callback = (ImageCallback) context;
 

@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -22,6 +24,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.example.dylan.ourcloud.TypeHelper;
 import com.example.dylan.ourcloud.live_zone.LiveUsers;
 import com.example.dylan.ourcloud.live_zone.ZoneUserList;
 import com.example.dylan.ourcloud.post_detail.PostDetailView;
@@ -41,11 +44,10 @@ import java.util.List;
 /**
  * Created by dylan on 8/6/15.
  */
-public class ThisZone extends Fragment implements View.OnClickListener,ListView.OnScrollListener,AdapterView.OnItemClickListener,
+public class ThisZone extends AppCompatActivity implements View.OnClickListener,ListView.OnScrollListener,AdapterView.OnItemClickListener,
         SwipeRefreshLayout.OnRefreshListener,ThisZoneController.Callback,
     ImageUtil.ImageCallback{
 
-    private Context context;
     private WifiController wifiController;
     private ThisZoneController thisZoneController;
     private LiveUsers liveUsers;
@@ -72,28 +74,15 @@ public class ThisZone extends Fragment implements View.OnClickListener,ListView.
     String[] menuItems = new String[] {"New Post","People Here","Chat"};
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        this.context = activity;
-        wifiController = WifiController.getInstance(context);
-        thisZoneController = new ThisZoneController(this);
-        initWifiConnect();
-        liveUsers = new LiveUsers(context);
-    }
+    public void onCreate(Bundle savedInstance) {
+        super.onCreate(savedInstance);
+        setContentView(R.layout.this_zone);
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        initWifiConnect();
-    }
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbarTitle = (TextView) toolbar.findViewById(R.id.toolbarTitle);
+        toolbarTitle.setTypeface(TypeHelper.getTypefaceBold(this));
 
-    @Override
-    public View onCreateView(LayoutInflater inflater,ViewGroup parent,Bundle savedInstance) {
-        super.onCreateView(inflater, parent, savedInstance);
-
-        View v = inflater.inflate(R.layout.this_zone,parent,false);
-        toolbarTitle = (TextView) getActivity().findViewById(R.id.toolbarTitle);
-        if(!dialogsInflated) {initDialogs();}
+        initDialogs();
 
         /**
          * Need a controller to grab this zones posts and have callback to this fragment.
@@ -103,25 +92,38 @@ public class ThisZone extends Fragment implements View.OnClickListener,ListView.
          * INFLATE MATERIAL DIALOG TO ADD NEW POST
          * Whenever user refreshes feed or attempts to add a new post, check WifiController.isConnected() method and show dialog if not connected or zone changed.
          */
-        refreshLayout = (SwipeRefreshLayout) v.findViewById(R.id.refreshContainer);
-        postContainer = (ListView) v.findViewById(R.id.zonePostList);
-        noPostsText = (TextView) v.findViewById(R.id.noPosts);
-        loadingSpinner = (ProgressBar) v.findViewById(R.id.initialLoader);
-        newPostButton = (FloatingActionButton) v.findViewById(R.id.newPostButton);
-        menuLayout = (DrawerLayout) v.findViewById(R.id.menuItems);
+        refreshLayout = (SwipeRefreshLayout) findViewById(R.id.refreshContainer);
+        postContainer = (ListView) findViewById(R.id.zonePostList);
+        noPostsText = (TextView) findViewById(R.id.noPosts);
+        loadingSpinner = (ProgressBar) findViewById(R.id.initialLoader);
+        newPostButton = (FloatingActionButton) findViewById(R.id.newPostButton);
+        menuLayout = (DrawerLayout) findViewById(R.id.menuItems);
 
-        menuOptionsList = (ListView) v.findViewById(R.id.menuOptions);
+        menuOptionsList = (ListView) findViewById(R.id.menuOptions);
 
-        menuOptionsList.setAdapter(new ArrayAdapter<String>(context, R.layout.nav_item, menuItems));
+        menuOptionsList.setAdapter(new ArrayAdapter<String>(this, R.layout.nav_item, menuItems));
         menuOptionsList.setOnItemClickListener(this);
 
         refreshLayout.setOnRefreshListener(this);
         newPostButton.setOnClickListener(this);
 
         refreshLayout.setColorSchemeColors(R.color.indicator, R.color.ColorPrimary, R.color.ColorPrimaryDark);
-
-        return v;
     }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        wifiController = WifiController.getInstance(this);
+        thisZoneController = new ThisZoneController(this);
+        liveUsers = new LiveUsers(this);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        initWifiConnect();
+    }
+
 
     @Override
     public void onDestroy() {
@@ -161,7 +163,7 @@ public class ThisZone extends Fragment implements View.OnClickListener,ListView.
         refreshLayout.setRefreshing(false);
         if (posts.size() > 0) {
             postContainer.setVisibility(View.VISIBLE);
-            postContainer.setAdapter(new ThisZoneListAdapter(context, posts));
+            postContainer.setAdapter(new ThisZoneListAdapter(this, posts));
             noPostsText.setVisibility(View.GONE);
         }
         else {
@@ -173,7 +175,7 @@ public class ThisZone extends Fragment implements View.OnClickListener,ListView.
         postContainer.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent detailActivity = new Intent(context, PostDetailView.class);
+                Intent detailActivity = new Intent(ThisZone.this, PostDetailView.class);
                 detailActivity.putExtra("selectedPost", posts.get(i));
                 startActivity(detailActivity);
             }
@@ -208,7 +210,7 @@ public class ThisZone extends Fragment implements View.OnClickListener,ListView.
 
         dialogsInflated = true;
 
-        enableWifi = new MaterialDialog.Builder(context)
+        enableWifi = new MaterialDialog.Builder(this)
                 .title("Enable Wifi")
                 .content("Please enable wifi to post in a zone, press reload when connected. If you want to check your marked zones, click skip")
                 .positiveText("Reload")
@@ -227,8 +229,8 @@ public class ThisZone extends Fragment implements View.OnClickListener,ListView.
                 })
                 .build();
 
-        final View newZoneView = LayoutInflater.from(context).inflate(R.layout.new_zone_name, null);
-        newZoneName = new MaterialDialog.Builder(context)
+        final View newZoneView = LayoutInflater.from(this).inflate(R.layout.new_zone_name, null);
+        newZoneName = new MaterialDialog.Builder(this)
                 .title("Please Name This Zone")
                 .customView(newZoneView, true)
 
@@ -323,11 +325,11 @@ public class ThisZone extends Fragment implements View.OnClickListener,ListView.
         menuLayout.closeDrawer(Gravity.LEFT);
         switch (position) {
             case 0:
-                 i = new Intent(context, PostComposeActivity.class);
+                 i = new Intent(this, PostComposeActivity.class);
                  startActivityForResult(i, 1);
                 break;
             case 1:
-                i = new Intent(context,ZoneUserList.class);
+                i = new Intent(this,ZoneUserList.class);
                 startActivity(i);
                 break;
             case 2:

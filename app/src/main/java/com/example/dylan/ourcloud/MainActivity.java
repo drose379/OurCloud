@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
+import com.example.dylan.ourcloud.hometabs.ThisZone;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.plus.model.people.Person;
@@ -56,7 +57,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void signInSuccess(Person currentUser) {
         UserInfo.getInstance().setPerson(currentUser);
 
-        Intent i = new Intent(this,HomeRoot.class);
+        Intent i = new Intent(this,ThisZone.class);
         startActivity(i);
         this.finish();
         /**
