@@ -43,6 +43,8 @@ public class ZoneUserList extends AppCompatActivity {
         broadcastManager.registerReceiver(new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
+                String usersJson = intent.getStringExtra("activeUsers");
+                Log.i("activeUsers",usersJson);
             }
         },iFilter);
     }

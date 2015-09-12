@@ -206,7 +206,6 @@ public class ThisZone extends Fragment implements View.OnClickListener,ListView.
                 .dismissListener(new DialogInterface.OnDismissListener() {
                     @Override
                     public void onDismiss(DialogInterface dialogInterface) {
-                        Log.i("onDismiss", "Dismiss called");
                         initWifiConnect();
                     }
                 })

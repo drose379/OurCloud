@@ -1,6 +1,8 @@
 package com.example.dylan.ourcloud.live_zone;
 
 import android.content.Context;
+import android.content.Intent;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 import com.example.dylan.ourcloud.UserInfo;
@@ -9,6 +11,7 @@ import com.github.nkzawa.socketio.client.IO;
 import com.github.nkzawa.socketio.client.Socket;
 
 import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.net.URISyntaxException;
 
@@ -22,29 +25,31 @@ public class LiveUsers {
     private Context context;
     private Socket socket;
 
+    private LocalBroadcastManager broadcsatManager;
+
     private Emitter.Listener updateUserListener = new Emitter.Listener() {
         @Override
         public void call(Object... args) {
-            updateUsers((String)args[0]);
-            Log.i("users", (String) args[0]);
+            updateUsers(args[0].toString());
         }
     };
 
     public LiveUsers(Context context) {
         this.context = context;
+        broadcsatManager = LocalBroadcastManager.getInstance(context);
     }
 
     public void connect() {
         try {
             socket = IO.socket("http://104.236.15.47:3000").connect();
             socket.on("updateUsers",updateUserListener);
-            updateSocketInfo();
+            uploadSocketInfo();
         } catch (URISyntaxException e) {
            throw new RuntimeException(e.getMessage());
         }
     }
 
-    public void updateSocketInfo() {
+    public void uploadSocketInfo() {
         JSONArray socketInfo = new JSONArray()
                 .put(UserInfo.getInstance().getId())
                 .put(UserInfo.getInstance().getZoneName())
@@ -56,6 +61,10 @@ public class LiveUsers {
 
     public void updateUsers(String users) {
         //send local broadcast with jsonobject of active users
+        Intent i = new Intent(UPDATE_ACTIVE_USERS);
+        i.putExtra("activeUsers",users);
+        broadcsatManager.sendBroadcast(i);
+
     }
 
     public void disconnect() {
