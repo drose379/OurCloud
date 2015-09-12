@@ -3,9 +3,12 @@ package com.example.dylan.ourcloud.live_zone;
 import android.content.Context;
 import android.util.Log;
 
+import com.example.dylan.ourcloud.UserInfo;
 import com.github.nkzawa.emitter.Emitter;
 import com.github.nkzawa.socketio.client.IO;
 import com.github.nkzawa.socketio.client.Socket;
+
+import org.json.JSONArray;
 
 import java.net.URISyntaxException;
 
@@ -32,17 +35,23 @@ public class LiveUsers {
     }
 
     public void connect() {
-
         try {
             socket = IO.socket("http://104.236.15.47:3000").connect();
-
-            Log.i("isConnected",String.valueOf(socket.connected()));
-
-            socket.emit("connect");
+            socket.on("updateUsers",updateUserListener);
+            updateSocketInfo();
         } catch (URISyntaxException e) {
            throw new RuntimeException(e.getMessage());
         }
+    }
 
+    public void updateSocketInfo() {
+        JSONArray socketInfo = new JSONArray()
+                .put(UserInfo.getInstance().getId())
+                .put(UserInfo.getInstance().getZoneName())
+                .put(UserInfo.getInstance().getDisplayName())
+                .put(UserInfo.getInstance().getProfileImage());
+
+        socket.emit("socketUserInfo",socketInfo.toString());
     }
 
     public void updateUsers(String users) {

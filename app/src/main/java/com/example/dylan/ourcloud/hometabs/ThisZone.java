@@ -77,6 +77,7 @@ public class ThisZone extends Fragment implements View.OnClickListener,ListView.
         this.context = activity;
         wifiController = WifiController.getInstance(context);
         thisZoneController = new ThisZoneController(this);
+        initWifiConnect();
         liveUsers = new LiveUsers(context);
     }
 
@@ -116,23 +117,7 @@ public class ThisZone extends Fragment implements View.OnClickListener,ListView.
         return v;
     }
 
-    @Override
-    public void onCreate(Bundle savedInstance) {
-        Log.i("onCreate","THis zone on start called");
-        super.onCreate(savedInstance);
-        /**
-         * Pull posts for this zone via method (must check wifi is still connected before calling method)
-         * Call this same method and wifi checkpoint when user refreshes feed
-         */
-        initWifiConnect();
-        liveUsers.connect();
-    }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        initWifiConnect();
-    }
 
     @Override
     public void onDestroy() {
@@ -197,6 +182,7 @@ public class ThisZone extends Fragment implements View.OnClickListener,ListView.
         } else {
             toolbarTitle.setText(zoneName);
             thisZoneController.grabZonePosts();
+            liveUsers.connect();
         }
 
     }
