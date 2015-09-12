@@ -82,6 +82,12 @@ public class ThisZone extends Fragment implements View.OnClickListener,ListView.
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        initWifiConnect();
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater,ViewGroup parent,Bundle savedInstance) {
         super.onCreateView(inflater, parent, savedInstance);
 
@@ -117,8 +123,6 @@ public class ThisZone extends Fragment implements View.OnClickListener,ListView.
         return v;
     }
 
-
-
     @Override
     public void onDestroy() {
         super.onDestroy();
@@ -126,6 +130,7 @@ public class ThisZone extends Fragment implements View.OnClickListener,ListView.
     }
 
     public void initWifiConnect() {
+        /** For testing, setting Zone statically
         if (wifiController.isConnected()) {
             UserInfo.getInstance().setWifiId(wifiController.getWifiId());
             UserInfo.getInstance().setNetworksInRange(wifiController.getNetworksInRange());
@@ -138,6 +143,11 @@ public class ThisZone extends Fragment implements View.OnClickListener,ListView.
             UserInfo.getInstance().setNetworksInRange(Arrays.asList("UNH-Public"));
             thisZoneController.getZoneId(UserInfo.getInstance().getWifiSSID(), UserInfo.getInstance().getNetworksInRange());
         }
+         */
+
+        UserInfo.getInstance().setWifiId("UNH-Secure");
+        UserInfo.getInstance().setNetworksInRange(Arrays.asList("UNH-Public"));
+        thisZoneController.getZoneId(UserInfo.getInstance().getWifiSSID(), UserInfo.getInstance().getNetworksInRange());
     }
 
     /**
@@ -163,8 +173,8 @@ public class ThisZone extends Fragment implements View.OnClickListener,ListView.
         postContainer.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent detailActivity = new Intent(context,PostDetailView.class);
-                detailActivity.putExtra("selectedPost",posts.get(i));
+                Intent detailActivity = new Intent(context, PostDetailView.class);
+                detailActivity.putExtra("selectedPost", posts.get(i));
                 startActivity(detailActivity);
             }
         });
@@ -182,7 +192,7 @@ public class ThisZone extends Fragment implements View.OnClickListener,ListView.
         } else {
             toolbarTitle.setText(zoneName);
             thisZoneController.grabZonePosts();
-            liveUsers.connect();
+            if (!liveUsers.isConnected) {liveUsers.connect();}
         }
 
     }

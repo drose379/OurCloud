@@ -67,7 +67,6 @@ public class UserInfo {
     public String getProfileImageSized(int size) {
         String fullUrl = person.getImage().getUrl();
         String[] splitUrl = fullUrl.split("\\=");
-
         return splitUrl[0] + "=" + String.valueOf(size);
     }
     public String getId() {

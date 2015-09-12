@@ -21,28 +21,33 @@ import java.net.URISyntaxException;
 public class LiveUsers {
 
     public static final String UPDATE_ACTIVE_USERS = "UPDATE_ACTIVE_USERS";
+    public static String currentUsers;
+
+    public boolean isConnected = false;
 
     private Context context;
     private Socket socket;
 
-    private LocalBroadcastManager broadcsatManager;
+    private LocalBroadcastManager broadcastManager;
 
     private Emitter.Listener updateUserListener = new Emitter.Listener() {
         @Override
         public void call(Object... args) {
             updateUsers(args[0].toString());
+            currentUsers = args[0].toString();
         }
     };
 
     public LiveUsers(Context context) {
         this.context = context;
-        broadcsatManager = LocalBroadcastManager.getInstance(context);
+        broadcastManager = LocalBroadcastManager.getInstance(context);
     }
 
     public void connect() {
         try {
             socket = IO.socket("http://104.236.15.47:3000").connect();
             socket.on("updateUsers",updateUserListener);
+            isConnected = true;
             uploadSocketInfo();
         } catch (URISyntaxException e) {
            throw new RuntimeException(e.getMessage());
@@ -54,21 +59,20 @@ public class LiveUsers {
                 .put(UserInfo.getInstance().getId())
                 .put(UserInfo.getInstance().getZoneName())
                 .put(UserInfo.getInstance().getDisplayName())
-                .put(UserInfo.getInstance().getProfileImage());
+                .put(UserInfo.getInstance().getProfileImageSized(80));
 
         socket.emit("socketUserInfo",socketInfo.toString());
     }
 
     public void updateUsers(String users) {
-        //send local broadcast with jsonobject of active users
         Intent i = new Intent(UPDATE_ACTIVE_USERS);
         i.putExtra("activeUsers",users);
-        broadcsatManager.sendBroadcast(i);
-
+        broadcastManager.sendBroadcast(i);
     }
 
     public void disconnect() {
         socket.disconnect();
+        isConnected = false;
         socket.off("updateUsers",updateUserListener);
     }
 }
