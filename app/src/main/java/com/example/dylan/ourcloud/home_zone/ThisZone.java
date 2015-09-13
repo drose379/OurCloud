@@ -106,9 +106,9 @@ public class ThisZone extends AppCompatActivity implements View.OnClickListener,
     @Override
     public void onStart() {
         super.onStart();
-        wifiController = WifiController.getInstance(this);
-        thisZoneController = new ThisZoneController(this);
-        liveUsers = new LiveUsers(this);
+        wifiController = wifiController == null ? WifiController.getInstance(this) : wifiController;
+        thisZoneController = thisZoneController == null ? new ThisZoneController(this) : thisZoneController;
+        liveUsers = liveUsers == null ? new LiveUsers(this) : liveUsers;
     }
 
     @Override
@@ -186,7 +186,10 @@ public class ThisZone extends AppCompatActivity implements View.OnClickListener,
         } else {
             toolbarTitle.setText(zoneName);
             thisZoneController.grabZonePosts();
-            if (!liveUsers.isConnected) {liveUsers.connect();}
+            
+            if (!liveUsers.isConnected()) {
+                liveUsers.connect();
+            }
         }
 
     }
@@ -275,8 +278,6 @@ public class ThisZone extends AppCompatActivity implements View.OnClickListener,
                         .setTitle("Mark This Zone")
                         .setType(1)
         );
-
-        //new post,people here,chat
 
         menuOptionsList.setAdapter(new HomeNavDrawerAdapter(this,menuOptions));
         menuOptionsList.setOnItemClickListener(this);

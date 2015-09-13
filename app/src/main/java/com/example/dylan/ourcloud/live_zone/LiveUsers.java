@@ -23,7 +23,7 @@ public class LiveUsers {
     public static final String UPDATE_ACTIVE_USERS = "UPDATE_ACTIVE_USERS";
     public static String currentUsers;
 
-    public boolean isConnected = false;
+    private boolean isConnected = false;
 
     private Context context;
     private Socket socket;
@@ -44,12 +44,13 @@ public class LiveUsers {
     }
 
     public void connect() {
+        isConnected = true;
         try {
             socket = IO.socket("http://104.236.15.47:3000").connect();
             socket.on("updateUsers",updateUserListener);
-            isConnected = true;
             uploadSocketInfo();
         } catch (URISyntaxException e) {
+            isConnected = false;
            throw new RuntimeException(e.getMessage());
         }
     }
@@ -74,5 +75,9 @@ public class LiveUsers {
         socket.disconnect();
         isConnected = false;
         socket.off("updateUsers",updateUserListener);
+    }
+
+    public boolean isConnected() {
+        return isConnected;
     }
 }
