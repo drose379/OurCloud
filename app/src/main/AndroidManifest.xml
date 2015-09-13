@@ -20,7 +20,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".hometabs.ThisZone" android:label="ThisZone" />
+        <activity android:name=".home_zone.ThisZone" android:label="ThisZone" />
         <activity android:name=".PostComposeActivity" android:label="New Post" />
         <activity android:name="com.soundcloud.android.crop.CropImageActivity"/>
         <activity android:name=".post_detail.PostDetailView" android:label="Post" />

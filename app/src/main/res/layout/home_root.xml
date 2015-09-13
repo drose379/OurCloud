@@ -17,7 +17,7 @@
         android:orientation="vertical"
         />
 
-    <com.example.dylan.ourcloud.hometabs.SlidingTabLayout
+    <com.example.dylan.ourcloud.home_zone.SlidingTabLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/tabs"

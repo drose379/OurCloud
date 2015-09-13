@@ -1,88 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<android.support.v4.widget.SwipeRefreshLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:custom_text="http://schemas.android.com/apk/res-auto"
-    xmlns:fab="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
     android:background="@color/ColorPrimaryDark"
-    android:id="@+id/refreshContainer"
-    >
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/tool_bar"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        />
+
 
     <android.support.v4.widget.DrawerLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
         android:id="@+id/menuItems"
-        >
-
-        <ListView
-            android:layout_width="200dp"
-            android:layout_height="match_parent"
-            android:layout_gravity="left"
-            android:id="@+id/menuOptions"
-            android:background="@color/ColorStart"
-            />
-
-    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#ECEDF0"
         >
 
-        <include
-            android:id="@+id/toolbar"
-            layout="@layout/tool_bar"
-            android:layout_height="wrap_content"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:orientation="vertical"
-            />
+            android:layout_height="match_parent"
+            android:background="#ECEDF0"
+            >
+            <!-- Main content -->
 
-    <ProgressBar
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:id="@+id/initialLoader"
-        />
+            <android.support.v4.widget.SwipeRefreshLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/refreshContainer"
+                >
 
-    <ListView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#ECEDF0"
-        android:divider="@null"
-        android:dividerHeight="0dp"
-        android:visibility="gone"
-        android:layout_below="@+id/toolbar"
-        android:id="@+id/zonePostList"
-        >
-    </ListView>
+            <ListView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#ECEDF0"
+                android:divider="@null"
+                android:dividerHeight="0dp"
+                android:visibility="gone"
+                android:id="@+id/zonePostList"
+                >
+            </ListView>
 
-    <com.example.dylan.ourcloud.CustomTextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        custom_text:bold="true"
-        android:textSize="20sp"
-        android:text="Be The First!"
-        android:visibility="gone"
-        android:id="@+id/noPosts"
-        />
+            </android.support.v4.widget.SwipeRefreshLayout>
 
-    <com.github.clans.fab.FloatingActionButton
-        android:id="@+id/newPostButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_margin="8dp"
-        fab:fab_hideAnimation="@anim/fab_scale_down"
-        android:src="@drawable/ic_menu_white_24dp"
-        />
-
+            <com.github.clans.fab.FloatingActionButton
+                android:id="@+id/newPostButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:layout_margin="8dp"
+                fab:fab_hideAnimation="@anim/fab_scale_down"
+                android:src="@drawable/ic_menu_white_24dp"
+                />
 
         </RelativeLayout>
+
+
+        <!-- Listview of menu items goes here -->
+        <ListView
+            android:layout_width="250dp"
+            android:layout_height="match_parent"
+            android:background="@color/ColorStart"
+            android:layout_gravity="left"
+            android:divider="@null"
+            android:dividerHeight="0dp"
+            android:id="@+id/menuOptions"
+            />
+
     </android.support.v4.widget.DrawerLayout>
-
-
-</android.support.v4.widget.SwipeRefreshLayout>
+</LinearLayout>
