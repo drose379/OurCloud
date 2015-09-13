@@ -49,6 +49,17 @@
 
             </android.support.v4.widget.SwipeRefreshLayout>
 
+            <com.example.dylan.ourcloud.CustomTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:textSize="17sp"
+                android:text="No Posts Here Yet. Be the First."
+                android:visibility="gone"
+                android:id="@+id/noPosts"
+                />
+
             <com.github.clans.fab.FloatingActionButton
                 android:id="@+id/newPostButton"
                 android:layout_width="wrap_content"

@@ -67,8 +67,6 @@ public class ThisZone extends AppCompatActivity implements View.OnClickListener,
 
     int previousVisibleItem;
 
-    String[] menuItems = new String[] {"New Post","","","People Here","Chat"};
-
     @Override
     public void onCreate(Bundle savedInstance) {
         super.onCreate(savedInstance);
@@ -89,7 +87,7 @@ public class ThisZone extends AppCompatActivity implements View.OnClickListener,
 
         refreshLayout = (SwipeRefreshLayout) findViewById(R.id.refreshContainer);
         postContainer = (ListView) findViewById(R.id.zonePostList);
-        //noPostsText = (TextView) findViewById(R.id.noPosts);
+        noPostsText = (TextView) findViewById(R.id.noPosts);
         //loadingSpinner = (ProgressBar) findViewById(R.id.initialLoader);
         newPostButton = (FloatingActionButton) findViewById(R.id.newPostButton);
         menuLayout = (DrawerLayout) findViewById(R.id.menuItems);
@@ -157,10 +155,10 @@ public class ThisZone extends AppCompatActivity implements View.OnClickListener,
         if (posts.size() > 0) {
             postContainer.setVisibility(View.VISIBLE);
             postContainer.setAdapter(new ThisZoneListAdapter(this, posts));
-            //noPostsText.setVisibility(View.GONE);
+            noPostsText.setVisibility(View.GONE);
         }
         else {
-            //noPostsText.setVisibility(View.VISIBLE);
+            noPostsText.setVisibility(View.VISIBLE);
             postContainer.setVisibility(View.GONE);
         }
 
@@ -186,7 +184,7 @@ public class ThisZone extends AppCompatActivity implements View.OnClickListener,
         } else {
             toolbarTitle.setText(zoneName);
             thisZoneController.grabZonePosts();
-            
+
             if (!liveUsers.isConnected()) {
                 liveUsers.connect();
             }

@@ -18,8 +18,13 @@ import android.widget.TextView;
 import com.example.dylan.ourcloud.Post;
 import com.example.dylan.ourcloud.R;
 import com.example.dylan.ourcloud.TypeHelper;
+import com.example.dylan.ourcloud.home_zone.HomeNavDrawerAdapter;
+import com.example.dylan.ourcloud.home_zone.MenuOption;
 import com.github.clans.fab.FloatingActionButton;
 import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -104,6 +109,7 @@ public class PostDetailView extends AppCompatActivity implements View.OnClickLis
     }
 
     public void initNavDrawer() {
+        List<MenuOption> menuOptions = new ArrayList<>();
         final String[] type1 = new String[] {"Text","Comments","More"};
         final String[] type2 = new String[] {"Text","Photo","Comments","More"};
         final String[] type3 = new String[] {"Photo","Comments","More"};
@@ -111,15 +117,32 @@ public class PostDetailView extends AppCompatActivity implements View.OnClickLis
         //switch over type, set the
         switch (post.getType()) {
             case "1" :
-                navDrawerItems.setAdapter(new ArrayAdapter<String>(this,R.layout.nav_item,type1));
+                for (String option : type1) {
+                    menuOptions.add(new MenuOption()
+                                    .setTitle(option)
+                                    .setType(1)
+                    );
+                }
                 break;
             case "2" :
-                navDrawerItems.setAdapter(new ArrayAdapter<String>(this,R.layout.nav_item,type2));
+                for (String option : type2) {
+                    menuOptions.add(new MenuOption()
+                                    .setTitle(option)
+                                    .setType(1)
+                    );
+                }
                 break;
             case "3" :
-                navDrawerItems.setAdapter(new ArrayAdapter<String>(this,R.layout.nav_item,type3));
+                for (String option : type3) {
+                    menuOptions.add(new MenuOption()
+                                    .setTitle(option)
+                                    .setType(1)
+                    );
+                }
                 break;
         }
+
+        navDrawerItems.setAdapter(new HomeNavDrawerAdapter(this,menuOptions));
 
 
         navDrawerItems.setOnItemClickListener(new AdapterView.OnItemClickListener() {
