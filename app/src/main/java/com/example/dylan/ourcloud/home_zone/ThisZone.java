@@ -19,6 +19,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.example.dylan.ourcloud.NavDrawerAdapter;
 import com.example.dylan.ourcloud.TypeHelper;
 import com.example.dylan.ourcloud.live_zone.LiveUsers;
 import com.example.dylan.ourcloud.live_zone.ZoneUserList;
@@ -106,7 +107,7 @@ public class ThisZone extends AppCompatActivity implements View.OnClickListener,
         super.onStart();
         wifiController = wifiController == null ? WifiController.getInstance(this) : wifiController;
         thisZoneController = thisZoneController == null ? new ThisZoneController(this) : thisZoneController;
-        liveUsers = liveUsers == null ? new LiveUsers(this) : liveUsers;
+        liveUsers = liveUsers == null ? LiveUsers.getInstance(this) : liveUsers;
     }
 
     @Override
@@ -120,6 +121,7 @@ public class ThisZone extends AppCompatActivity implements View.OnClickListener,
     public void onDestroy() {
         super.onDestroy();
         liveUsers.disconnect();
+
     }
 
     public void initWifiConnect() {
@@ -277,7 +279,7 @@ public class ThisZone extends AppCompatActivity implements View.OnClickListener,
                         .setType(1)
         );
 
-        menuOptionsList.setAdapter(new HomeNavDrawerAdapter(this,menuOptions));
+        menuOptionsList.setAdapter(new NavDrawerAdapter(this,menuOptions));
         menuOptionsList.setOnItemClickListener(this);
     }
 

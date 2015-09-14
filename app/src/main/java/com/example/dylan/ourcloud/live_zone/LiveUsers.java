@@ -38,6 +38,20 @@ public class LiveUsers {
         }
     };
 
+    private Emitter.Listener privateMessageListener = new Emitter.Listener() {
+        @Override
+        public void call(Object... args) {
+            Log.i("privateMessage",(String)args[0]);
+        }
+    };
+
+    private static LiveUsers liveUsers = null;
+
+    public static LiveUsers getInstance(Context context) {
+        liveUsers = liveUsers == null ? new LiveUsers(context) : liveUsers;
+        return liveUsers;
+    }
+
     public LiveUsers(Context context) {
         this.context = context;
         broadcastManager = LocalBroadcastManager.getInstance(context);
@@ -48,6 +62,7 @@ public class LiveUsers {
         try {
             socket = IO.socket("http://104.236.15.47:3000").connect();
             socket.on("updateUsers",updateUserListener);
+            socket.on("privateMessage",privateMessageListener);
             uploadSocketInfo();
         } catch (URISyntaxException e) {
             isConnected = false;
@@ -65,6 +80,13 @@ public class LiveUsers {
         socket.emit("socketUserInfo",socketInfo.toString());
     }
 
+    public void sendMessage(String receivingID,String message) {
+        JSONArray messageInfo = new JSONArray()
+                .put(receivingID)
+                .put(message);
+        socket.emit("sendPrivateMessage",messageInfo.toString());
+    }
+
     public void updateUsers(String users) {
         Intent i = new Intent(UPDATE_ACTIVE_USERS);
         i.putExtra("activeUsers",users);
@@ -75,6 +97,7 @@ public class LiveUsers {
         socket.disconnect();
         isConnected = false;
         socket.off("updateUsers",updateUserListener);
+        socket.off("privateMessage",privateMessageListener);
     }
 
     public boolean isConnected() {

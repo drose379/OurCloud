@@ -5,8 +5,14 @@ package com.example.dylan.ourcloud.live_zone;
  */
 public class User {
 
+    private String id;
     private String name;
     private String photoUrl;
+
+    public User setId(String id) {
+        this.id = id;
+        return this;
+    }
 
     public User setName(String name) {
         this.name = name;
@@ -17,6 +23,7 @@ public class User {
         return this;
     }
 
+    public String getId() {return id;}
     public String getName() {
         return name;
     }

@@ -9,6 +9,8 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -69,7 +71,7 @@ public class ZoneUserList extends AppCompatActivity {
 
 
     public void updateUserList(String userJson) {
-        List<User> users = new ArrayList<User>();
+        final List<User> users = new ArrayList<User>();
         JSONObject activeUsers;
         try {
 
@@ -79,16 +81,12 @@ public class ZoneUserList extends AppCompatActivity {
             while(keys.hasNext()) {
                 String key = keys.next();
                 JSONArray user = new JSONArray(activeUsers.getString(key));
-                users.add(new User().setName(user.getString(0)).setImage(user.getString(1)));
+                users.add(new User().setId(key).setName(user.getString(0)).setImage(user.getString(1)));
             }
-
-
 
         } catch (JSONException e) {
             throw new RuntimeException(e.getMessage());
         }
-
-// Causing issue, mixing up users when one leaves, it is removing the wrong item from the list
 
         if (listAdapter != null) {
             listAdapter.updateUsers(users);
@@ -97,7 +95,15 @@ public class ZoneUserList extends AppCompatActivity {
             userList.setAdapter(listAdapter);
         }
 
-
+        userList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView adapterView,View view,int item,long id) {
+                User selectedUser = users.get(item);
+                if (!selectedUser.getName().equals(UserInfo.getInstance().getDisplayName())) {
+                    LiveUsers.getInstance(ZoneUserList.this).sendMessage(selectedUser.getId(),"This is a test message!, TO: " + selectedUser.getName());
+                }
+            }
+        });
 
     }
 

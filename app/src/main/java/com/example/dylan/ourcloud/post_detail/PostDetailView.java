@@ -2,23 +2,19 @@ package com.example.dylan.ourcloud.post_detail;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.dylan.ourcloud.Post;
 import com.example.dylan.ourcloud.R;
 import com.example.dylan.ourcloud.TypeHelper;
-import com.example.dylan.ourcloud.home_zone.HomeNavDrawerAdapter;
+import com.example.dylan.ourcloud.NavDrawerAdapter;
 import com.example.dylan.ourcloud.home_zone.MenuOption;
 import com.github.clans.fab.FloatingActionButton;
 import com.squareup.picasso.Picasso;
@@ -142,7 +138,7 @@ public class PostDetailView extends AppCompatActivity implements View.OnClickLis
                 break;
         }
 
-        navDrawerItems.setAdapter(new HomeNavDrawerAdapter(this,menuOptions));
+        navDrawerItems.setAdapter(new NavDrawerAdapter(this,menuOptions));
 
 
         navDrawerItems.setOnItemClickListener(new AdapterView.OnItemClickListener() {

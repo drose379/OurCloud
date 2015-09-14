@@ -1,4 +1,4 @@
-package com.example.dylan.ourcloud.home_zone;
+package com.example.dylan.ourcloud;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.dylan.ourcloud.R;
+import com.example.dylan.ourcloud.home_zone.MenuOption;
 import com.google.android.gms.maps.model.Circle;
 import com.squareup.picasso.Picasso;
 
@@ -19,12 +20,12 @@ import de.hdodenhof.circleimageview.CircleImageView;
 /**
  * Created by dylan on 9/12/15.
  */
-public class HomeNavDrawerAdapter extends BaseAdapter {
+public class NavDrawerAdapter extends BaseAdapter {
 
     private Context context;
     private List<MenuOption> menuItems;
 
-    public HomeNavDrawerAdapter(Context context,List<MenuOption> menuItems) {
+    public NavDrawerAdapter(Context context, List<MenuOption> menuItems) {
         this.context = context;
         this.menuItems = menuItems;
     }
