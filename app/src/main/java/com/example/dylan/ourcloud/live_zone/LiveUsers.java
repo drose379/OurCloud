@@ -46,11 +46,30 @@ public class LiveUsers {
     private Emitter.Listener privateMessageListener = new Emitter.Listener() {
         @Override
         public void call(Object... args) {
+            String senderId = null;
+            String senderName = null;
+            String message = null;
             /**
              * args[0] contians json string of [senderID,message]
              * Use users List<User> to look up the senderId and get a name and photo corresponding
              * Make the List<User> in ZoneUserList activity public
              */
+            try {
+                JSONArray messageInfo = new JSONArray(args[0].toString());
+                senderId = messageInfo.getString(0);
+                message = messageInfo.getString(1);
+            } catch (JSONException e) {e.getMessage();}
+
+            //loop over users List<User> and grab the id matching the senderId, use that object to get the name of the sender, assign to senderName field
+            for(User user : users) {
+                if (user.getId().equals(senderId)) {
+                    senderName = user.getName();
+                }
+            }
+
+            //This event listener needs to broadcast new message info to correct message thread
+            //Test notifications on message receive, make sure activity is staying alive when app is in background
+
         }
     };
 

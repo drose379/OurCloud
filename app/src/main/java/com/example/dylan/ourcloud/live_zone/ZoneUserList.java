@@ -85,7 +85,7 @@ public class ZoneUserList extends AppCompatActivity {
                 User selectedUser = users.get(item);
                 if (!selectedUser.getName().equals(UserInfo.getInstance().getDisplayName())) {
                     //For testing the private messaging feature
-                    LiveUsers.getInstance(ZoneUserList.this).sendMessage(selectedUser.getId(),"This is a test message!, TO: " + selectedUser.getName());
+                    LiveUsers.getInstance(ZoneUserList.this).sendMessage(selectedUser.getId(),"This is a test message");
                 }
             }
         });
