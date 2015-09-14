@@ -11,9 +11,13 @@ import com.github.nkzawa.socketio.client.IO;
 import com.github.nkzawa.socketio.client.Socket;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * Created by dylan on 9/10/15.
@@ -21,7 +25,8 @@ import java.net.URISyntaxException;
 public class LiveUsers {
 
     public static final String UPDATE_ACTIVE_USERS = "UPDATE_ACTIVE_USERS";
-    public static String currentUsers;
+    //public static String currentUsers;
+    public static ArrayList<User> users = new ArrayList<>();
 
     private boolean isConnected = false;
 
@@ -34,14 +39,18 @@ public class LiveUsers {
         @Override
         public void call(Object... args) {
             updateUsers(args[0].toString());
-            currentUsers = args[0].toString();
+            //currentUsers = args[0].toString();
         }
     };
 
     private Emitter.Listener privateMessageListener = new Emitter.Listener() {
         @Override
         public void call(Object... args) {
-            Log.i("privateMessage",(String)args[0]);
+            /**
+             * args[0] contians json string of [senderID,message]
+             * Use users List<User> to look up the senderId and get a name and photo corresponding
+             * Make the List<User> in ZoneUserList activity public
+             */
         }
     };
 
@@ -87,10 +96,36 @@ public class LiveUsers {
         socket.emit("sendPrivateMessage",messageInfo.toString());
     }
 
-    public void updateUsers(String users) {
+    public void updateUsers(String usersJson) {
+        /**
+         * Need to just broadcast the List<User> from here
+         * Change all use of userString into using List<String>, no need to convert from string to List all around application, just do it here
+         * User POJO must be parcelable.
+         */
+
+        createUserList(usersJson);
+
         Intent i = new Intent(UPDATE_ACTIVE_USERS);
-        i.putExtra("activeUsers",users);
+        i.putParcelableArrayListExtra("activeUsers",users);
         broadcastManager.sendBroadcast(i);
+    }
+
+    public void createUserList(String usersJson) {
+        users.clear();
+        JSONObject activeUsers;
+        try {
+            activeUsers = new JSONObject(usersJson);
+            //Loop over they keys of the object, for each key there is a jsonArray, [Name,Image], add to List<User>
+            Iterator<String> keys = activeUsers.keys();
+            while(keys.hasNext()) {
+                String key = keys.next();
+                JSONArray user = new JSONArray(activeUsers.getString(key));
+                users.add(new User().setId(key).setName(user.getString(0)).setImage(user.getString(1)));
+            }
+
+        } catch (JSONException e) {
+            throw new RuntimeException(e.getMessage());
+        }
     }
 
     public void disconnect() {

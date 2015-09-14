@@ -32,7 +32,7 @@ import java.util.List;
  */
 public class ZoneUserList extends AppCompatActivity {
 
-    private String users = LiveUsers.currentUsers;
+    private List<User> currentUsers = LiveUsers.users;
 
     ListView userList;
     LiveUserListAdapter listAdapter;
@@ -57,36 +57,20 @@ public class ZoneUserList extends AppCompatActivity {
     @Override
     public void onStart() {
         super.onStart();
-        updateUserList(users);
+        updateUserList(currentUsers);
         LocalBroadcastManager broadcastManager = LocalBroadcastManager.getInstance(this);
         IntentFilter iFilter = new IntentFilter(LiveUsers.UPDATE_ACTIVE_USERS);
         broadcastManager.registerReceiver(new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                String usersJson = intent.getStringExtra("activeUsers");
-                updateUserList(usersJson);
+                List<User> usersList = intent.getParcelableArrayListExtra("activeUsers");
+                updateUserList(usersList);
             }
         }, iFilter);
     }
 
 
-    public void updateUserList(String userJson) {
-        final List<User> users = new ArrayList<User>();
-        JSONObject activeUsers;
-        try {
-
-            activeUsers = new JSONObject(userJson);
-            //Loop over they keys of the object, for each key there is a jsonArray, [Name,Image], add to List<User>
-            Iterator<String> keys = activeUsers.keys();
-            while(keys.hasNext()) {
-                String key = keys.next();
-                JSONArray user = new JSONArray(activeUsers.getString(key));
-                users.add(new User().setId(key).setName(user.getString(0)).setImage(user.getString(1)));
-            }
-
-        } catch (JSONException e) {
-            throw new RuntimeException(e.getMessage());
-        }
+    public void updateUserList(final List<User> users) {
 
         if (listAdapter != null) {
             listAdapter.updateUsers(users);
@@ -100,6 +84,7 @@ public class ZoneUserList extends AppCompatActivity {
             public void onItemClick(AdapterView adapterView,View view,int item,long id) {
                 User selectedUser = users.get(item);
                 if (!selectedUser.getName().equals(UserInfo.getInstance().getDisplayName())) {
+                    //For testing the private messaging feature
                     LiveUsers.getInstance(ZoneUserList.this).sendMessage(selectedUser.getId(),"This is a test message!, TO: " + selectedUser.getName());
                 }
             }
