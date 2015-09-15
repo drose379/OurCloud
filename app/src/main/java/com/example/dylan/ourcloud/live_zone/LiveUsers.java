@@ -1,10 +1,15 @@
 package com.example.dylan.ourcloud.live_zone;
 
+import android.app.Notification;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
+import android.provider.Settings;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
+import android.view.View;
 
+import com.example.dylan.ourcloud.R;
 import com.example.dylan.ourcloud.UserInfo;
 import com.github.nkzawa.emitter.Emitter;
 import com.github.nkzawa.socketio.client.IO;
@@ -67,6 +72,8 @@ public class LiveUsers {
                 }
             }
 
+            handleNewMessage(senderName,message);
+
             //This event listener needs to broadcast new message info to correct message thread
             //Test notifications on message receive, make sure activity is staying alive when app is in background
 
@@ -127,6 +134,19 @@ public class LiveUsers {
         Intent i = new Intent(UPDATE_ACTIVE_USERS);
         i.putParcelableArrayListExtra("activeUsers",users);
         broadcastManager.sendBroadcast(i);
+    }
+
+    public void handleNewMessage(String from,String message) {
+        //testing notifications
+        NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        Notification n = new Notification.Builder(context)
+                .setContentTitle(from)
+                .setSmallIcon(R.drawable.notification_template_icon_bg)
+                .setContentText(message)
+                .setSound(Settings.System.DEFAULT_NOTIFICATION_URI)
+                .build();
+        manager.notify("newMessage",1,n);
+
     }
 
     public void createUserList(String usersJson) {
