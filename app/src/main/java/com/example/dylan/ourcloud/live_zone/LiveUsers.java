@@ -1,15 +1,10 @@
 package com.example.dylan.ourcloud.live_zone;
 
-import android.app.Notification;
-import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
-import android.provider.Settings;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v4.content.LocalBroadcastManager;
-import android.util.Log;
-import android.view.View;
 
-import com.example.dylan.ourcloud.R;
 import com.example.dylan.ourcloud.UserInfo;
 import com.github.nkzawa.emitter.Emitter;
 import com.github.nkzawa.socketio.client.IO;
@@ -39,12 +34,12 @@ public class LiveUsers {
     private Socket socket;
 
     private LocalBroadcastManager broadcastManager;
+    private MessagesDBHelper messageDBHelper;
 
     private Emitter.Listener updateUserListener = new Emitter.Listener() {
         @Override
         public void call(Object... args) {
             updateUsers(args[0].toString());
-            //currentUsers = args[0].toString();
         }
     };
 
@@ -72,7 +67,7 @@ public class LiveUsers {
                 }
             }
 
-            handleNewMessage(senderName,message);
+            handleNewMessage(senderId,senderName,message);
         }
     };
 
@@ -86,6 +81,7 @@ public class LiveUsers {
     public LiveUsers(Context context) {
         this.context = context;
         broadcastManager = LocalBroadcastManager.getInstance(context);
+        messageDBHelper = messageDBHelper == null ? new MessagesDBHelper(context) : messageDBHelper;
     }
 
     public void connect() {
@@ -132,16 +128,24 @@ public class LiveUsers {
         broadcastManager.sendBroadcast(i);
     }
 
-    public void handleNewMessage(String from,String message) {
-        //testing notifications
-        NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-        Notification n = new Notification.Builder(context)
-                .setContentTitle(from)
-                .setSmallIcon(R.drawable.notification_template_icon_bg)
-                .setContentText(message)
-                .setSound(Settings.System.DEFAULT_NOTIFICATION_URI)
-                .build();
-        manager.notify("newMessage",1,n);
+    public void handleNewMessage(String senderId,String senderName,String message) {
+        /**
+         * Need to add message to SQLite messages table
+         * AFTER NEW MESSAGE IS ADDED TO DB, THEN DO BELOW (SEND BROADCAST)
+         * Need to send broadcast that the chat thread activity and open chat conversation activity will listen for
+         * When these activities receive broadcast, they will query the DB and get the new message
+         * If app is in background, set notification from these activities (activity will set boolean in onPause and onResume to know when in background)
+         *
+         * Create DB:    chat_info
+         * Create table: messages
+         * messages table schema
+            * Needs a way to uniquely identify the conversation...
+            * (SenderId,message) <--- add (image_url) once implemented
+            *
+         */
+        SQLiteDatabase writeable = messageDBHelper.getWritableDatabase();
+        writeable.execSQL(
+                "INSERT INTO messages (sender_id, sender_name, message) VALUES (" + senderId + "," + senderName + "," + message + ");");
 
     }
 
