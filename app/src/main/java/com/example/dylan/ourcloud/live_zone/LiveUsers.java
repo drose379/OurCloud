@@ -3,8 +3,10 @@ package com.example.dylan.ourcloud.live_zone;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
 
 import com.example.dylan.ourcloud.UserInfo;
 import com.github.nkzawa.emitter.Emitter;
@@ -109,6 +111,7 @@ public class LiveUsers {
     }
 
     public void sendMessage(String receivingID,String message) {
+        //May want to add senderPhotoURL as an argument, so the user who receives the message has photo of who they are chatting with
         JSONArray messageInfo = new JSONArray()
                 .put(receivingID)
                 .put(message);
@@ -151,8 +154,8 @@ public class LiveUsers {
         vals.put("sender_name",senderName);
         vals.put("message",message);
 
-        writeable.insert("chat_messages",null,vals);
-
+        writeable.insert("messages",null,vals);
+        
         //now broadcast that a new private message has come in from senderId, anyone interested will query db for messages from senderId and have new message
 
     }
