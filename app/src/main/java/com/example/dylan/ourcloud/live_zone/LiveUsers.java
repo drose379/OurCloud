@@ -1,5 +1,6 @@
 package com.example.dylan.ourcloud.live_zone;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
@@ -144,8 +145,15 @@ public class LiveUsers {
             *
          */
         SQLiteDatabase writeable = messageDBHelper.getWritableDatabase();
-        writeable.execSQL(
-                "INSERT INTO messages (sender_id, sender_name, message) VALUES (" + senderId + "," + senderName + "," + message + ");");
+
+        ContentValues vals = new ContentValues();
+        vals.put("sender_id",senderId);
+        vals.put("sender_name",senderName);
+        vals.put("message",message);
+
+        writeable.insert("chat_messages",null,vals);
+
+        //now broadcast that a new private message has come in from senderId, anyone interested will query db for messages from senderId and have new message
 
     }
 
