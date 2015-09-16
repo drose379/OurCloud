@@ -84,8 +84,14 @@ public class ZoneUserList extends AppCompatActivity {
             public void onItemClick(AdapterView adapterView,View view,int item,long id) {
                 User selectedUser = users.get(item);
                 if (!selectedUser.getName().equals(UserInfo.getInstance().getDisplayName())) {
-                    //For testing the private messaging feature
-                    LiveUsers.getInstance(ZoneUserList.this).sendMessage(selectedUser.getId(),"This is a test message");
+                    /**
+                     * Open the chat convorsation activity, pass the User object along
+                     * Activity will use the User object to query the DB for previous messages
+                     * Will be able to use LiveUsers.sendMessage() from convorsation, and also listen for new message broadcast
+                     */
+                    Intent i = new Intent(ZoneUserList.this,ChatConvo.class);
+                    i.putExtra("sender",selectedUser);
+                    startActivity(i);
                 }
             }
         });

@@ -116,7 +116,6 @@ public class ThisZone extends AppCompatActivity implements View.OnClickListener,
         initWifiConnect();
     }
 
-
     @Override
     public void onDestroy() {
         super.onDestroy();

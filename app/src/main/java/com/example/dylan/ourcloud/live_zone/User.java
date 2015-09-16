@@ -17,7 +17,7 @@ public class User implements Parcelable {
     }
 
     public User(Parcel in) {
-        String[] items = {};
+        String[] items = new String[3];
         in.readStringArray(items);
         id = items[0];
         name = items[1];
@@ -39,7 +39,7 @@ public class User implements Parcelable {
         return 0;
     }
 
-    public void writeToParcel(Parcel out,int flage) {
+    public void writeToParcel(Parcel out,int flags) {
         String[] items = {id,name,photoUrl};
         out.writeStringArray(items);
     }

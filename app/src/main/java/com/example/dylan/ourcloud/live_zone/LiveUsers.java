@@ -28,7 +28,7 @@ import java.util.List;
 public class LiveUsers {
 
     public static final String UPDATE_ACTIVE_USERS = "UPDATE_ACTIVE_USERS";
-    //public static String currentUsers;
+    public static final String NEW_PRIVATE_MESSAGE = "NEW_PRIVATE_MESSAGE";
     public static ArrayList<User> users = new ArrayList<>();
 
     private boolean isConnected = false;
@@ -139,13 +139,6 @@ public class LiveUsers {
          * Need to send broadcast that the chat thread activity and open chat conversation activity will listen for
          * When these activities receive broadcast, they will query the DB and get the new message
          * If app is in background, set notification from these activities (activity will set boolean in onPause and onResume to know when in background)
-         *
-         * Create DB:    chat_info
-         * Create table: messages
-         * messages table schema
-            * Needs a way to uniquely identify the conversation...
-            * (SenderId,message) <--- add (image_url) once implemented
-            *
          */
         SQLiteDatabase writeable = messageDBHelper.getWritableDatabase();
 
@@ -155,8 +148,11 @@ public class LiveUsers {
         vals.put("message",message);
 
         writeable.insert("messages",null,vals);
-        
-        //now broadcast that a new private message has come in from senderId, anyone interested will query db for messages from senderId and have new message
+
+        Intent i = new Intent( NEW_PRIVATE_MESSAGE );
+        i.putExtra("sender_id",senderId);
+        broadcastManager.sendBroadcast(i);
+        //Create a Message Pojo for organization, pass List<Message> to the listadapter for the chat activity, also good for adding new messages to adapter data set
 
     }
 
