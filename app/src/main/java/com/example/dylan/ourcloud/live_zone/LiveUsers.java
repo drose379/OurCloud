@@ -73,10 +73,6 @@ public class LiveUsers {
             }
 
             handleNewMessage(senderName,message);
-
-            //This event listener needs to broadcast new message info to correct message thread
-            //Test notifications on message receive, make sure activity is staying alive when app is in background
-
         }
     };
 
