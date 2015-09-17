@@ -1,13 +1,17 @@
 package com.example.dylan.ourcloud.live_zone;
 
+import android.app.Notification;
+import android.app.NotificationManager;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.provider.Settings;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
+import com.example.dylan.ourcloud.R;
 import com.example.dylan.ourcloud.UserInfo;
 import com.github.nkzawa.emitter.Emitter;
 import com.github.nkzawa.socketio.client.IO;
@@ -147,6 +151,7 @@ public class LiveUsers {
          */
 
         insertMessageToLocal(senderId,message);
+        notifyNewMessage(senderId, message);
 
         Intent i = new Intent( NEW_PRIVATE_MESSAGE );
         i.putExtra("other_user_id", senderId);
@@ -176,22 +181,39 @@ public class LiveUsers {
     }
 
     public void insertMessageToLocal(String otherUserId,String message) {
-        String otherUserName = null;
-
-        for(User user : users) {
-            if (user.getId().equals(otherUserId)) {
-                otherUserName = user.getName();
-            }
-        }
-
+        String otherUserName = getUserName(otherUserId);
         SQLiteDatabase writeable = messageDBHelper.getWritableDatabase();
 
         ContentValues vals = new ContentValues();
         vals.put("other_user_id",otherUserId);
         vals.put("other_user_name",otherUserName);
-        vals.put("message",message);
+        vals.put("message", message);
 
         writeable.insert("messages",null,vals);
+    }
+
+    public void notifyNewMessage(String otherUserId, String message) {
+        String otherUserName = getUserName(otherUserId);
+        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+
+        Notification newMessageNoti = new Notification.Builder(context)
+                .setContentTitle("New Message")
+                .setContentTitle(otherUserName)
+                .setContentText(message)
+                .setSound(Settings.System.DEFAULT_NOTIFICATION_URI)
+                .setSmallIcon(R.drawable.notification_template_icon_bg)
+                .build();
+        notificationManager.notify("newMessage",1,newMessageNoti);
+    }
+
+    public String getUserName(String userId) {
+        String otherUserName = null;
+        for(User user : users) {
+            if (user.getId().equals(userId)) {
+                otherUserName = user.getName();
+            }
+        }
+        return otherUserName;
     }
 
     public void disconnect() {

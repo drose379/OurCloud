@@ -89,7 +89,7 @@ public class ZoneUserList extends AppCompatActivity {
                      * Will be able to use LiveUsers.sendMessage() from convorsation, and also listen for new message broadcast
                      */
                     Intent i = new Intent(ZoneUserList.this,ChatConvo.class);
-                    i.putExtra("sender",selectedUser);
+                    i.putExtra("other_user",selectedUser);
                     startActivity(i);
                 }
             }
