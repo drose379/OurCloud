@@ -12,8 +12,8 @@ public class MessagesDBHelper extends SQLiteOpenHelper {
     private static String databaseName = "chat_message";
     public String messageTableName = "messages";
 
-    public String colSenderId = "sender_id";
-    public String colSenderName = "sender_name";
+    public String colSenderId = "other_user_id";
+    public String colSenderName = "other_user_name";
     public String colMessage = "message";
 
     public MessagesDBHelper( Context context ) {
@@ -23,7 +23,7 @@ public class MessagesDBHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate( SQLiteDatabase database ) {
         database.execSQL(
-                "CREATE TABLE messages (other_user_id TEXT, other_user_name TEXT, message TEXT);"
+                "CREATE TABLE messages (other_user_id TEXT, other_user_name TEXT, origin INTEGER, message TEXT);"
         );
     }
 

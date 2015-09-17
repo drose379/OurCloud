@@ -65,10 +65,7 @@ public class LiveUsers {
                 senderId = messageInfo.getString(0);
                 message = messageInfo.getString(1);
             } catch (JSONException e) {e.getMessage();}
-
-            //loop over users List<User> and grab the id matching the senderId, use that object to get the name of the sender, assign to senderName field
-
-
+            
             handleNewMessage(senderId,message);
         }
     };
@@ -115,7 +112,7 @@ public class LiveUsers {
                 .put(receivingID)
                 .put(message);
 
-        insertMessageToLocal(receivingID,message);
+        insertMessageToLocal(receivingID,message,1);
 
 
         socket.emit("sendPrivateMessage", messageInfo.toString());
@@ -150,7 +147,7 @@ public class LiveUsers {
          * If app is in background, set notification from these activities (activity will set boolean in onPause and onResume to know when in background)
          */
 
-        insertMessageToLocal(senderId,message);
+        insertMessageToLocal(senderId,message,0);
         notifyNewMessage(senderId, message);
 
         Intent i = new Intent( NEW_PRIVATE_MESSAGE );
@@ -180,13 +177,14 @@ public class LiveUsers {
         }
     }
 
-    public void insertMessageToLocal(String otherUserId,String message) {
+    public void insertMessageToLocal(String otherUserId,String message,int origin) {
         String otherUserName = getUserName(otherUserId);
         SQLiteDatabase writeable = messageDBHelper.getWritableDatabase();
 
         ContentValues vals = new ContentValues();
         vals.put("other_user_id",otherUserId);
         vals.put("other_user_name",otherUserName);
+        vals.put("origin",origin);
         vals.put("message", message);
 
         writeable.insert("messages",null,vals);
