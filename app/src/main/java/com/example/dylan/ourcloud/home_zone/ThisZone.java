@@ -75,7 +75,6 @@ public class ThisZone extends AppCompatActivity implements View.OnClickListener,
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbarTitle = (TextView) toolbar.findViewById(R.id.toolbarTitle);
-        toolbarTitle.setTypeface(TypeHelper.getTypefaceBold(this));
 
         /**
          * Need a controller to grab this zones posts and have callback to this fragment.

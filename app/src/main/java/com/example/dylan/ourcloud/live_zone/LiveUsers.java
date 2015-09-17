@@ -50,7 +50,6 @@ public class LiveUsers {
         @Override
         public void call(Object... args) {
             String senderId = null;
-            String senderName = null;
             String message = null;
             /**
              * args[0] contians json string of [senderID,message]
@@ -64,13 +63,9 @@ public class LiveUsers {
             } catch (JSONException e) {e.getMessage();}
 
             //loop over users List<User> and grab the id matching the senderId, use that object to get the name of the sender, assign to senderName field
-            for(User user : users) {
-                if (user.getId().equals(senderId)) {
-                    senderName = user.getName();
-                }
-            }
 
-            handleNewMessage(senderId,senderName,message);
+
+            handleNewMessage(senderId,message);
         }
     };
 
@@ -115,7 +110,17 @@ public class LiveUsers {
         JSONArray messageInfo = new JSONArray()
                 .put(receivingID)
                 .put(message);
-        socket.emit("sendPrivateMessage",messageInfo.toString());
+
+        insertMessageToLocal(receivingID,message);
+
+
+        socket.emit("sendPrivateMessage", messageInfo.toString());
+
+        /**
+         *Also have to save outgoing messages to SQLite DB
+         * (sender_id table will be the same, but may need to change name to avoid confusion) may just be chat_with_id
+         */
+
     }
 
     public void updateUsers(String usersJson) {
@@ -128,11 +133,11 @@ public class LiveUsers {
         createUserList(usersJson);
 
         Intent i = new Intent(UPDATE_ACTIVE_USERS);
-        i.putParcelableArrayListExtra("activeUsers",users);
+        i.putParcelableArrayListExtra("activeUsers", users);
         broadcastManager.sendBroadcast(i);
     }
 
-    public void handleNewMessage(String senderId,String senderName,String message) {
+    public void handleNewMessage(String senderId,String message) {
         /**
          * Need to add message to SQLite messages table
          * AFTER NEW MESSAGE IS ADDED TO DB, THEN DO BELOW (SEND BROADCAST)
@@ -140,18 +145,14 @@ public class LiveUsers {
          * When these activities receive broadcast, they will query the DB and get the new message
          * If app is in background, set notification from these activities (activity will set boolean in onPause and onResume to know when in background)
          */
-        SQLiteDatabase writeable = messageDBHelper.getWritableDatabase();
 
-        ContentValues vals = new ContentValues();
-        vals.put("sender_id",senderId);
-        vals.put("sender_name",senderName);
-        vals.put("message",message);
-
-        writeable.insert("messages",null,vals);
+        insertMessageToLocal(senderId,message);
 
         Intent i = new Intent( NEW_PRIVATE_MESSAGE );
-        i.putExtra("sender_id",senderId);
+        i.putExtra("other_user_id", senderId);
         broadcastManager.sendBroadcast(i);
+
+
         //Create a Message Pojo for organization, pass List<Message> to the listadapter for the chat activity, also good for adding new messages to adapter data set
 
     }
@@ -172,6 +173,25 @@ public class LiveUsers {
         } catch (JSONException e) {
             throw new RuntimeException(e.getMessage());
         }
+    }
+
+    public void insertMessageToLocal(String otherUserId,String message) {
+        String otherUserName = null;
+
+        for(User user : users) {
+            if (user.getId().equals(otherUserId)) {
+                otherUserName = user.getName();
+            }
+        }
+
+        SQLiteDatabase writeable = messageDBHelper.getWritableDatabase();
+
+        ContentValues vals = new ContentValues();
+        vals.put("other_user_id",otherUserId);
+        vals.put("other_user_name",otherUserName);
+        vals.put("message",message);
+
+        writeable.insert("messages",null,vals);
     }
 
     public void disconnect() {

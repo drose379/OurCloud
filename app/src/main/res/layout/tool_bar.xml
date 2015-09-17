@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<android.support.v7.widget.Toolbar
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_height="wrap_content"
     android:layout_width="match_parent"
+    xmlns:custom_text="http://schemas.android.com/apk/res-auto"
     android:id="@+id/toolbar"
     android:background="@color/ColorPrimary"
     android:elevation="2dp"
-    android:theme="@style/Base.ThemeOverlay.AppCompat.Dark"
-    >
+    android:theme="@style/Base.ThemeOverlay.AppCompat.Dark">
 
-    <TextView
+    <com.example.dylan.ourcloud.CustomTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="18sp"
+        custom_text:bold="true"
         android:textColor="@color/ColorWhite"
         android:id="@+id/toolbarTitle"
         />

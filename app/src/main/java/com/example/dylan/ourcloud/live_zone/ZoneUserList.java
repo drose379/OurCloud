@@ -69,7 +69,6 @@ public class ZoneUserList extends AppCompatActivity {
         }, iFilter);
     }
 
-
     public void updateUserList(final List<User> users) {
 
         if (listAdapter != null) {

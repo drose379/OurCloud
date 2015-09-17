@@ -23,7 +23,7 @@ public class MessagesDBHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate( SQLiteDatabase database ) {
         database.execSQL(
-                "CREATE TABLE messages (sender_id TEXT, sender_name TEXT, message TEXT);"
+                "CREATE TABLE messages (other_user_id TEXT, other_user_name TEXT, message TEXT);"
         );
     }
 
