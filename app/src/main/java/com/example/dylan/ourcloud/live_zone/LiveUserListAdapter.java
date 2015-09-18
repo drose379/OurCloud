@@ -8,8 +8,10 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.dylan.ourcloud.LocalUser;
+import com.example.dylan.ourcloud.LocalUserDBHelper;
 import com.example.dylan.ourcloud.R;
-import com.example.dylan.ourcloud.UserInfo;
+
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -58,7 +60,7 @@ public class LiveUserListAdapter extends BaseAdapter {
         userName = (TextView) v.findViewById(R.id.userName);
         userImage = (CircleImageView) v.findViewById(R.id.userImage);
 
-        userName.setText(user.getName().equals(UserInfo.getInstance().getDisplayName()) ? "Me" : user.getName());
+        userName.setText(user.getName().equals(LocalUser.getInstance(context).getItem(LocalUserDBHelper.nameCol)) ? "Me" : user.getName());
         Picasso.with(context).load(user.getPhotoUrl()).into(userImage);
 
         return v;

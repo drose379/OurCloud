@@ -3,6 +3,7 @@ package com.example.dylan.ourcloud.util;
 import android.util.Log;
 
 import com.example.dylan.ourcloud.Comment;
+import com.example.dylan.ourcloud.LocalUser;
 import com.example.dylan.ourcloud.Post;
 
 import org.json.JSONArray;
@@ -31,7 +32,7 @@ public class JSONUtil {
         return vals.toString();
     }
 
-    public static List<Post> toPostList(String postsJson) {
+    public static List<Post> toPostList(String postsJson,String currentUser) {
         List<Post> posts = new ArrayList<Post>();
 
         try {
@@ -39,7 +40,7 @@ public class JSONUtil {
 
             for(int i = 0;i<postsParent.length();i++) {
                 JSONObject currentObject = postsParent.getJSONObject(i);
-                Post currentPost = new Post()
+                Post currentPost = new Post(currentUser)
                         .setUser(currentObject.getString("user_name"))
                         .setUserImage(currentObject.getString("user_image"))
                         .setPostId(currentObject.getString("ID"))

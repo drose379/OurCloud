@@ -1,7 +1,6 @@
 package com.example.dylan.ourcloud.util;
 
 import com.example.dylan.ourcloud.SignInController;
-import com.example.dylan.ourcloud.UserInfo;
 import com.google.android.gms.plus.model.people.Person;
 import com.squareup.okhttp.Call;
 import com.squareup.okhttp.Callback;
@@ -38,7 +37,6 @@ public class UserUtil {
 
             @Override
             public void onResponse(Response response) throws IOException {
-                UserInfo.getInstance().setInDatabase(true);
                 callback.signInSuccess(person);
             }
         });

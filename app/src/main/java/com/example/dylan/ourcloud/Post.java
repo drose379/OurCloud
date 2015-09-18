@@ -9,6 +9,8 @@ import java.util.List;
  */
 public class Post implements Serializable {
 
+    private String currentUser;
+
     private String postId;
     private String user;
     private String userImageUrl;
@@ -17,6 +19,10 @@ public class Post implements Serializable {
     private String postImageUrl;
     private long postTimeMillis;
     private ArrayList<Comment> comments;
+
+    public Post(String currentUser) {
+        this.currentUser = currentUser;
+    }
 
     public Post setPostId(String id) {
         postId = id;
@@ -77,8 +83,7 @@ public class Post implements Serializable {
     }
 
     public boolean isCurrentUser() {
-        boolean isCurrentUser = user.equals(UserInfo.getInstance().getDisplayName()) ? true : false;
-        return isCurrentUser;
+        return user.equals(currentUser);
     }
 
 }

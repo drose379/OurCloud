@@ -5,6 +5,7 @@ import android.content.IntentSender;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -16,7 +17,6 @@ import com.google.android.gms.plus.model.people.Person;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener,SignInController.UICallback {
 
-    private UserInfo currentUser;
     private SignInController signInController;
     private WifiController wifiController;
 
@@ -53,7 +53,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void signInSuccess(Person currentUser) {
-        LocalUserInfoController.userSignIn(currentUser);
+
+        //for testing
+        LocalUser.getInstance(this).userSignIn(currentUser);
+
+        Log.i("signIn","New user signed in");
 
         Intent i = new Intent(this,ThisZone.class);
         startActivity(i);

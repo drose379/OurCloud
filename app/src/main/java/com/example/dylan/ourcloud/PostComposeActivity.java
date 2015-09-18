@@ -83,7 +83,7 @@ public class PostComposeActivity extends AppCompatActivity implements View.OnCli
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         TextView toolbarTitle = (TextView) toolbar.findViewById(R.id.toolbarTitle);
-        toolbarTitle.setText(UserInfo.getInstance().getZoneName());
+        toolbarTitle.setText(LocalUser.getInstance(this).getItem(LocalUserDBHelper.zone_name_col));
 
         TextView userName = (TextView) findViewById(R.id.userName);
         ImageView userImage = (ImageView) findViewById(R.id.userImage);
@@ -93,8 +93,8 @@ public class PostComposeActivity extends AppCompatActivity implements View.OnCli
         uploadedImageContainer = (ImageView) findViewById(R.id.selectedImageContainer);
 
 
-        userName.setText(UserInfo.getInstance().getDisplayName());
-        Picasso.with(this).load(UserInfo.getInstance().getProfileImageSized(90)).into(userImage);
+        userName.setText(LocalUser.getInstance(this).getItem(LocalUserDBHelper.nameCol));
+        Picasso.with(this).load(LocalUser.getInstance(this).getProfilePhotoSized(90)).into(userImage);
 
         selectImageIcon.setOnClickListener(this);
         postSubmitButton.setOnClickListener(this);

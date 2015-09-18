@@ -2,8 +2,10 @@ package com.example.dylan.ourcloud.home_zone;
 
 import android.os.Handler;
 
+import com.example.dylan.ourcloud.LocalUser;
+import com.example.dylan.ourcloud.LocalUserDBHelper;
 import com.example.dylan.ourcloud.Post;
-import com.example.dylan.ourcloud.UserInfo;
+
 import com.example.dylan.ourcloud.util.JSONUtil;
 import com.example.dylan.ourcloud.util.TimeUtil;
 import com.squareup.okhttp.Call;
@@ -34,6 +36,7 @@ public class ThisZoneController {
     }
 
     private OkHttpClient httpClient;
+    private LocalUser localUser;
     private Handler handler;
     private Callback callback;
 
@@ -41,10 +44,11 @@ public class ThisZoneController {
         callback = frag;
         handler = new Handler();
         httpClient = new OkHttpClient();
+        localUser = LocalUser.getInstance(frag);
     }
 
     public void grabZonePosts() {
-        String currentZone = UserInfo.getInstance().getZoneId();
+        String currentZone = localUser.getItem(LocalUserDBHelper.zone_id_col);
         //grab items that user is OP off, but change the author name to "Me"
 
         RequestBody rBody = RequestBody.create(MediaType.parse("text/plain"), JSONUtil.generateJSONArray(currentZone));
@@ -61,7 +65,7 @@ public class ThisZoneController {
 
             @Override
             public void onResponse(Response response) throws IOException {
-                final List<Post> posts = JSONUtil.toPostList(response.body().string());
+                final List<Post> posts = JSONUtil.toPostList(response.body().string(),localUser.getItem(LocalUserDBHelper.nameCol));
                 Runnable r = new Runnable() {
                     @Override
                     public void run() {
@@ -137,11 +141,11 @@ public class ThisZoneController {
     public void newPost(String postText,long expirationDate) {
 
         //need to construct a json array of just the values that are in range, add that as an item in jsonItems below. remember to json_decode it in the API
-        UserInfo currentUser = UserInfo.getInstance();
+
 
         String jsonItems = JSONUtil.generateJSONArray(
-                currentUser.getId(),
-                currentUser.getZoneId(),
+                localUser.getItem(LocalUserDBHelper.user_id_col),
+                localUser.getItem(LocalUserDBHelper.zone_id_col),
                 postText.trim(),
                 String.valueOf(TimeUtil.getCurrentTimeMillis()),
                 String.valueOf(expirationDate));
@@ -167,14 +171,14 @@ public class ThisZoneController {
 
     public void newPostWithImage(String postText,String postImageUrl,long expirationDate) {
 
-        UserInfo currentUser = UserInfo.getInstance();
-
-        String jsonItems = JSONUtil.generateJSONArray(currentUser.getId(),
-                currentUser.getZoneId(),
+        String jsonItems = JSONUtil.generateJSONArray(
+                localUser.getItem(LocalUserDBHelper.user_id_col),
+                localUser.getItem(LocalUserDBHelper.zone_id_col),
                 postText.trim(),
                 postImageUrl,
                 String.valueOf(TimeUtil.getCurrentTimeMillis()),
-                String.valueOf(expirationDate));
+                String.valueOf(expirationDate)
+        );
 
         RequestBody rBody = RequestBody.create(MediaType.parse("text/plain"), jsonItems);
         Request request = new Request.Builder()

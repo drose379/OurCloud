@@ -15,9 +15,11 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.dylan.ourcloud.LocalUser;
+import com.example.dylan.ourcloud.LocalUserDBHelper;
 import com.example.dylan.ourcloud.R;
 import com.example.dylan.ourcloud.TypeHelper;
-import com.example.dylan.ourcloud.UserInfo;
+
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -32,6 +34,8 @@ import java.util.List;
  */
 public class ZoneUserList extends AppCompatActivity {
 
+    private LocalUser localUser;
+
     private List<User> currentUsers = LiveUsers.users;
 
     ListView userList;
@@ -41,11 +45,13 @@ public class ZoneUserList extends AppCompatActivity {
     public void onCreate(Bundle savedInstance) {
         super.onCreate(savedInstance);
         setContentView(R.layout.live_zone_list);
+        localUser = LocalUser.getInstance(this);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         TextView toolbarTitle = (TextView) toolbar.findViewById(R.id.toolbarTitle);
 
         toolbarTitle.setTypeface(TypeHelper.getTypefaceBold(this));
-        toolbarTitle.setText(UserInfo.getInstance().getZoneName());
+        toolbarTitle.setText(localUser.getItem(LocalUserDBHelper.zone_name_col));
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -57,6 +63,7 @@ public class ZoneUserList extends AppCompatActivity {
     @Override
     public void onStart() {
         super.onStart();
+
         updateUserList(currentUsers);
         LocalBroadcastManager broadcastManager = LocalBroadcastManager.getInstance(this);
         IntentFilter iFilter = new IntentFilter(LiveUsers.UPDATE_ACTIVE_USERS);
@@ -82,7 +89,7 @@ public class ZoneUserList extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView adapterView,View view,int item,long id) {
                 User selectedUser = users.get(item);
-                if (!selectedUser.getName().equals(UserInfo.getInstance().getDisplayName())) {
+                if (!selectedUser.getName().equals(localUser.getItem(LocalUserDBHelper.nameCol))) {
                     /**
                      * Open the chat convorsation activity, pass the User object along
                      * Activity will use the User object to query the DB for previous messages

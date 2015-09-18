@@ -17,9 +17,10 @@ import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.example.dylan.ourcloud.Comment;
+import com.example.dylan.ourcloud.LocalUser;
+import com.example.dylan.ourcloud.LocalUserDBHelper;
 import com.example.dylan.ourcloud.Post;
 import com.example.dylan.ourcloud.R;
-import com.example.dylan.ourcloud.UserInfo;
 import com.github.clans.fab.FloatingActionButton;
 import com.squareup.picasso.Picasso;
 
@@ -47,7 +48,7 @@ public class PostCommentsFrag extends Fragment implements View.OnClickListener,C
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        commentController = new CommentController(this);
+        commentController = new CommentController(this,getActivity());
         menuButton = (FloatingActionButton) getActivity().findViewById(R.id.menuButton);
     }
 
@@ -132,8 +133,8 @@ public class PostCommentsFrag extends Fragment implements View.OnClickListener,C
         CircleImageView userImage = (CircleImageView) newCommentView.findViewById(R.id.userImageMini);
         TextView userName = (TextView) newCommentView.findViewById(R.id.userName);
 
-        Picasso.with(getActivity()).load(UserInfo.getInstance().getProfileImageSized(80)).into(userImage);
-        userName.setText(UserInfo.getInstance().getDisplayName());
+        Picasso.with(getActivity()).load(LocalUser.getInstance(getActivity()).getProfilePhotoSized(80)).into(userImage);
+        userName.setText(LocalUser.getInstance(getActivity()).getItem(LocalUserDBHelper.nameCol));
 
         newComment = new MaterialDialog.Builder(getActivity())
                 .title("New Comment")

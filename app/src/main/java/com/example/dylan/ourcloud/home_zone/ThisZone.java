@@ -19,6 +19,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.example.dylan.ourcloud.LocalUser;
+import com.example.dylan.ourcloud.LocalUserDBHelper;
 import com.example.dylan.ourcloud.NavDrawerAdapter;
 import com.example.dylan.ourcloud.TypeHelper;
 import com.example.dylan.ourcloud.live_zone.LiveUsers;
@@ -28,7 +30,7 @@ import com.example.dylan.ourcloud.util.ImageUtil;
 import com.example.dylan.ourcloud.Post;
 import com.example.dylan.ourcloud.PostComposeActivity;
 import com.example.dylan.ourcloud.R;
-import com.example.dylan.ourcloud.UserInfo;
+
 import com.example.dylan.ourcloud.WifiController;
 
 import com.github.clans.fab.FloatingActionButton;
@@ -47,6 +49,7 @@ public class ThisZone extends AppCompatActivity implements View.OnClickListener,
 
     private WifiController wifiController;
     private ThisZoneController thisZoneController;
+    private LocalUser localUser;
     private LiveUsers liveUsers;
 
     Intent newPostTempData;
@@ -70,7 +73,7 @@ public class ThisZone extends AppCompatActivity implements View.OnClickListener,
 
     @Override
     public void onCreate(Bundle savedInstance) {
-        Log.i("thisZoneCreate","This zone on create called");
+        Log.i("thisZoneCreate", "This zone on create called");
         super.onCreate(savedInstance);
         setContentView(R.layout.this_zone);
 
@@ -98,8 +101,7 @@ public class ThisZone extends AppCompatActivity implements View.OnClickListener,
         refreshLayout.setColorSchemeColors(R.color.indicator, R.color.ColorPrimary, R.color.ColorPrimaryDark);
 
         newPostButton.setOnClickListener(this);
-        initNavMenu();
-        initDialogs();
+
     }
 
     @Override
@@ -108,6 +110,10 @@ public class ThisZone extends AppCompatActivity implements View.OnClickListener,
         wifiController = wifiController == null ? WifiController.getInstance(this) : wifiController;
         thisZoneController = thisZoneController == null ? new ThisZoneController(this) : thisZoneController;
         liveUsers = liveUsers == null ? LiveUsers.getInstance(this) : liveUsers;
+        localUser = LocalUser.getInstance(this);
+
+        initNavMenu();
+        initDialogs();
     }
 
     @Override
@@ -139,9 +145,11 @@ public class ThisZone extends AppCompatActivity implements View.OnClickListener,
         }
          */
 
-        UserInfo.getInstance().setWifiId("UNH-Secure");
-        UserInfo.getInstance().setNetworksInRange(Arrays.asList("UNH-Public"));
-        thisZoneController.getZoneId(UserInfo.getInstance().getWifiSSID(), UserInfo.getInstance().getNetworksInRange());
+        //Testing
+        localUser.setWifiId("UNH-Secure");
+        localUser.setNetworksInRange(Arrays.asList("UNH-Public"));
+
+        thisZoneController.getZoneId(localUser.getItem(LocalUserDBHelper.wifi_id_col), localUser.getNetworksInRange());
     }
 
     /**
@@ -177,10 +185,10 @@ public class ThisZone extends AppCompatActivity implements View.OnClickListener,
     @Override
     public void getZoneId(String zoneId,String zoneName) {
 
-        UserInfo.getInstance().setZoneId(zoneId);
-        UserInfo.getInstance().setZoneName(zoneName);
+        localUser.setZoneId(zoneId);
+        localUser.setZoneName(zoneName);
 
-        if(UserInfo.getInstance().getZoneName() == null) {
+        if(localUser.getItem(LocalUserDBHelper.zone_name_col) == null) {
             newZoneName.show();
         } else {
             toolbarTitle.setText(zoneName);
@@ -240,7 +248,7 @@ public class ThisZone extends AppCompatActivity implements View.OnClickListener,
                             newZoneName.show();
                         } else {
                             //submit the zone name, wait for callback, in that callback, assign the zone name to UserInfo, and call .getPosts();
-                            thisZoneController.createZoneName(UserInfo.getInstance().getZoneId(), zoneName);
+                            thisZoneController.createZoneName(localUser.getItem(LocalUserDBHelper.zone_id_col), zoneName);
                         }
                     }
                 })
@@ -253,8 +261,8 @@ public class ThisZone extends AppCompatActivity implements View.OnClickListener,
         List<MenuOption> menuOptions = new ArrayList<MenuOption>();
 
         menuOptions.add(new MenuOption()
-                        .setTitle(UserInfo.getInstance().getDisplayName())
-                        .setImage(UserInfo.getInstance().getProfileImageSized(80))
+                        .setTitle(localUser.getItem(LocalUserDBHelper.nameCol))
+                        .setImage(localUser.getProfilePhotoSized(80))
                         .setType(3)
         );
         menuOptions.add(new MenuOption()
@@ -284,7 +292,7 @@ public class ThisZone extends AppCompatActivity implements View.OnClickListener,
 
     @Override
     public void zoneNameReady(String zoneName) {
-        UserInfo.getInstance().setZoneName(zoneName);
+        localUser.setZoneName(zoneName);
         toolbarTitle.setText(zoneName);
         thisZoneController.grabZonePosts();
     }

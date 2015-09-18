@@ -14,8 +14,9 @@ import android.provider.Settings;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
+import com.example.dylan.ourcloud.LocalUser;
+import com.example.dylan.ourcloud.LocalUserDBHelper;
 import com.example.dylan.ourcloud.R;
-import com.example.dylan.ourcloud.UserInfo;
 import com.github.nkzawa.emitter.Emitter;
 import com.github.nkzawa.socketio.client.IO;
 import com.github.nkzawa.socketio.client.Socket;
@@ -42,6 +43,7 @@ public class LiveUsers {
 
     private Context context;
     private Socket socket;
+    private LocalUser localUser;
 
     private PendingIntent openOnNotification;
     private Intent onNotificationIntent;
@@ -87,6 +89,7 @@ public class LiveUsers {
         this.context = context;
         broadcastManager = LocalBroadcastManager.getInstance(context);
         messageDBHelper = messageDBHelper == null ? new MessagesDBHelper(context) : messageDBHelper;
+        localUser = LocalUser.getInstance(context);
 
     }
 
@@ -105,10 +108,10 @@ public class LiveUsers {
 
     public void uploadSocketInfo() {
         JSONArray socketInfo = new JSONArray()
-                .put(UserInfo.getInstance().getId())
-                .put(UserInfo.getInstance().getZoneName())
-                .put(UserInfo.getInstance().getDisplayName())
-                .put(UserInfo.getInstance().getProfileImageSized(80));
+                .put(localUser.getItem(LocalUserDBHelper.user_id_col))
+                .put(localUser.getItem(LocalUserDBHelper.zone_name_col))
+                .put(localUser.getItem(LocalUserDBHelper.nameCol))
+                .put(localUser.getProfilePhotoSized(80));
 
         socket.emit("socketUserInfo",socketInfo.toString());
     }
