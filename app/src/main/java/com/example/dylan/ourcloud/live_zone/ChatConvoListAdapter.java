@@ -44,6 +44,7 @@ public class ChatConvoListAdapter extends BaseAdapter {
     public View getView(int item,View recycledView,ViewGroup parent) {
         View v = recycledView;
         v = v == null ? LayoutInflater.from(context).inflate(R.layout.chat_message_card,parent,false) : v;
+        CardView container = (CardView) v.findViewById(R.id.card);
         TextView messageTextTest = (TextView) v.findViewById(R.id.messageText);
         TextView senderNameTest = (TextView) v.findViewById(R.id.senderName);
 
@@ -52,6 +53,7 @@ public class ChatConvoListAdapter extends BaseAdapter {
         messageTextTest.setText(currentMessage.getText());
         senderNameTest.setText(currentMessage.getOrigin() == 1 ? "Me" : currentMessage.getOtherUserName());
         senderNameTest.setTextColor(currentMessage.getOrigin() == 1 ? Color.DKGRAY : context.getResources().getColor(R.color.ColorPrimary));
+        container.setCardBackgroundColor(currentMessage.getOrigin() == 1 ? Color.parseColor("#F5F5F5") : Color.parseColor("#E0E0E0"));
 
         return v;
     }

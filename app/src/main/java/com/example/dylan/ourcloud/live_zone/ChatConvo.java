@@ -1,5 +1,6 @@
 package com.example.dylan.ourcloud.live_zone;
 
+import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -31,6 +32,8 @@ import java.util.List;
  * Created by dylan on 9/16/15.
  */
 public class ChatConvo extends AppCompatActivity implements View.OnClickListener {
+
+    public static String convoOtherUserId = "0";
 
     private User otherUser;
     private MessagesDBHelper messageDBHelper;
@@ -66,10 +69,19 @@ public class ChatConvo extends AppCompatActivity implements View.OnClickListener
     @Override
     public void onStart() {
         super.onStart();
+
+        convoOtherUserId = otherUser.getId();
         messageDBHelper = new MessagesDBHelper(this);
         broadcastManager = LocalBroadcastManager.getInstance(this);
+
         getMessages();
         initBroadcastListener();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        convoOtherUserId = "0";
     }
 
     @Override

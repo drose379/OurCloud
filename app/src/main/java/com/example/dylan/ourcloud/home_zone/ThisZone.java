@@ -70,6 +70,7 @@ public class ThisZone extends AppCompatActivity implements View.OnClickListener,
 
     @Override
     public void onCreate(Bundle savedInstance) {
+        Log.i("thisZoneCreate","This zone on create called");
         super.onCreate(savedInstance);
         setContentView(R.layout.this_zone);
 

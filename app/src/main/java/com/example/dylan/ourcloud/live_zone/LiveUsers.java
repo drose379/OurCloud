@@ -2,11 +2,14 @@ package com.example.dylan.ourcloud.live_zone;
 
 import android.app.Notification;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
+import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
@@ -40,6 +43,9 @@ public class LiveUsers {
     private Context context;
     private Socket socket;
 
+    private PendingIntent openOnNotification;
+    private Intent onNotificationIntent;
+
     private LocalBroadcastManager broadcastManager;
     private MessagesDBHelper messageDBHelper;
 
@@ -65,7 +71,7 @@ public class LiveUsers {
                 senderId = messageInfo.getString(0);
                 message = messageInfo.getString(1);
             } catch (JSONException e) {e.getMessage();}
-            
+
             handleNewMessage(senderId,message);
         }
     };
@@ -81,6 +87,7 @@ public class LiveUsers {
         this.context = context;
         broadcastManager = LocalBroadcastManager.getInstance(context);
         messageDBHelper = messageDBHelper == null ? new MessagesDBHelper(context) : messageDBHelper;
+
     }
 
     public void connect() {
@@ -112,7 +119,7 @@ public class LiveUsers {
                 .put(receivingID)
                 .put(message);
 
-        insertMessageToLocal(receivingID,message,1);
+        insertMessageToLocal(receivingID, message, 1);
 
 
         socket.emit("sendPrivateMessage", messageInfo.toString());
@@ -184,7 +191,7 @@ public class LiveUsers {
         ContentValues vals = new ContentValues();
         vals.put("other_user_id",otherUserId);
         vals.put("other_user_name",otherUserName);
-        vals.put("origin",origin);
+        vals.put("origin", origin);
         vals.put("message", message);
 
         writeable.insert("messages",null,vals);
@@ -192,16 +199,31 @@ public class LiveUsers {
 
     public void notifyNewMessage(String otherUserId, String message) {
         String otherUserName = getUserName(otherUserId);
+
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+
+        onNotificationIntent = new Intent(context,ChatConvo.class);
+        onNotificationIntent.putExtra("other_user",new User().setName(otherUserName).setId(otherUserId));
+
+        openOnNotification = PendingIntent.getActivity(context,1,onNotificationIntent,0);
 
         Notification newMessageNoti = new Notification.Builder(context)
                 .setContentTitle("New Message")
                 .setContentTitle(otherUserName)
                 .setContentText(message)
                 .setSound(Settings.System.DEFAULT_NOTIFICATION_URI)
+                .setContentIntent(openOnNotification)
+                .setTicker(message)
+                .setLights(Color.GREEN,100,100)
+                .setAutoCancel(true)
                 .setSmallIcon(R.drawable.notification_template_icon_bg)
+                //.setContentIntent(openOnNotification)
+
                 .build();
-        notificationManager.notify("newMessage",1,newMessageNoti);
+        if (!ChatConvo.convoOtherUserId.equals(otherUserId)) {
+            notificationManager.notify("newMessage",1,newMessageNoti);
+        }
+
     }
 
     public String getUserName(String userId) {
@@ -215,6 +237,12 @@ public class LiveUsers {
     }
 
     public void disconnect() {
+        /**
+         * Emit event saying that this socket will be disconnecting to server
+         * Server will respond with a event with the socket attached userID &|| userName
+         * Local broadcast saying that this userID is disconnecting
+         * Chat convo actiivty will listen for this broadcast and show "X has left" if the otherUser has left
+         */
         socket.disconnect();
         isConnected = false;
         socket.off("updateUsers",updateUserListener);
