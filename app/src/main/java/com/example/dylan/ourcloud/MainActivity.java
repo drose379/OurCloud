@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void signInSuccess(Person currentUser) {
-        UserInfo.getInstance().setPerson(currentUser);
+        LocalUserInfoController.userSignIn(currentUser);
 
         Intent i = new Intent(this,ThisZone.class);
         startActivity(i);
