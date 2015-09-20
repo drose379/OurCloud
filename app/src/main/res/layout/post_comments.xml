@@ -22,7 +22,7 @@
     <!-- Listview to contain comment cards -->
     <ListView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:dividerHeight="0dp"
         android:divider="@null"
         android:layout_below="@id/addComButton"

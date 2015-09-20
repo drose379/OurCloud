@@ -208,7 +208,7 @@ public class LiveUsers {
         onNotificationIntent = new Intent(context,ChatConvo.class);
         onNotificationIntent.putExtra("other_user",new User().setName(otherUserName).setId(otherUserId));
 
-        openOnNotification = PendingIntent.getActivity(context,1,onNotificationIntent,0);
+        openOnNotification = PendingIntent.getActivity(context,1,onNotificationIntent,PendingIntent.FLAG_UPDATE_CURRENT);
 
         Notification newMessageNoti = new Notification.Builder(context)
                 .setContentTitle("New Message")
@@ -220,11 +220,10 @@ public class LiveUsers {
                 .setLights(Color.GREEN,100,100)
                 .setAutoCancel(true)
                 .setSmallIcon(R.drawable.notification_template_icon_bg)
-                //.setContentIntent(openOnNotification)
-
                 .build();
+
         if (!ChatConvo.convoOtherUserId.equals(otherUserId)) {
-            notificationManager.notify("newMessage",1,newMessageNoti);
+            notificationManager.notify(otherUserId,1,newMessageNoti);
         }
 
     }

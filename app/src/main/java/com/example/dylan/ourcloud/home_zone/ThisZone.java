@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -62,6 +63,7 @@ public class ThisZone extends AppCompatActivity implements View.OnClickListener,
     ListView postContainer;
     TextView noPostsText;
     TextView toolbarTitle;
+    ImageView menuButton;
 
     boolean dialogsInflated;
     MaterialDialog newPost;
@@ -79,7 +81,7 @@ public class ThisZone extends AppCompatActivity implements View.OnClickListener,
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbarTitle = (TextView) toolbar.findViewById(R.id.toolbarTitle);
-
+        menuButton = (ImageView) toolbar.findViewById(R.id.toolbarMenuButton);
         /**
          * Need a controller to grab this zones posts and have callback to this fragment.
          * Show each post in a card
@@ -100,6 +102,7 @@ public class ThisZone extends AppCompatActivity implements View.OnClickListener,
         refreshLayout.setOnRefreshListener(this);
         refreshLayout.setColorSchemeColors(R.color.indicator, R.color.ColorPrimary, R.color.ColorPrimaryDark);
 
+        menuButton.setOnClickListener(this);
         newPostButton.setOnClickListener(this);
 
     }
@@ -125,6 +128,7 @@ public class ThisZone extends AppCompatActivity implements View.OnClickListener,
     @Override
     public void onDestroy() {
         super.onDestroy();
+        Log.i("onDestroy","Destroied");
         liveUsers.disconnect();
 
     }
@@ -266,10 +270,6 @@ public class ThisZone extends AppCompatActivity implements View.OnClickListener,
                         .setType(3)
         );
         menuOptions.add(new MenuOption()
-                        .setTitle("New Post")
-                        .setType(1)
-        );
-        menuOptions.add(new MenuOption()
                         .setTitle("People Here")
                         .setType(1)
         );
@@ -345,9 +345,17 @@ public class ThisZone extends AppCompatActivity implements View.OnClickListener,
     public void onClick(View v) {
         switch(v.getId()) {
             case R.id.newPostButton:
+                Intent i = new Intent(this, PostComposeActivity.class);
+                startActivityForResult(i, 1);
+                break;
+            case R.id.toolbarMenuButton :
                 menuOptionsList.bringToFront();
                 menuLayout.requestLayout();
-                menuLayout.openDrawer(Gravity.LEFT);
+                if (menuLayout.isDrawerOpen(Gravity.LEFT)) {
+                    menuLayout.closeDrawer(Gravity.LEFT);
+                } else {
+                    menuLayout.openDrawer(Gravity.LEFT);
+                }
 
                 break;
         }
@@ -362,17 +370,13 @@ public class ThisZone extends AppCompatActivity implements View.OnClickListener,
                 //me (user info)
                 break;
             case 1:
-                i = new Intent(this, PostComposeActivity.class);
-                startActivityForResult(i, 1);
-                break;
-            case 2:
                 i = new Intent(this,ZoneUserList.class);
                 startActivity(i);
                 break;
-            case 3:
+            case 2:
                 //chat
                 break;
-            case 4 :
+            case 3:
                 //marked zones
                 break;
         }

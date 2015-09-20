@@ -1,5 +1,6 @@
 package com.example.dylan.ourcloud.live_zone;
 
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -44,6 +45,7 @@ public class ChatConvo extends AppCompatActivity implements View.OnClickListener
     ListView messageList;
     Button sendButton;
     EditText messageArea;
+    TextView toolbarTitle;
 
     @Override
     public void onCreate( Bundle savedInstance ) {
@@ -53,8 +55,7 @@ public class ChatConvo extends AppCompatActivity implements View.OnClickListener
         otherUser = getIntent().getParcelableExtra("other_user");
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        TextView toolbarTitle = (TextView) toolbar.findViewById(R.id.toolbarTitle);
-        toolbarTitle.setText(otherUser.getName());
+        toolbarTitle = (TextView) toolbar.findViewById(R.id.toolbarTitle);
 
         messageList = (ListView) findViewById(R.id.messageList);
         sendButton = (Button) findViewById(R.id.sendButton);
@@ -64,18 +65,16 @@ public class ChatConvo extends AppCompatActivity implements View.OnClickListener
 
     }
 
-
-
     @Override
     public void onStart() {
         super.onStart();
-
-        convoOtherUserId = otherUser.getId();
         messageDBHelper = new MessagesDBHelper(this);
         broadcastManager = LocalBroadcastManager.getInstance(this);
-
+        convoOtherUserId = otherUser.getId();
+        toolbarTitle.setText(otherUser.getName());
         getMessages();
         initBroadcastListener();
+        clearNotification();
     }
 
     @Override
@@ -91,6 +90,25 @@ public class ChatConvo extends AppCompatActivity implements View.OnClickListener
                 sendMessage();
                 break;
         }
+    }
+
+    @Override
+    public void onNewIntent(Intent intent) {
+        /**
+         * If user gets notification, and goes to application manager and closes the app before opening the notification,
+         * When they attempt to send a message, the socket in LiveUsers class is null
+         * Need to have a LiveUsers.isConnected() method to check if socket is connected.
+         * If not, call LiveUsers.connect() method
+         *
+         */
+        super.onNewIntent(intent);
+        otherUser = intent.getParcelableExtra("other_user");
+    }
+
+    public void clearNotification() {
+        Log.i("clearNotification","Clear notification called");
+        NotificationManager nManager = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
+        nManager.cancel(otherUser.getId(),1);
     }
 
     public void getMessages() {

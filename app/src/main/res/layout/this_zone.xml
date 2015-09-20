@@ -68,7 +68,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_margin="8dp"
                 fab:fab_hideAnimation="@anim/fab_scale_down"
-                android:src="@drawable/ic_menu_white_24dp"
+                android:src="@drawable/ic_create_white_24dp"
                 />
 
         </RelativeLayout>

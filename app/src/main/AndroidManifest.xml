@@ -25,7 +25,7 @@
         <activity android:name="com.soundcloud.android.crop.CropImageActivity"/>
         <activity android:name=".post_detail.PostDetailView" android:label="Post" />
         <activity android:name=".live_zone.ZoneUserList"/>
-        <activity android:name=".live_zone.ChatConvo" />
+        <activity android:name=".live_zone.ChatConvo" android:launchMode="singleTask" />
 
     </application>
 
