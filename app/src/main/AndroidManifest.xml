@@ -60,6 +60,9 @@
             </intent-filter>
         </service>
 
+        <service android:name=".live_zone.NewLiveUser"
+            android:exported="false"/>
+
         <activity android:name=".home_zone.ThisZone" android:label="ThisZone" />
         <activity android:name=".PostComposeActivity" android:label="New Post" />
         <activity android:name="com.soundcloud.android.crop.CropImageActivity"/>

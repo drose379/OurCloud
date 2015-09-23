@@ -80,7 +80,6 @@ public class ThisZone extends AppCompatActivity implements View.OnClickListener,
 
     @Override
     public void onCreate(Bundle savedInstance) {
-        Log.i("thisZoneCreate", "This zone on create called");
         super.onCreate(savedInstance);
         setContentView(R.layout.this_zone);
 
@@ -119,7 +118,6 @@ public class ThisZone extends AppCompatActivity implements View.OnClickListener,
         thisZoneController = thisZoneController == null ? new ThisZoneController(this) : thisZoneController;
         //liveUsers = liveUsers == null ? LiveUsers.getInstance(this) : liveUsers;
         localUser = LocalUser.getInstance(this);
-
         initNavMenu();
         initDialogs();
     }
@@ -128,14 +126,6 @@ public class ThisZone extends AppCompatActivity implements View.OnClickListener,
     public void onResume() {
         super.onResume();
         initWifiConnect();
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        Log.i("onDestroy", "Destroied");
-//        liveUsers.disconnect();
-
     }
 
     public void initWifiConnect() {
@@ -203,6 +193,7 @@ public class ThisZone extends AppCompatActivity implements View.OnClickListener,
         if(localUser.getItem(LocalUserDBHelper.zone_name_col) == null) {
             newZoneName.show();
         } else {
+
             Intent enterLiveUser = new Intent(this,NewLiveUser.class);
             startService(enterLiveUser);
 

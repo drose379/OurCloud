@@ -6,7 +6,7 @@
     </shared>
   </component>
   <component name="AndroidLogFilters">
-    <option name="TOOL_WINDOW_CUSTOM_FILTER" value="localUserGcm" />
+    <option name="TOOL_WINDOW_CUSTOM_FILTER" value="gcm" />
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
   </component>
   <component name="BookmarkManager">
@@ -18,10 +18,11 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.4/taskArtifacts/fileHashes.bin" afterPath="$PROJECT_DIR$/.gradle/2.4/taskArtifacts/fileHashes.bin" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.4/taskArtifacts/fileSnapshots.bin" afterPath="$PROJECT_DIR$/.gradle/2.4/taskArtifacts/fileSnapshots.bin" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.4/taskArtifacts/taskArtifacts.bin" afterPath="$PROJECT_DIR$/.gradle/2.4/taskArtifacts/taskArtifacts.bin" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/example/dylan/ourcloud/GcmTokenGrab.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/dylan/ourcloud/GcmTokenGrab.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/example/dylan/ourcloud/LocalUser.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/dylan/ourcloud/LocalUser.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/example/dylan/ourcloud/LocalUserDBHelper.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/dylan/ourcloud/LocalUserDBHelper.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/example/dylan/ourcloud/MainActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/dylan/ourcloud/MainActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/example/dylan/ourcloud/live_zone/NewLiveUser.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/dylan/ourcloud/live_zone/NewLiveUser.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/example/dylan/ourcloud/home_zone/ThisZone.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/dylan/ourcloud/home_zone/ThisZone.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
@@ -51,15 +52,26 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="MainActivity.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="MainActivity.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/dylan/ourcloud/MainActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="56" column="9" selection-start-line="56" selection-start-column="9" selection-end-line="56" selection-end-column="9" />
+            <state vertical-scroll-proportion="0.5609493">
+              <caret line="68" column="94" selection-start-line="68" selection-start-column="94" selection-end-line="68" selection-end-column="94" />
               <folding>
-                <element signature="e#2254#2729#0" expanded="true" />
-                <element signature="e#2728#2729#0" expanded="true" />
+                <element signature="imports" expanded="true" />
+                <element signature="e#2178#2663#0" expanded="true" />
+                <element signature="e#2662#2663#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="GcmTokenGrab.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/dylan/ourcloud/GcmTokenGrab.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="7" column="23" selection-start-line="7" selection-start-column="20" selection-end-line="7" selection-end-column="23" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -68,32 +80,57 @@
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/dylan/ourcloud/home_zone/ThisZone.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="209" column="47" selection-start-line="209" selection-start-column="47" selection-end-line="209" selection-end-column="47" />
+              <caret line="119" column="48" selection-start-line="119" selection-start-column="48" selection-end-line="119" selection-end-column="48" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#8532#8763#0" expanded="true" />
-                <element signature="e#8762#8763#0" expanded="true" />
-                <element signature="e#8791#9089#0" expanded="true" />
-                <element signature="e#9088#9089#0" expanded="true" />
-                <element signature="e#9516#10388#0" expanded="true" />
-                <element signature="e#10387#10388#0" expanded="true" />
-                <element signature="e#10509#10521#0" expanded="true" />
-                <element signature="e#15160#15161#0" expanded="true" />
-                <element signature="e#15193#15194#0" expanded="true" />
+                <element signature="e#8315#8546#0" expanded="true" />
+                <element signature="e#8545#8546#0" expanded="true" />
+                <element signature="e#8574#8872#0" expanded="true" />
+                <element signature="e#8871#8872#0" expanded="true" />
+                <element signature="e#9299#10171#0" expanded="true" />
+                <element signature="e#10170#10171#0" expanded="true" />
+                <element signature="e#10292#10304#0" expanded="true" />
+                <element signature="e#14943#14944#0" expanded="true" />
+                <element signature="e#14976#14977#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="NewLiveUser.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="NewLiveUser.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/dylan/ourcloud/live_zone/NewLiveUser.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.71952534">
-              <caret line="45" column="13" selection-start-line="45" selection-start-column="13" selection-end-line="45" selection-end-column="13" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="32" column="100" selection-start-line="32" selection-start-column="100" selection-end-line="32" selection-end-column="100" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#631#632#0" expanded="true" />
-                <element signature="e#667#668#0" expanded="true" />
+                <element signature="e#656#657#0" expanded="true" />
+                <element signature="e#692#693#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ThisZoneController.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/dylan/ourcloud/home_zone/ThisZoneController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="71" column="53" selection-start-line="71" selection-start-column="53" selection-end-line="71" selection-end-column="53" />
+              <folding>
+                <element signature="e#2330#2510#0" expanded="true" />
+                <element signature="e#2509#2510#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="LiveUsers.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/dylan/ourcloud/live_zone/LiveUsers.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="54" column="156" selection-start-line="54" selection-start-column="156" selection-end-line="54" selection-end-column="156" />
+              <folding>
+                <element signature="imports" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -113,23 +150,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="LiveUsers.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/dylan/ourcloud/live_zone/LiveUsers.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="54" column="156" selection-start-line="54" selection-start-column="156" selection-end-line="54" selection-end-column="156" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="LocalUser.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/dylan/ourcloud/LocalUser.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="74" column="92" selection-start-line="74" selection-start-column="92" selection-end-line="74" selection-end-column="92" />
+              <caret line="74" column="8" selection-start-line="74" selection-start-column="8" selection-end-line="74" selection-end-column="8" />
               <folding>
                 <element signature="e#1897#1898#0" expanded="true" />
                 <element signature="e#1958#1959#0" expanded="true" />
@@ -1981,14 +2006,14 @@
         <option value="$PROJECT_DIR$/app/src/main/res/layout/post_compose.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/dylan/ourcloud/live_zone/LiveUsers.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/dylan/ourcloud/live_zone/ChatConvo.java" />
-        <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/build.gradle" />
         <option value="$PROJECT_DIR$/app/build.gradle" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/example/dylan/ourcloud/GcmTokenGrab.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/dylan/ourcloud/LocalUserDBHelper.java" />
+        <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/dylan/ourcloud/LocalUser.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/dylan/ourcloud/MainActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/dylan/ourcloud/GcmTokenGrab.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/dylan/ourcloud/home_zone/ThisZone.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/example/dylan/ourcloud/LocalUserDBHelper.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/dylan/ourcloud/live_zone/NewLiveUser.java" />
       </list>
     </option>
@@ -2109,6 +2134,28 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="OurCloud" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidSourceTypeNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ourcloud" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="home_zone" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
       <pane id="Scratches" />
@@ -2122,7 +2169,7 @@
     <property name="android.sdk.path" value="$USER_HOME$/Android/Sdk" />
     <property name="recentsLimit" value="5" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../GCMTest" />
-    <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_SERIALS" value="emulator-5554" />
+    <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_SERIALS" value="0dcab816" />
     <property name="FullScreen" value="false" />
     <property name="SearchEverywhereHistoryKey" value="userupdate&#9;null&#9;null&#10;Log.i(&quot;userUpdate&quot;)&#9;null&#9;null&#10;ReceivedUpdate&#9;null&#9;null&#10;JSONU&#9;PSI&#9;JAVA://com.example.dylan.ourcloud.util.DateUtil.JSONUtil&#10;JSON&#9;PSI&#9;JAVA://com.example.dylan.ourcloud.util.DateUtil.JSONUtil" />
     <property name="OverrideImplement.combined" value="true" />
@@ -2353,7 +2400,7 @@
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39874738" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39832285" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32744282" sideWeight="0.50208336" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -2789,17 +2836,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/dylan/ourcloud/home_zone/ThisZoneController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.029542098">
-          <caret line="71" column="53" selection-start-line="71" selection-start-column="53" selection-end-line="71" selection-end-column="53" />
-          <folding>
-            <element signature="e#2330#2510#0" expanded="false" />
-            <element signature="e#2509#2510#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/dylan/ourcloud/live_zone/User.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -2836,55 +2872,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.55177516">
-          <caret line="15" column="0" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
-          <folding>
-            <element signature="e#1571#1589#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/dylan/ourcloud/util/UserUtil.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="39" column="0" selection-start-line="39" selection-start-column="0" selection-end-line="39" selection-end-column="0" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/dylan/ourcloud/GcmTokenGrab.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="19" column="65" selection-start-line="19" selection-start-column="65" selection-end-line="19" selection-end-column="65" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#562#563#0" expanded="true" />
-            <element signature="e#598#599#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/dylan/ourcloud/LocalUser.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="74" column="92" selection-start-line="74" selection-start-column="92" selection-end-line="74" selection-end-column="92" />
-          <folding>
-            <element signature="e#1897#1898#0" expanded="true" />
-            <element signature="e#1958#1959#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/dylan/ourcloud/MainActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="56" column="9" selection-start-line="56" selection-start-column="9" selection-end-line="56" selection-end-column="9" />
-          <folding>
-            <element signature="e#2254#2729#0" expanded="true" />
-            <element signature="e#2728#2729#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -2898,21 +2890,23 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/dylan/ourcloud/home_zone/ThisZone.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/dylan/ourcloud/home_zone/ThisZoneController.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="209" column="47" selection-start-line="209" selection-start-column="47" selection-end-line="209" selection-end-column="47" />
+          <caret line="71" column="53" selection-start-line="71" selection-start-column="53" selection-end-line="71" selection-end-column="53" />
           <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#8532#8763#0" expanded="true" />
-            <element signature="e#8762#8763#0" expanded="true" />
-            <element signature="e#8791#9089#0" expanded="true" />
-            <element signature="e#9088#9089#0" expanded="true" />
-            <element signature="e#9516#10388#0" expanded="true" />
-            <element signature="e#10387#10388#0" expanded="true" />
-            <element signature="e#10509#10521#0" expanded="true" />
-            <element signature="e#15160#15161#0" expanded="true" />
-            <element signature="e#15193#15194#0" expanded="true" />
+            <element signature="e#2330#2510#0" expanded="true" />
+            <element signature="e#2509#2510#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.7633136">
+          <caret line="64" column="8" selection-start-line="64" selection-start-column="8" selection-end-line="64" selection-end-column="8" />
+          <folding>
+            <element signature="e#1571#1589#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2925,14 +2919,64 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/dylan/ourcloud/live_zone/NewLiveUser.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/dylan/ourcloud/LocalUser.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.71952534">
-          <caret line="45" column="13" selection-start-line="45" selection-start-column="13" selection-end-line="45" selection-end-column="13" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="74" column="8" selection-start-line="74" selection-start-column="8" selection-end-line="74" selection-end-column="8" />
+          <folding>
+            <element signature="e#1897#1898#0" expanded="true" />
+            <element signature="e#1958#1959#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/dylan/ourcloud/GcmTokenGrab.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="7" column="23" selection-start-line="7" selection-start-column="20" selection-end-line="7" selection-end-column="23" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/dylan/ourcloud/home_zone/ThisZone.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="119" column="48" selection-start-line="119" selection-start-column="48" selection-end-line="119" selection-end-column="48" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#631#632#0" expanded="true" />
-            <element signature="e#667#668#0" expanded="true" />
+            <element signature="e#8315#8546#0" expanded="true" />
+            <element signature="e#8545#8546#0" expanded="true" />
+            <element signature="e#8574#8872#0" expanded="true" />
+            <element signature="e#8871#8872#0" expanded="true" />
+            <element signature="e#9299#10171#0" expanded="true" />
+            <element signature="e#10170#10171#0" expanded="true" />
+            <element signature="e#10292#10304#0" expanded="true" />
+            <element signature="e#14943#14944#0" expanded="true" />
+            <element signature="e#14976#14977#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/dylan/ourcloud/live_zone/NewLiveUser.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="32" column="100" selection-start-line="32" selection-start-column="100" selection-end-line="32" selection-end-column="100" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#656#657#0" expanded="true" />
+            <element signature="e#692#693#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/dylan/ourcloud/MainActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.5609493">
+          <caret line="68" column="94" selection-start-line="68" selection-start-column="94" selection-end-line="68" selection-end-column="94" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#2178#2663#0" expanded="true" />
+            <element signature="e#2662#2663#0" expanded="true" />
           </folding>
         </state>
       </provider>

@@ -26,15 +26,14 @@ public class GcmTokenGrab extends IntentService {
 
     @Override
     public void onHandleIntent( Intent intent ) {
+        String gcmId;
         try {
-            String gcmId = InstanceID.getInstance(this).getToken("937815926312", GoogleCloudMessaging.INSTANCE_ID_SCOPE, null);
-
-            Intent sendGcmId = new Intent(RECEIVE_GCM_TOKEN);
-            sendGcmId.putExtra("gcmId",gcmId);
-            LocalBroadcastManager.getInstance(this).sendBroadcast(sendGcmId);
-
-
+            gcmId = InstanceID.getInstance(this).getToken("937815926312", GoogleCloudMessaging.INSTANCE_ID_SCOPE, null);
         } catch (IOException e) {throw new RuntimeException(e.getMessage());}
+
+        Intent token = new Intent(RECEIVE_GCM_TOKEN);
+        token.putExtra("gcmId",gcmId);
+        LocalBroadcastManager.getInstance(this).sendBroadcast(token);
 
     }
 

@@ -58,19 +58,19 @@ public class LocalUser {
          * Start by deleting all other rows from the DB, no need to store multiple users info at once, only one user will be signed in at a time
          * Then, insert all the persons data into a db row, each row name should correspond to the item name
          */
-        userDBHelper.getWritableDatabase().delete(LocalUserDBHelper.tableName,null,null);
+        userDBHelper.getWritableDatabase().delete(LocalUserDBHelper.tableName, null, null);
         ContentValues userVals = new ContentValues();
 
         userVals.put("id",person.getId());
         userVals.put("name",person.getDisplayName());
-        userVals.put("profile_image",person.getImage().getUrl());
+        userVals.put("profile_image", person.getImage().getUrl());
 
         userDBHelper.getWritableDatabase().insert(LocalUserDBHelper.tableName, null, userVals);
     }
 
     public void setGcmId(String gcmId) {
         ContentValues vals = new ContentValues();
-        vals.put("gcm_id",gcmId);
+        vals.put("gcm_id", gcmId);
 
         userDBHelper.getWritableDatabase().update(LocalUserDBHelper.tableName,vals,null,null);
     }

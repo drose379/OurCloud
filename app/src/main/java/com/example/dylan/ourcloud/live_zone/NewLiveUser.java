@@ -2,6 +2,7 @@ package com.example.dylan.ourcloud.live_zone;
 
 import android.app.IntentService;
 import android.content.Intent;
+import android.util.Log;
 
 import com.example.dylan.ourcloud.LocalUser;
 import com.example.dylan.ourcloud.LocalUserDBHelper;
@@ -28,6 +29,8 @@ public class NewLiveUser extends IntentService {
 
     @Override
     public void onHandleIntent( Intent intent ) {
+        //Untested, need to make a similar service to this that is called when user closes app, to remove them from live users DB
+        //Should get a notificationf from gcm after this request finishes with updated list of users
         LocalUser localUser = LocalUser.getInstance(this);
         OkHttpClient http = new OkHttpClient();
         JSONArray items = new JSONArray()
@@ -40,7 +43,7 @@ public class NewLiveUser extends IntentService {
         RequestBody rBody = RequestBody.create(MediaType.parse("text/plain"), items.toString());
         Request request = new Request.Builder()
                 .post(rBody)
-                .url("")
+                .url("http://104.236.15.47/OurCloudAPI/index.php/live/newUserEnter")
                 .build();
 
         try {
