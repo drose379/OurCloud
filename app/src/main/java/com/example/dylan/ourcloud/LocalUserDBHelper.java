@@ -27,7 +27,7 @@ public class LocalUserDBHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase database) {
         database.execSQL(
-                        "CREATE TABLE user (id TEXT, name TEXT, profile_image TEXT, wifi_id TEXT, networks_in_range TEXT, zone_name TEXT, zone_id TEXT);"
+                        "CREATE TABLE user (id TEXT,gcm_id TEXT, name TEXT, profile_image TEXT, wifi_id TEXT, networks_in_range TEXT, zone_name TEXT, zone_id TEXT);"
         );
     }
 

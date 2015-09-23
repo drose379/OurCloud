@@ -142,7 +142,7 @@ public class ChatConvo extends AppCompatActivity implements View.OnClickListener
 
     public void sendMessage() {
         if ( !messageArea.isEmpty() ) {
-            LiveUsers.getInstance(this).sendMessage(otherUser.getId(),messageArea.getText().toString());
+            //LiveUsers.getInstance(this).sendMessage(otherUser.getId(),messageArea.getText().toString());
             messageArea.clear();
             getMessages();
         }

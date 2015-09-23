@@ -112,7 +112,7 @@ public class ThisZone extends AppCompatActivity implements View.OnClickListener,
         super.onStart();
         wifiController = wifiController == null ? WifiController.getInstance(this) : wifiController;
         thisZoneController = thisZoneController == null ? new ThisZoneController(this) : thisZoneController;
-        liveUsers = liveUsers == null ? LiveUsers.getInstance(this) : liveUsers;
+        //liveUsers = liveUsers == null ? LiveUsers.getInstance(this) : liveUsers;
         localUser = LocalUser.getInstance(this);
 
         initNavMenu();
@@ -129,7 +129,7 @@ public class ThisZone extends AppCompatActivity implements View.OnClickListener,
     public void onDestroy() {
         super.onDestroy();
         Log.i("onDestroy","Destroied");
-        liveUsers.disconnect();
+//        liveUsers.disconnect();
 
     }
 
@@ -154,6 +154,7 @@ public class ThisZone extends AppCompatActivity implements View.OnClickListener,
         localUser.setNetworksInRange(Arrays.asList("UNH-Public"));
 
         thisZoneController.getZoneId(localUser.getItem(LocalUserDBHelper.wifi_id_col), localUser.getNetworksInRange());
+        //add method to thisZoneController for adding live user to the Db
     }
 
     /**
@@ -197,10 +198,11 @@ public class ThisZone extends AppCompatActivity implements View.OnClickListener,
         } else {
             toolbarTitle.setText(zoneName);
             thisZoneController.grabZonePosts();
-
+/**
             if (!liveUsers.isConnected()) {
                 liveUsers.connect();
             }
+ */
         }
 
     }

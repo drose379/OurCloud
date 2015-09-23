@@ -1,7 +1,12 @@
 package com.example.dylan.ourcloud;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.IntentSender;
+import android.os.AsyncTask;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -13,6 +18,7 @@ import android.widget.RelativeLayout;
 import com.example.dylan.ourcloud.home_zone.ThisZone;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.SignInButton;
+import com.google.android.gms.iid.InstanceID;
 import com.google.android.gms.plus.model.people.Person;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener,SignInController.UICallback {
@@ -53,15 +59,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void signInSuccess(Person currentUser) {
-
-        //for testing
         LocalUser.getInstance(this).userSignIn(currentUser);
 
-        Log.i("signIn","New user signed in");
+        //get the token id for gcm
+        Intent registerGcm = new Intent(this,GcmTokenGrab.class);
+        startService(registerGcm);
 
-        Intent i = new Intent(this,ThisZone.class);
-        startActivity(i);
-        this.finish();
+        LocalBroadcastManager.getInstance(this).registerReceiver(new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                LocalUser.getInstance(MainActivity.this).setGcmId(intent.getStringExtra("gcmId"));
+                Intent i = new Intent(MainActivity.this,ThisZone.class);
+                startActivity(i);
+                MainActivity.this.finish();
+            }
+        },new IntentFilter(GcmTokenGrab.RECEIVE_GCM_TOKEN));
+
         /**
          * Need to create class for wifi manager, which has a callback interface once the wifi accesspoint is established
          *

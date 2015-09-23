@@ -68,6 +68,13 @@ public class LocalUser {
         userDBHelper.getWritableDatabase().insert(LocalUserDBHelper.tableName, null, userVals);
     }
 
+    public void setGcmId(String gcmId) {
+        ContentValues vals = new ContentValues();
+        vals.put("gcm_id",gcmId);
+
+        userDBHelper.getWritableDatabase().insert(LocalUserDBHelper.tableName,null,vals);
+    }
+
     public void setWifiId(String wifiId) {
         ContentValues vals = new ContentValues();
         vals.put(LocalUserDBHelper.wifi_id_col,wifiId);
