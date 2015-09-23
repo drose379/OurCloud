@@ -106,7 +106,6 @@ public class ChatConvo extends AppCompatActivity implements View.OnClickListener
     }
 
     public void clearNotification() {
-        Log.i("clearNotification","Clear notification called");
         NotificationManager nManager = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
         nManager.cancel(otherUser.getId(),1);
     }
@@ -126,7 +125,6 @@ public class ChatConvo extends AppCompatActivity implements View.OnClickListener
                             .setText(results.getString(messageCol))
                             .setOtherUserName(results.getString(otherUserNameCol))
                             );
-
         }
 
         if (chatConvoListAdapter != null) {
@@ -139,6 +137,8 @@ public class ChatConvo extends AppCompatActivity implements View.OnClickListener
         }
 
     }
+
+    //add getMessages method to only get newest message in the db, no need to grab all messages when only 1 new message comes
 
     public void sendMessage() {
         if ( !messageArea.isEmpty() ) {

@@ -3,6 +3,7 @@ package com.example.dylan.ourcloud.live_zone;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.app.Service;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
@@ -10,6 +11,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.provider.Settings;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
@@ -74,7 +76,7 @@ public class LiveUsers {
                 message = messageInfo.getString(1);
             } catch (JSONException e) {e.getMessage();}
 
-            handleNewMessage(senderId,message);
+            handleNewMessage(senderId, message);
         }
     };
 
