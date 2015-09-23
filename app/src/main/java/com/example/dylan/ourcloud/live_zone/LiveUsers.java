@@ -51,7 +51,7 @@ public class LiveUsers extends GcmListenerService {
     @Override
     public void onMessageReceived(String from, Bundle data) {
 
-        Log.i("gcmMessage","Received gcm message");
+        Log.i("gcmMessage",data.getString("user_photo"));
 
         /**
          * Check message type, either new live chat for client, or updated list of users in this zone, use a switch to get the 'type' from the received data
