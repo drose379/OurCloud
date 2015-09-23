@@ -13,6 +13,7 @@ public class LocalUserDBHelper extends SQLiteOpenHelper {
     public static String tableName = "user";
 
     public static String user_id_col = "id";
+    public static String gcm_id_col = "gcm_id";
     public static String nameCol = "name";
     public static String profile_image_col = "profile_image";
     public static String wifi_id_col = "wifi_id";

@@ -17,7 +17,7 @@ import java.io.IOException;
  */
 public class GcmTokenGrab extends IntentService {
 
-    public static String RECEIVE_GCM_TOKEN;
+    public static String RECEIVE_GCM_TOKEN = "RECEIVE_GCM_TOKEN";
 
     public GcmTokenGrab() {
         super("RegisterGcm");

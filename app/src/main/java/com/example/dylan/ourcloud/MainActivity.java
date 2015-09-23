@@ -68,12 +68,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         LocalBroadcastManager.getInstance(this).registerReceiver(new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
+                //called when the gcm token service receives this devices gcm token
                 LocalUser.getInstance(MainActivity.this).setGcmId(intent.getStringExtra("gcmId"));
-                Intent i = new Intent(MainActivity.this,ThisZone.class);
+
+                Intent i = new Intent(MainActivity.this, ThisZone.class);
                 startActivity(i);
                 MainActivity.this.finish();
             }
-        },new IntentFilter(GcmTokenGrab.RECEIVE_GCM_TOKEN));
+        }, new IntentFilter(GcmTokenGrab.RECEIVE_GCM_TOKEN));
 
         /**
          * Need to create class for wifi manager, which has a callback interface once the wifi accesspoint is established

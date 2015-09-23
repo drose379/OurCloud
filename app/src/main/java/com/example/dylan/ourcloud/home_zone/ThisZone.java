@@ -1,8 +1,12 @@
 package com.example.dylan.ourcloud.home_zone;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -25,6 +29,7 @@ import com.example.dylan.ourcloud.LocalUserDBHelper;
 import com.example.dylan.ourcloud.NavDrawerAdapter;
 import com.example.dylan.ourcloud.TypeHelper;
 import com.example.dylan.ourcloud.live_zone.LiveUsers;
+import com.example.dylan.ourcloud.live_zone.NewLiveUser;
 import com.example.dylan.ourcloud.live_zone.ZoneUserList;
 import com.example.dylan.ourcloud.post_detail.PostDetailView;
 import com.example.dylan.ourcloud.util.ImageUtil;
@@ -128,7 +133,7 @@ public class ThisZone extends AppCompatActivity implements View.OnClickListener,
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Log.i("onDestroy","Destroied");
+        Log.i("onDestroy", "Destroied");
 //        liveUsers.disconnect();
 
     }
@@ -152,6 +157,8 @@ public class ThisZone extends AppCompatActivity implements View.OnClickListener,
         //Testing
         localUser.setWifiId("UNH-Secure");
         localUser.setNetworksInRange(Arrays.asList("UNH-Public"));
+
+        //Start newUser service here, it will send broadcast when done, receive broadcast here, call getZoneId() inside broadcastreceiver
 
         thisZoneController.getZoneId(localUser.getItem(LocalUserDBHelper.wifi_id_col), localUser.getNetworksInRange());
         //add method to thisZoneController for adding live user to the Db
@@ -188,7 +195,7 @@ public class ThisZone extends AppCompatActivity implements View.OnClickListener,
     }
 
     @Override
-    public void getZoneId(String zoneId,String zoneName) {
+    public void getZoneId(String zoneId,final String zoneName) {
 
         localUser.setZoneId(zoneId);
         localUser.setZoneName(zoneName);
@@ -196,13 +203,12 @@ public class ThisZone extends AppCompatActivity implements View.OnClickListener,
         if(localUser.getItem(LocalUserDBHelper.zone_name_col) == null) {
             newZoneName.show();
         } else {
+            Intent enterLiveUser = new Intent(this,NewLiveUser.class);
+            startService(enterLiveUser);
+
             toolbarTitle.setText(zoneName);
             thisZoneController.grabZonePosts();
-/**
-            if (!liveUsers.isConnected()) {
-                liveUsers.connect();
-            }
- */
+
         }
 
     }
