@@ -45,14 +45,17 @@ public class LiveUsers extends GcmListenerService {
     private boolean isConnected = false;
 
     private Context context;
-    private Socket socket;
     private LocalUser localUser;
 
 
     @Override
     public void onMessageReceived(String from, Bundle data) {
+
+        Log.i("gcmMessage","Received gcm message");
+
         /**
          * Check message type, either new live chat for client, or updated list of users in this zone, use a switch to get the 'type' from the received data
+         * Send local broadcasts from here, just like old activity did
          */
     }
 

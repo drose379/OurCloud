@@ -43,13 +43,18 @@
             android:exported="true"
             android:permission="com.google.android.c2dm.permission.SEND"
             >
-
             <intent-filter>
-                <action android:name="com.google.android.c2dm.RECEIVE"/>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE"/>
                 <category android:name="com.example.dylan.ourcloud"/>
             </intent-filter>
-
         </receiver>
+
+        <service android:name=".live_zone.LiveUsers"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+            </intent-filter>
+        </service>
 
         <service
             android:name=".GcmTokenGrab"
@@ -61,6 +66,9 @@
         </service>
 
         <service android:name=".live_zone.NewLiveUser"
+            android:exported="false"/>
+
+        <service android:name=".live_zone.ExitLiveUser"
             android:exported="false"/>
 
         <activity android:name=".home_zone.ThisZone" android:label="ThisZone" />

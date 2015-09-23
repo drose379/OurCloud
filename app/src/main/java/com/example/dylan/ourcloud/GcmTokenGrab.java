@@ -29,6 +29,7 @@ public class GcmTokenGrab extends IntentService {
         String gcmId;
         try {
             gcmId = InstanceID.getInstance(this).getToken("937815926312", GoogleCloudMessaging.INSTANCE_ID_SCOPE, null);
+            Log.i("gcm",gcmId);
         } catch (IOException e) {throw new RuntimeException(e.getMessage());}
 
         Intent token = new Intent(RECEIVE_GCM_TOKEN);

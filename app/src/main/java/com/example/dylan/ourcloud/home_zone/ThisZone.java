@@ -28,6 +28,7 @@ import com.example.dylan.ourcloud.LocalUser;
 import com.example.dylan.ourcloud.LocalUserDBHelper;
 import com.example.dylan.ourcloud.NavDrawerAdapter;
 import com.example.dylan.ourcloud.TypeHelper;
+import com.example.dylan.ourcloud.live_zone.ExitLiveUser;
 import com.example.dylan.ourcloud.live_zone.LiveUsers;
 import com.example.dylan.ourcloud.live_zone.NewLiveUser;
 import com.example.dylan.ourcloud.live_zone.ZoneUserList;
@@ -126,6 +127,14 @@ public class ThisZone extends AppCompatActivity implements View.OnClickListener,
     public void onResume() {
         super.onResume();
         initWifiConnect();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        //Run a service that makes a request to server to remove this user from live_users table, server will aslo send broadcast of updated users
+        Intent userExit = new Intent( this,ExitLiveUser.class );
+        startService(userExit);
     }
 
     public void initWifiConnect() {

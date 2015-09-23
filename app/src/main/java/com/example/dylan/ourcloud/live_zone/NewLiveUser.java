@@ -30,13 +30,13 @@ public class NewLiveUser extends IntentService {
     @Override
     public void onHandleIntent( Intent intent ) {
         //Untested, need to make a similar service to this that is called when user closes app, to remove them from live users DB
-        //Should get a notificationf from gcm after this request finishes with updated list of users
+        //Should get a notification from gcm after this request finishes with updated list of users
         LocalUser localUser = LocalUser.getInstance(this);
         OkHttpClient http = new OkHttpClient();
         JSONArray items = new JSONArray()
                 .put(localUser.getItem(LocalUserDBHelper.gcm_id_col))
                 .put(localUser.getItem(LocalUserDBHelper.user_id_col))
-                .put(localUser.getItem(LocalUserDBHelper.zone_name_col))
+                .put(localUser.getItem(LocalUserDBHelper.zone_id_col))
                 .put(localUser.getItem(LocalUserDBHelper.nameCol))
                 .put(localUser.getItem(LocalUserDBHelper.profile_image_col));
 
