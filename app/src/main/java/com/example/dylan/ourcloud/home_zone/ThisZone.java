@@ -150,11 +150,7 @@ public class ThisZone extends AppCompatActivity implements View.OnClickListener,
         //Testing
         localUser.setWifiId("UNH-Secure");
         localUser.setNetworksInRange(Arrays.asList("UNH-Public"));
-
-        //Start newUser service here, it will send broadcast when done, receive broadcast here, call getZoneId() inside broadcastreceiver
-
         thisZoneController.getZoneId(localUser.getItem(LocalUserDBHelper.wifi_id_col), localUser.getNetworksInRange());
-        //add method to thisZoneController for adding live user to the Db
     }
 
     /**

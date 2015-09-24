@@ -56,8 +56,6 @@ public class LiveUsers extends GcmListenerService {
 
         if (appActive) {
 
-            Log.i("gcm","Received GCM");
-
             String messageType = data.getString("type");
 
             switch (messageType) {
@@ -77,6 +75,8 @@ public class LiveUsers extends GcmListenerService {
 
                     } catch (JSONException e) {e.getMessage();}
 
+                    updateUsers();
+
                     break;
 
                 case "2"  :
@@ -90,6 +90,12 @@ public class LiveUsers extends GcmListenerService {
          * Check message type, either new live chat for client, or updated list of users in this zone, use a switch to get the 'type' from the received data
          * Send local broadcasts from here, just like old activity did
          */
+    }
+
+    public void updateUsers() {
+        Intent updateUsers = new Intent(UPDATE_ACTIVE_USERS);
+        updateUsers.putParcelableArrayListExtra("activeUsers",users);
+        LocalBroadcastManager.getInstance(this).sendBroadcast(updateUsers);
     }
 
 }
