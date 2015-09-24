@@ -15,6 +15,7 @@ import android.os.IBinder;
 import android.provider.Settings;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.example.dylan.ourcloud.LocalUser;
 import com.example.dylan.ourcloud.LocalUserDBHelper;
@@ -40,6 +41,7 @@ public class LiveUsers extends GcmListenerService {
 
     public static final String UPDATE_ACTIVE_USERS = "UPDATE_ACTIVE_USERS";
     public static final String NEW_PRIVATE_MESSAGE = "NEW_PRIVATE_MESSAGE";
+    public static boolean appActive = true;
     public static ArrayList<User> users = new ArrayList<>();
 
     private boolean isConnected = false;
@@ -48,10 +50,41 @@ public class LiveUsers extends GcmListenerService {
     private LocalUser localUser;
 
 
+
     @Override
     public void onMessageReceived(String from, Bundle data) {
 
-        Log.i("gcmMessage",data.getString("user_photo"));
+        if (appActive) {
+
+            Log.i("gcm","Received GCM");
+
+            String messageType = data.getString("type");
+
+            switch (messageType) {
+                case "1" :
+
+                    LiveUsers.users.clear();
+                    try {
+
+                        JSONArray users = new JSONArray(data.getString("message"));
+                        for (int i = 0; i < users.length(); i++) {
+                            JSONObject currentUser = new JSONObject(users.getString(i));
+                            LiveUsers.users.add(new User()
+                                    .setId(currentUser.getString("user_id"))
+                                    .setName(currentUser.getString("user_name"))
+                                    .setImage(currentUser.getString("user_photo")));
+                        }
+
+                    } catch (JSONException e) {e.getMessage();}
+
+                    break;
+
+                case "2"  :
+                    //new private message
+                    //set a notification
+                    break;
+            }
+        }
 
         /**
          * Check message type, either new live chat for client, or updated list of users in this zone, use a switch to get the 'type' from the received data

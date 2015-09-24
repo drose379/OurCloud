@@ -25,6 +25,7 @@ public class ExitLiveUser extends IntentService {
 
     @Override
     public void onHandleIntent(Intent intent) {
+        LiveUsers.appActive = false;
         OkHttpClient http = new OkHttpClient();
         LocalUser user = LocalUser.getInstance(this);
         RequestBody body = RequestBody.create(MediaType.parse("text/plain"),

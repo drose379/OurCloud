@@ -119,6 +119,7 @@ public class ThisZone extends AppCompatActivity implements View.OnClickListener,
         thisZoneController = thisZoneController == null ? new ThisZoneController(this) : thisZoneController;
         //liveUsers = liveUsers == null ? LiveUsers.getInstance(this) : liveUsers;
         localUser = LocalUser.getInstance(this);
+        LiveUsers.appActive = true;
         initNavMenu();
         initDialogs();
     }
@@ -129,13 +130,6 @@ public class ThisZone extends AppCompatActivity implements View.OnClickListener,
         initWifiConnect();
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        //Run a service that makes a request to server to remove this user from live_users table, server will aslo send broadcast of updated users
-        Intent userExit = new Intent( this,ExitLiveUser.class );
-        startService(userExit);
-    }
 
     public void initWifiConnect() {
         /** For testing, setting Zone statically
@@ -293,6 +287,10 @@ public class ThisZone extends AppCompatActivity implements View.OnClickListener,
                         .setTitle("Mark This Zone")
                         .setType(1)
         );
+        menuOptions.add(new MenuOption()
+                        .setTitle("Exit")
+                        .setType(1)
+        );
 
         menuOptionsList.setAdapter(new NavDrawerAdapter(this,menuOptions));
         menuOptionsList.setOnItemClickListener(this);
@@ -386,6 +384,14 @@ public class ThisZone extends AppCompatActivity implements View.OnClickListener,
                 break;
             case 3:
                 //marked zones
+                break;
+            case 4:
+                //mark this zone
+                break;
+            case 5:
+                Intent exit = new Intent(this,ExitLiveUser.class);
+                startService(exit);
+                this.finish();
                 break;
         }
     }
