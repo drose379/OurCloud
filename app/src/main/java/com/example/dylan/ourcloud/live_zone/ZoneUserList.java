@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.example.dylan.ourcloud.LocalUser;
 import com.example.dylan.ourcloud.LocalUserDBHelper;
+import com.example.dylan.ourcloud.NetworkListenerActivity;
 import com.example.dylan.ourcloud.R;
 import com.example.dylan.ourcloud.TypeHelper;
 
@@ -32,7 +33,7 @@ import java.util.List;
 /**
  * Created by dylan on 9/10/15.
  */
-public class ZoneUserList extends AppCompatActivity {
+public class ZoneUserList extends NetworkListenerActivity {
 
     private LocalUser localUser;
 
@@ -68,8 +69,6 @@ public class ZoneUserList extends AppCompatActivity {
 
 
         initUserReceiver();
-        initNetworkReceiver();
-
     }
 
     public void initUserReceiver() {
@@ -83,17 +82,6 @@ public class ZoneUserList extends AppCompatActivity {
                 updateUserList(usersList);
             }
         }, iFilter);
-    }
-
-    public void initNetworkReceiver() {
-        BroadcastReceiver networkReceiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                ZoneUserList.this.finish();
-            }
-        };
-
-        LocalBroadcastManager.getInstance(this).registerReceiver(networkReceiver,new IntentFilter(WifiStateListener.EXIT_WIFI));
     }
 
     public void updateUserList(final List<User> users) {

@@ -1,5 +1,6 @@
 package com.example.dylan.ourcloud.post_detail;
 
+import android.content.BroadcastReceiver;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
@@ -11,6 +12,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.dylan.ourcloud.NetworkListenerActivity;
 import com.example.dylan.ourcloud.Post;
 import com.example.dylan.ourcloud.R;
 import com.example.dylan.ourcloud.TypeHelper;
@@ -32,7 +34,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 */
 
 
-public class PostDetailView extends AppCompatActivity implements View.OnClickListener {
+public class PostDetailView extends NetworkListenerActivity implements View.OnClickListener {
 
     private Post post;
     private Bundle postBundle;
@@ -75,6 +77,11 @@ public class PostDetailView extends AppCompatActivity implements View.OnClickLis
 
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+    }
+
 
     @Override
     public void onClick(View v) {
@@ -91,8 +98,6 @@ public class PostDetailView extends AppCompatActivity implements View.OnClickLis
                 break;
         }
     }
-
-
 
     public void initHeaderView() {
         CircleImageView userHeader = (CircleImageView) findViewById(R.id.userHeaderPhoto);

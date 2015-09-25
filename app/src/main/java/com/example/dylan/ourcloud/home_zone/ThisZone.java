@@ -29,6 +29,7 @@ import com.example.dylan.ourcloud.LocalUser;
 import com.example.dylan.ourcloud.LocalUserDBHelper;
 import com.example.dylan.ourcloud.MainActivity;
 import com.example.dylan.ourcloud.NavDrawerAdapter;
+import com.example.dylan.ourcloud.NetworkListenerActivity;
 import com.example.dylan.ourcloud.TypeHelper;
 import com.example.dylan.ourcloud.live_zone.ExitLiveUser;
 import com.example.dylan.ourcloud.live_zone.LiveUsers;
@@ -53,7 +54,7 @@ import java.util.List;
 /**
  * Created by dylan on 8/6/15.
  */
-public class ThisZone extends AppCompatActivity implements View.OnClickListener,ListView.OnScrollListener,AdapterView.OnItemClickListener,
+public class ThisZone extends NetworkListenerActivity implements View.OnClickListener,ListView.OnScrollListener,AdapterView.OnItemClickListener,
         SwipeRefreshLayout.OnRefreshListener,ThisZoneController.Callback,
     ImageUtil.ImageCallback{
 
@@ -130,17 +131,7 @@ public class ThisZone extends AppCompatActivity implements View.OnClickListener,
     public void onResume() {
         super.onResume();
         initWifiConnect();
-        initNetworkBroadcastListener();
 
-    }
-
-    public void initNetworkBroadcastListener() {
-        LocalBroadcastManager.getInstance(this).registerReceiver(new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                ThisZone.this.finish();
-            }
-        }, new IntentFilter(WifiStateListener.EXIT_WIFI));
     }
 
     public void initWifiConnect() {

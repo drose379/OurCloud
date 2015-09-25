@@ -24,6 +24,7 @@ import android.widget.TextView;
 
 
 import com.example.dylan.ourcloud.EditText;
+import com.example.dylan.ourcloud.NetworkListenerActivity;
 import com.example.dylan.ourcloud.R;
 import com.example.dylan.ourcloud.TypeHelper;
 
@@ -33,7 +34,7 @@ import java.util.List;
 /**
  * Created by dylan on 9/16/15.
  */
-public class ChatConvo extends AppCompatActivity implements View.OnClickListener {
+public class ChatConvo extends NetworkListenerActivity implements View.OnClickListener {
 
     public static String convoOtherUserId = "0";
 
@@ -76,7 +77,6 @@ public class ChatConvo extends AppCompatActivity implements View.OnClickListener
         toolbarTitle.setText(otherUser.getName());
         getMessages();
         initBroadcastListener();
-        initNetworkReceiver();
         clearNotification();
     }
 
@@ -93,16 +93,6 @@ public class ChatConvo extends AppCompatActivity implements View.OnClickListener
                 sendMessage();
                 break;
         }
-    }
-
-    public void initNetworkReceiver() {
-        BroadcastReceiver wifiReceiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context,Intent intent) {
-                ChatConvo.this.finish();
-            }
-        };
-        LocalBroadcastManager.getInstance(this).registerReceiver(wifiReceiver,new IntentFilter(WifiStateListener.EXIT_WIFI));
     }
 
     @Override
