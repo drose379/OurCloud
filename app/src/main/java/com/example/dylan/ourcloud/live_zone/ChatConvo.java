@@ -27,6 +27,7 @@ import com.example.dylan.ourcloud.EditText;
 import com.example.dylan.ourcloud.NetworkListenerActivity;
 import com.example.dylan.ourcloud.R;
 import com.example.dylan.ourcloud.TypeHelper;
+import com.example.dylan.ourcloud.UserListenerActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +35,7 @@ import java.util.List;
 /**
  * Created by dylan on 9/16/15.
  */
-public class ChatConvo extends NetworkListenerActivity implements View.OnClickListener {
+public class ChatConvo extends UserListenerActivity implements View.OnClickListener {
 
     public static String convoOtherUserId = "0";
 
@@ -76,7 +77,7 @@ public class ChatConvo extends NetworkListenerActivity implements View.OnClickLi
         convoOtherUserId = otherUser.getId();
         toolbarTitle.setText(otherUser.getName());
         getMessages();
-        initBroadcastListener();
+        initMessageListener();
         clearNotification();
     }
 
@@ -106,6 +107,38 @@ public class ChatConvo extends NetworkListenerActivity implements View.OnClickLi
          */
         super.onNewIntent(intent);
         otherUser = intent.getParcelableExtra("other_user");
+    }
+
+    @Override
+    public void userUpdate(List<User> users) {
+        /**
+         * If otherUser is not found in the updated list of Users, show card in messages with no name, saying X user has left, save this to db so it is shown next time
+         * Disable the send button when user leaves, re enable if chat activity is still open and otherUser re-joins
+         * To show send is disabled, change its button to a darker or dif shade
+         */
+
+        boolean userFound = false;
+
+        for (User user : users) {
+            if (user.getName().equals(otherUser.getName())) {
+                userFound = true;
+            }
+        }
+
+        if (!userFound) {
+            //add a message to localdb saying the user has left, highlight it somehow
+            //disable send button
+            ContentValues vals = new ContentValues();
+            vals.put("message",otherUser.getName() + " has left!");
+            vals.put("origin","3");
+            vals.put("other_user_id",otherUser.getId());
+            vals.put("other_user_name","");
+
+            messageDBHelper.getWritableDatabase().insert("messages",null,vals);
+
+            getMessages();
+        }
+
     }
 
     public void clearNotification() {
@@ -174,7 +207,7 @@ public class ChatConvo extends NetworkListenerActivity implements View.OnClickLi
 
 
 
-    public void initBroadcastListener() {
+    public void initMessageListener() {
         //Listen for new private message broadcast
         //Only act if the senderId in the broadcast matches up with senderId in this conversation
         IntentFilter newMessageFilter = new IntentFilter(LiveUsers.NEW_PRIVATE_MESSAGE);

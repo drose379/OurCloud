@@ -136,24 +136,22 @@ public class ThisZone extends NetworkListenerActivity implements View.OnClickLis
 
     public void initWifiConnect() {
         /** For testing, setting Zone statically
+        LocalUser localUser = LocalUser.getInstance(this);
         if (wifiController.isConnected()) {
-            UserInfo.getInstance().setWifiId(wifiController.getWifiId());
-            UserInfo.getInstance().setNetworksInRange(wifiController.getNetworksInRange());
+            localUser.setWifiId(wifiController.getWifiId());
+            localUser.setNetworksInRange(wifiController.getNetworksInRange());
 
-            thisZoneController.getZoneId(UserInfo.getInstance().getWifiSSID(), UserInfo.getInstance().getNetworksInRange());
+            thisZoneController.getZoneId(localUser.getItem(LocalUserDBHelper.wifi_id_col), localUser.getNetworksInRange());
         } else {
-            //enableWifi.show();
-            //FOR TESTING WITH EMULATOR
-            UserInfo.getInstance().setWifiId("UNH-Secure");
-            UserInfo.getInstance().setNetworksInRange(Arrays.asList("UNH-Public"));
-            thisZoneController.getZoneId(UserInfo.getInstance().getWifiSSID(), UserInfo.getInstance().getNetworksInRange());
+            enableWifi.show();
         }
-         */
+*/
 
         //Testing
         localUser.setWifiId("UNH-Secure");
         localUser.setNetworksInRange(Arrays.asList("UNH-Public"));
         thisZoneController.getZoneId(localUser.getItem(LocalUserDBHelper.wifi_id_col), localUser.getNetworksInRange());
+
     }
 
     /**
@@ -192,7 +190,7 @@ public class ThisZone extends NetworkListenerActivity implements View.OnClickLis
         localUser.setZoneId(zoneId);
         localUser.setZoneName(zoneName);
 
-        if(localUser.getItem(LocalUserDBHelper.zone_name_col) == null) {
+        if(localUser.getItem(LocalUserDBHelper.zone_name_col).equals("null")) {
             newZoneName.show();
         } else {
 
