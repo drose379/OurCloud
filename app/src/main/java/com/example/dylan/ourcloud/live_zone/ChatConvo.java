@@ -3,6 +3,7 @@ package com.example.dylan.ourcloud.live_zone;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -49,6 +50,7 @@ public class ChatConvo extends AppCompatActivity implements View.OnClickListener
 
     @Override
     public void onCreate( Bundle savedInstance ) {
+
         super.onCreate(savedInstance);
         setContentView(R.layout.chat_convo);
 
@@ -74,6 +76,7 @@ public class ChatConvo extends AppCompatActivity implements View.OnClickListener
         toolbarTitle.setText(otherUser.getName());
         getMessages();
         initBroadcastListener();
+        initNetworkReceiver();
         clearNotification();
     }
 
@@ -90,6 +93,16 @@ public class ChatConvo extends AppCompatActivity implements View.OnClickListener
                 sendMessage();
                 break;
         }
+    }
+
+    public void initNetworkReceiver() {
+        BroadcastReceiver wifiReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context,Intent intent) {
+                ChatConvo.this.finish();
+            }
+        };
+        LocalBroadcastManager.getInstance(this).registerReceiver(wifiReceiver,new IntentFilter(WifiStateListener.EXIT_WIFI));
     }
 
     @Override
@@ -142,11 +155,34 @@ public class ChatConvo extends AppCompatActivity implements View.OnClickListener
 
     public void sendMessage() {
         if ( !messageArea.isEmpty() ) {
-            //LiveUsers.getInstance(this).sendMessage(otherUser.getId(),messageArea.getText().toString());
-            messageArea.clear();
+            Intent sendMessage = new Intent(this,SendPrivateMessage.class);
+            Bundle messageInfo = new Bundle();
+            messageInfo.putString("receiverUserId",otherUser.getId());
+            messageInfo.putString("message", messageArea.getText().toString());
+            sendMessage.putExtra("messageInfo", messageInfo);
+            startService(sendMessage);
+
+            insertMessageToLocal(otherUser.getId(),messageArea.getText().toString(),1);
             getMessages();
+
+            messageArea.clear();
         }
     }
+
+    public void insertMessageToLocal(String otherUserId,String message,int origin) {
+        String otherUserName = LiveUsers.getUserName(otherUserId);
+        SQLiteDatabase writeable = messageDBHelper.getWritableDatabase();
+
+        ContentValues vals = new ContentValues();
+        vals.put("other_user_id",otherUserId);
+        vals.put("other_user_name",otherUserName);
+        vals.put("origin", origin);
+        vals.put("message", message);
+
+        writeable.insert("messages", null, vals);
+    }
+
+
 
     public void initBroadcastListener() {
         //Listen for new private message broadcast
@@ -155,6 +191,7 @@ public class ChatConvo extends AppCompatActivity implements View.OnClickListener
         broadcastManager.registerReceiver(new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
+                Log.i("chatConvo","Received broadcast");
                 String otherUserId = intent.getStringExtra("other_user_id");
                 if (otherUserId.equals(otherUser.getId())) {
                     getMessages();

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.net.Network;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.DrawerLayout;
@@ -26,11 +27,13 @@ import android.widget.TextView;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.example.dylan.ourcloud.LocalUser;
 import com.example.dylan.ourcloud.LocalUserDBHelper;
+import com.example.dylan.ourcloud.MainActivity;
 import com.example.dylan.ourcloud.NavDrawerAdapter;
 import com.example.dylan.ourcloud.TypeHelper;
 import com.example.dylan.ourcloud.live_zone.ExitLiveUser;
 import com.example.dylan.ourcloud.live_zone.LiveUsers;
 import com.example.dylan.ourcloud.live_zone.NewLiveUser;
+import com.example.dylan.ourcloud.live_zone.WifiStateListener;
 import com.example.dylan.ourcloud.live_zone.ZoneUserList;
 import com.example.dylan.ourcloud.post_detail.PostDetailView;
 import com.example.dylan.ourcloud.util.ImageUtil;
@@ -57,7 +60,6 @@ public class ThisZone extends AppCompatActivity implements View.OnClickListener,
     private WifiController wifiController;
     private ThisZoneController thisZoneController;
     private LocalUser localUser;
-    private LiveUsers liveUsers;
 
     Intent newPostTempData;
 
@@ -76,6 +78,7 @@ public class ThisZone extends AppCompatActivity implements View.OnClickListener,
     MaterialDialog enableWifi;
     MaterialDialog newZoneName;
     MaterialDialog mainOptionsMenu;
+    MaterialDialog exitZone;
 
     int previousVisibleItem;
 
@@ -117,7 +120,6 @@ public class ThisZone extends AppCompatActivity implements View.OnClickListener,
         super.onStart();
         wifiController = wifiController == null ? WifiController.getInstance(this) : wifiController;
         thisZoneController = thisZoneController == null ? new ThisZoneController(this) : thisZoneController;
-        //liveUsers = liveUsers == null ? LiveUsers.getInstance(this) : liveUsers;
         localUser = LocalUser.getInstance(this);
         LiveUsers.appActive = true;
         initNavMenu();
@@ -128,8 +130,18 @@ public class ThisZone extends AppCompatActivity implements View.OnClickListener,
     public void onResume() {
         super.onResume();
         initWifiConnect();
+        initNetworkBroadcastListener();
+
     }
 
+    public void initNetworkBroadcastListener() {
+        LocalBroadcastManager.getInstance(this).registerReceiver(new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                ThisZone.this.finish();
+            }
+        }, new IntentFilter(WifiStateListener.EXIT_WIFI));
+    }
 
     public void initWifiConnect() {
         /** For testing, setting Zone statically
@@ -256,6 +268,18 @@ public class ThisZone extends AppCompatActivity implements View.OnClickListener,
                 })
                 .build();
 
+
+        exitZone = new MaterialDialog.Builder(ThisZone.this)
+                .title("You left the zone!")
+                .positiveText("Exit")
+                .callback(new MaterialDialog.ButtonCallback() {
+                    @Override
+                    public void onPositive(MaterialDialog dialog) {
+                        dialog.dismiss();
+                        ThisZone.this.finish();
+                    }
+                })
+                .build();
 
     }
 
@@ -386,6 +410,7 @@ public class ThisZone extends AppCompatActivity implements View.OnClickListener,
                 break;
             case 5:
                 Intent exit = new Intent(this,ExitLiveUser.class);
+                LiveUsers.appActive = false;
                 startService(exit);
                 this.finish();
                 break;

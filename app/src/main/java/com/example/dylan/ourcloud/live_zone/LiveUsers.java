@@ -42,14 +42,12 @@ public class LiveUsers extends GcmListenerService {
     public static final String UPDATE_ACTIVE_USERS = "UPDATE_ACTIVE_USERS";
     public static final String NEW_PRIVATE_MESSAGE = "NEW_PRIVATE_MESSAGE";
     public static boolean appActive = true;
+
     public static ArrayList<User> users = new ArrayList<>();
 
     private boolean isConnected = false;
 
-    private Context context;
     private LocalUser localUser;
-
-
 
     @Override
     public void onMessageReceived(String from, Bundle data) {
@@ -80,8 +78,30 @@ public class LiveUsers extends GcmListenerService {
                     break;
 
                 case "2"  :
-                    //new private message
-                    //set a notification
+
+                    //NEEDS CLEAN UP
+
+                    SQLiteDatabase writeable = new MessagesDBHelper(this).getWritableDatabase();
+
+                    String senderId = data.getString("senderId");
+                    String senderName = data.getString("senderName");
+                    String message = data.getString("message");
+                    int origin = 2;
+
+                    ContentValues vals = new ContentValues();
+                    vals.put("other_user_id",senderId);
+                    vals.put("other_user_name", senderName);
+                    vals.put("origin", origin);
+                    vals.put("message", message);
+
+                    writeable.insert("messages", null, vals);
+
+                    Intent newMessage = new Intent(NEW_PRIVATE_MESSAGE);
+                    newMessage.putExtra("other_user_id",senderId);
+                    LocalBroadcastManager.getInstance(this).sendBroadcast(newMessage);
+
+                    notifyNewMessage(senderId,senderName,message);
+
                     break;
             }
         }
@@ -96,6 +116,46 @@ public class LiveUsers extends GcmListenerService {
         Intent updateUsers = new Intent(UPDATE_ACTIVE_USERS);
         updateUsers.putParcelableArrayListExtra("activeUsers",users);
         LocalBroadcastManager.getInstance(this).sendBroadcast(updateUsers);
+    }
+
+    public void notifyNewMessage(String otherUserId,String senderName, String message) {
+        //String otherUserName = getUserName(otherUserId);
+
+
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+        Intent onNotificationIntent = new Intent(this,ChatConvo.class);
+        onNotificationIntent.putExtra("other_user",new User().setName(senderName).setId(otherUserId));
+
+        //PendingIntent openOnNotification = PendingIntent.getActivity(this,1,onNotificationIntent,PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent openOnNotification = PendingIntent.getActivity(this,2,onNotificationIntent,PendingIntent.FLAG_UPDATE_CURRENT);
+
+        Notification newMessageNoti = new Notification.Builder(this)
+                .setContentTitle("New Message")
+                .setContentTitle(senderName)
+                .setContentText(message)
+                .setSound(Settings.System.DEFAULT_NOTIFICATION_URI)
+                .setContentIntent(openOnNotification)
+                .setTicker(message)
+                .setLights(Color.GREEN,100,100)
+                .setAutoCancel(true)
+                .setSmallIcon(R.drawable.notification_template_icon_bg)
+                .build();
+
+        if (!ChatConvo.convoOtherUserId.equals(otherUserId)) {
+            notificationManager.notify(otherUserId,1,newMessageNoti);
+        }
+
+    }
+
+    public static String getUserName(String userId) {
+        String otherUserName = null;
+        for(User user : LiveUsers.users) {
+            if (user.getId().equals(userId)) {
+                otherUserName = user.getName();
+            }
+        }
+        return otherUserName;
     }
 
 }

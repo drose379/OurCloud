@@ -65,8 +65,17 @@ public class ZoneUserList extends AppCompatActivity {
         super.onStart();
 
         updateUserList(currentUsers);
+
+
+        initUserReceiver();
+        initNetworkReceiver();
+
+    }
+
+    public void initUserReceiver() {
         LocalBroadcastManager broadcastManager = LocalBroadcastManager.getInstance(this);
         IntentFilter iFilter = new IntentFilter(LiveUsers.UPDATE_ACTIVE_USERS);
+
         broadcastManager.registerReceiver(new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
@@ -74,6 +83,17 @@ public class ZoneUserList extends AppCompatActivity {
                 updateUserList(usersList);
             }
         }, iFilter);
+    }
+
+    public void initNetworkReceiver() {
+        BroadcastReceiver networkReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                ZoneUserList.this.finish();
+            }
+        };
+
+        LocalBroadcastManager.getInstance(this).registerReceiver(networkReceiver,new IntentFilter(WifiStateListener.EXIT_WIFI));
     }
 
     public void updateUserList(final List<User> users) {
