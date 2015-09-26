@@ -126,19 +126,36 @@ public class ChatConvo extends UserListenerActivity implements View.OnClickListe
         }
 
         if (!userFound) {
-            //add a message to localdb saying the user has left, highlight it somehow
-            //disable send button
-            ContentValues vals = new ContentValues();
-            vals.put("message",otherUser.getName() + " has left!");
-            vals.put("origin","3");
-            vals.put("other_user_id",otherUser.getId());
-            vals.put("other_user_name","");
-
-            messageDBHelper.getWritableDatabase().insert("messages",null,vals);
-
+            otherUserLeft();
+            getMessages();
+        } else if (sendButton.getVisibility() == View.GONE) {
+            //this fires if the other user left, and this convo is still open, and the other user re-joins
+            otherUserJoined();
             getMessages();
         }
 
+    }
+
+    public void otherUserLeft() {
+        ContentValues vals = new ContentValues();
+        vals.put("message",otherUser.getName() + " has left!");
+        vals.put("origin","3");
+        vals.put("other_user_id",otherUser.getId());
+        vals.put("other_user_name","");
+
+        messageDBHelper.getWritableDatabase().insert("messages",null,vals);
+        sendButton.setVisibility(View.GONE);
+    }
+
+    public void otherUserJoined() {
+        ContentValues vals = new ContentValues();
+        vals.put("message",otherUser.getName() + " has joined!!");
+        vals.put("origin","3");
+        vals.put("other_user_id",otherUser.getId());
+        vals.put("other_user_name","");
+
+        messageDBHelper.getWritableDatabase().insert("messages",null,vals);
+        sendButton.setVisibility(View.VISIBLE);
     }
 
     public void clearNotification() {
