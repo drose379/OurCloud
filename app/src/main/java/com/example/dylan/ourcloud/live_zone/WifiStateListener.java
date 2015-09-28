@@ -10,6 +10,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.example.dylan.ourcloud.WifiController;
 
 /**
  * Created by dylan on 9/24/15.
@@ -21,22 +22,25 @@ public class WifiStateListener extends BroadcastReceiver {
     @Override
     public void onReceive(Context context,Intent intent) {
 
-        ConnectivityManager conManager = (ConnectivityManager) context.getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        WifiController controller = WifiController.getInstance(context);
+
 
         /**
          * Need to add a check if network "mobile" is active, if yes, call all code below
          * If it is Wifi, this means the user entered a new wifi zone, update all info, remove them from current zone... etc
          */
 
-        Log.i("wifiState","wifi state intent sent");
+        if (!controller.isConnected()) {
+            LiveUsers.appActive = false;
 
-        LiveUsers.appActive = false;
+            Intent networkChange = new Intent(EXIT_WIFI);
+            LocalBroadcastManager.getInstance(context).sendBroadcast(networkChange);
 
-        Intent networkChange = new Intent(EXIT_WIFI);
-        LocalBroadcastManager.getInstance(context).sendBroadcast(networkChange);
+            Intent exitUser = new Intent(context,ExitLiveUser.class);
+            context.startService(exitUser);
+        }
 
-        Intent exitUser = new Intent(context,ExitLiveUser.class);
-        context.startService(exitUser);
+
 
         /**
          * Need to implement whether the network is connected or disconnected, and act accordingly.
