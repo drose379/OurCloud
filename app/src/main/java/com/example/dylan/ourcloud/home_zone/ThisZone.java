@@ -315,8 +315,6 @@ public class ThisZone extends NetworkListenerActivity implements View.OnClickLis
     @Override
     public void onActivityResult(int requestCode,int resultCode,Intent data) {
 
-        //save post type and send it to the PostDetailView to decide menu items for nav
-
         super.onActivityResult(requestCode, resultCode, data);
 
         switch (resultCode) {
@@ -328,12 +326,12 @@ public class ThisZone extends NetworkListenerActivity implements View.OnClickLis
 
             case PostComposeActivity.POST_BOTH:
                 newPostTempData = data;
-                ImageUtil.getInstance().uploadImage(this,PostComposeActivity.POST_BOTH,(File)data.getSerializableExtra("postImage"));
+                ImageUtil.getInstance(this).uploadImage(this,PostComposeActivity.POST_BOTH,(File)data.getSerializableExtra("postImage"));
                 break;
 
             case PostComposeActivity.POST_PHOTO_ONLY:
                 newPostTempData = data;
-                ImageUtil.getInstance().uploadImage(this,PostComposeActivity.POST_PHOTO_ONLY,(File)data.getSerializableExtra("postImage"));
+                ImageUtil.getInstance(this).uploadImage(this,PostComposeActivity.POST_PHOTO_ONLY,(File)data.getSerializableExtra("postImage"));
                 break;
         }
 

@@ -14,6 +14,7 @@ import com.squareup.okhttp.RequestBody;
 import com.squareup.okhttp.Response;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -28,23 +29,24 @@ public class ImageUtil {
         public void imageUploaded(int status,String url);
     }
 
-    public static ImageUtil instance = null;
+    private static ImageUtil instance = null;
+    private Context context;
 
     private OkHttpClient httpClient;
 
-    public static ImageUtil getInstance() {
+    public static ImageUtil getInstance( Context context ) {
         if (instance == null) {
-            instance = new ImageUtil();
+            instance = new ImageUtil(context);
         }
         return instance;
     }
 
-    public ImageUtil() {
+    public ImageUtil( Context context ) {
+        this.context = context;
         httpClient = new OkHttpClient();
     }
 
     public void uploadImage(Context context,final int status,File postImage) {
-        Log.i("postImage",postImage.getName());
         final ImageCallback callback = (ImageCallback) context;
 
         MediaType MEDIA_TYPE_JPG = MediaType.parse("image/jpeg");
@@ -71,14 +73,19 @@ public class ImageUtil {
 
     }
 
-    public static File newImageFile() throws IOException {
+    public File newImageFile() throws IOException {
         Random r = new Random();
         r.nextInt(1000000);
 
-        String fileName = "JPEG_" + r.nextInt();
+        String fileName = "JPEG" + r.nextInt();
+        //File storageDirectory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
         File storageDirectory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
 
-        File image = File.createTempFile(fileName,".jpg",storageDirectory);
+        storageDirectory.mkdirs();
+
+        File image = new File(storageDirectory, fileName + ".jpg");
+
+        image.createNewFile();
 
         return image;
     }

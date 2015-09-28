@@ -125,7 +125,7 @@ public class PostComposeActivity extends AppCompatActivity implements View.OnCli
                         switch (i) {
                             case 0:
                                 try {
-                                    postImage = ImageUtil.newImageFile();
+                                    postImage = ImageUtil.getInstance(PostComposeActivity.this).newImageFile();
                                     Intent takePhoto = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                                     takePhoto.putExtra(MediaStore.EXTRA_OUTPUT,Uri.fromFile(postImage));
                                     startActivityForResult(takePhoto,1);
@@ -203,7 +203,7 @@ public class PostComposeActivity extends AppCompatActivity implements View.OnCli
             Bitmap rotated = Bitmap.createBitmap(original, 0, 0, original.getWidth(), original.getHeight(), matrix, true);
 
             FileOutputStream os = new FileOutputStream(postImage);
-            rotated.compress(Bitmap.CompressFormat.JPEG, 100, os);
+            rotated.compress(Bitmap.CompressFormat.JPEG, 60, os); // magic number is 60
 
         }
 
@@ -294,6 +294,7 @@ public class PostComposeActivity extends AppCompatActivity implements View.OnCli
                 break;
             case 3:
                 results.putExtra("postImage",postImage);
+                Log.i("postImageOnly",String.valueOf(postImage.length()));
                 results.putExtra("expDate", expMillis);
                 resultCode = POST_PHOTO_ONLY;
                 break;

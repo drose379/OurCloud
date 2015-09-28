@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.widget.Toast;
@@ -22,19 +23,20 @@ public class WifiStateListener extends BroadcastReceiver {
 
         ConnectivityManager conManager = (ConnectivityManager) context.getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
 
+        /**
+         * Need to add a check if network "mobile" is active, if yes, call all code below
+         * If it is Wifi, this means the user entered a new wifi zone, update all info, remove them from current zone... etc
+         */
 
-        if (conManager.getActiveNetworkInfo().getTypeName().equals("mobile")) {
+        Log.i("wifiState","wifi state intent sent");
 
-            Log.i("wifiState","wifi state intent sent");
+        LiveUsers.appActive = false;
 
-            LiveUsers.appActive = false;
+        Intent networkChange = new Intent(EXIT_WIFI);
+        LocalBroadcastManager.getInstance(context).sendBroadcast(networkChange);
 
-            Intent networkChange = new Intent(EXIT_WIFI);
-            LocalBroadcastManager.getInstance(context).sendBroadcast(networkChange);
-
-            Intent exitUser = new Intent(context,ExitLiveUser.class);
-            context.startService(exitUser);
-        }
+        Intent exitUser = new Intent(context,ExitLiveUser.class);
+        context.startService(exitUser);
 
         /**
          * Need to implement whether the network is connected or disconnected, and act accordingly.
