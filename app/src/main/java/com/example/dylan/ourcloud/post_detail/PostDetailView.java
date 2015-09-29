@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -79,6 +80,7 @@ public class PostDetailView extends NetworkListenerActivity implements View.OnCl
         }
 
         toolbarMenuButton.setOnClickListener(this);
+        newCommentButton.setOnClickListener(this);
 
         initHeaderView();
         initNavDrawer();
@@ -107,6 +109,7 @@ public class PostDetailView extends NetworkListenerActivity implements View.OnCl
 
                 break;
             case R.id.newCommentButton :
+                Log.i("newComment","Button clicked");
                 newComment.show();
                 break;
         }
@@ -216,6 +219,7 @@ public class PostDetailView extends NetworkListenerActivity implements View.OnCl
                         if (!commentArea.getText().toString().isEmpty()) {
                             String comment = commentArea.getText().toString();
                             CommentController.getInstance(PostDetailView.this).newComment(comment, post);
+                            commentArea.setText("");
                             //why can I not show Loading dialog here? Saying window has leaked...
                         }
                     }

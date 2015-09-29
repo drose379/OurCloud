@@ -17,10 +17,9 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.4/taskArtifacts/fileHashes.bin" afterPath="$PROJECT_DIR$/.gradle/2.4/taskArtifacts/fileHashes.bin" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.4/taskArtifacts/fileSnapshots.bin" afterPath="$PROJECT_DIR$/.gradle/2.4/taskArtifacts/fileSnapshots.bin" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.4/taskArtifacts/taskArtifacts.bin" afterPath="$PROJECT_DIR$/.gradle/2.4/taskArtifacts/taskArtifacts.bin" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/example/dylan/ourcloud/post_detail/CommentController.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/dylan/ourcloud/post_detail/CommentController.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/example/dylan/ourcloud/post_detail/PostCommentsFrag.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/dylan/ourcloud/post_detail/PostCommentsFrag.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/example/dylan/ourcloud/post_detail/PostDetailView.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/dylan/ourcloud/post_detail/PostDetailView.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/post_detail.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/post_detail.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/post_comments.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/post_comments.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="OurCloud.iws" />
@@ -97,10 +96,10 @@
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/dylan/ourcloud/post_detail/PostDetailView.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="66" column="84" selection-start-line="66" selection-start-column="84" selection-end-line="66" selection-end-column="84" />
+              <caret line="221" column="49" selection-start-line="221" selection-start-column="49" selection-end-line="221" selection-end-column="49" />
               <folding>
-                <element signature="e#3409#3410#0" expanded="true" />
-                <element signature="e#3440#3441#0" expanded="true" />
+                <element signature="e#3485#3486#0" expanded="true" />
+                <element signature="e#3516#3517#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -121,13 +120,26 @@
       <file leaf-file-name="PostCommentsFrag.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/dylan/ourcloud/post_detail/PostCommentsFrag.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.33285713">
-              <caret line="79" column="83" selection-start-line="79" selection-start-column="83" selection-end-line="79" selection-end-column="83" />
+            <state vertical-scroll-proportion="0.25931928">
+              <caret line="35" column="0" selection-start-line="35" selection-start-column="0" selection-end-line="35" selection-end-column="0" />
               <folding>
-                <element signature="e#1483#1484#0" expanded="true" />
-                <element signature="e#1523#1524#0" expanded="true" />
+                <element signature="e#1415#1416#0" expanded="true" />
+                <element signature="e#1455#1456#0" expanded="true" />
               </folding>
             </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="post_comments.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/post_comments.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-8.571428">
+              <caret line="12" column="31" selection-start-line="12" selection-start-column="31" selection-end-line="12" selection-end-column="31" />
+              <folding />
+            </state>
+          </provider>
+          <provider editor-type-id="android-designer">
+            <state />
           </provider>
         </entry>
       </file>
@@ -1960,7 +1972,6 @@
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/dylan/ourcloud/util/UserUtil.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/dylan/ourcloud/home_zone/ThisZoneController.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/dylan/ourcloud/util/JSONUtil.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/post_comments.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/this_zone.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/tool_bar.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/tool_bar_no_menu.xml" />
@@ -1993,9 +2004,10 @@
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/dylan/ourcloud/LocalUser.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/dylan/ourcloud/post_detail/CommentListAdapter.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/post_detail.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/example/dylan/ourcloud/post_detail/PostDetailView.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/example/dylan/ourcloud/post_detail/PostCommentsFrag.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/dylan/ourcloud/post_detail/CommentController.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/dylan/ourcloud/post_detail/PostDetailView.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/post_comments.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/dylan/ourcloud/post_detail/PostCommentsFrag.java" />
       </list>
     </option>
   </component>
@@ -2225,7 +2237,7 @@
     <property name="android.sdk.path" value="$USER_HOME$/Android/Sdk" />
     <property name="recentsLimit" value="5" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../GCMTest" />
-    <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_SERIALS" value="emulator-5554" />
+    <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_SERIALS" value="06157df6825cc621 emulator-5554" />
     <property name="FullScreen" value="false" />
     <property name="SearchEverywhereHistoryKey" value="userupdate&#9;null&#9;null&#10;Log.i(&quot;userUpdate&quot;)&#9;null&#9;null&#10;ReceivedUpdate&#9;null&#9;null&#10;JSONU&#9;PSI&#9;JAVA://com.example.dylan.ourcloud.util.DateUtil.JSONUtil&#10;JSON&#9;PSI&#9;JAVA://com.example.dylan.ourcloud.util.DateUtil.JSONUtil" />
     <property name="OverrideImplement.combined" value="true" />
@@ -2463,8 +2475,8 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32635984" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.23953974" sideWeight="0.49791667" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32635984" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.23953974" sideWeight="0.49791667" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -2600,17 +2612,6 @@
         <state vertical-scroll-proportion="0.23564065">
           <caret line="19" column="13" selection-start-line="19" selection-start-column="13" selection-end-line="19" selection-end-column="13" />
         </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/post_comments.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="24" column="43" selection-start-line="24" selection-start-column="43" selection-end-line="24" selection-end-column="43" />
-          <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer">
-        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/this_zone.xml">
@@ -2935,17 +2936,6 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/dylan/ourcloud/post_detail/PostDetailView.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="66" column="84" selection-start-line="66" selection-start-column="84" selection-end-line="66" selection-end-column="84" />
-          <folding>
-            <element signature="e#3409#3410#0" expanded="true" />
-            <element signature="e#3440#3441#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/dylan/ourcloud/post_detail/CommentController.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -2956,13 +2946,35 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/dylan/ourcloud/post_detail/PostDetailView.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="221" column="49" selection-start-line="221" selection-start-column="49" selection-end-line="221" selection-end-column="49" />
+          <folding>
+            <element signature="e#3485#3486#0" expanded="true" />
+            <element signature="e#3516#3517#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/post_comments.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-8.571428">
+          <caret line="12" column="31" selection-start-line="12" selection-start-column="31" selection-end-line="12" selection-end-column="31" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/dylan/ourcloud/post_detail/PostCommentsFrag.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33285713">
-          <caret line="79" column="83" selection-start-line="79" selection-start-column="83" selection-end-line="79" selection-end-column="83" />
+        <state vertical-scroll-proportion="0.25931928">
+          <caret line="35" column="0" selection-start-line="35" selection-start-column="0" selection-end-line="35" selection-end-column="0" />
           <folding>
-            <element signature="e#1483#1484#0" expanded="true" />
-            <element signature="e#1523#1524#0" expanded="true" />
+            <element signature="e#1415#1416#0" expanded="true" />
+            <element signature="e#1455#1456#0" expanded="true" />
           </folding>
         </state>
       </provider>

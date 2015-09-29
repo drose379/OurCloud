@@ -32,9 +32,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
 /**
  * Created by dylan on 8/31/15.
  */
-public class PostCommentsFrag extends Fragment implements View.OnClickListener,CommentController.Callback,ListView.OnScrollListener {
+public class PostCommentsFrag extends Fragment implements CommentController.Callback,ListView.OnScrollListener {
 
-    private CommentController commentController;
     private Post post;
 
     int previousVisibleItem;
@@ -44,7 +43,7 @@ public class PostCommentsFrag extends Fragment implements View.OnClickListener,C
 
     MaterialDialog newComment;
     MaterialDialog loadingDialog;
-    FloatingActionButton menuButton;
+    FloatingActionButton newComButton;
 
     @Override
     public void onAttach(Activity activity) {
@@ -61,13 +60,12 @@ public class PostCommentsFrag extends Fragment implements View.OnClickListener,C
     @Override
     public View onCreateView(LayoutInflater inflater,ViewGroup container, Bundle savedInstance) {
         View v = inflater.inflate(R.layout.post_comments,container,false);
+        newComButton = (FloatingActionButton) getActivity().findViewById(R.id.newCommentButton);
 
         commentList = (ListView) v.findViewById(R.id.commentListView);
 
-        TextView addButton = (TextView) v.findViewById(R.id.addComButton);
         noCommentsText = (TextView) v.findViewById(R.id.noCommentsText);
 
-        addButton.setOnClickListener(this);
         commentList.setOnScrollListener(this);
 
         initDialogs();
@@ -77,7 +75,7 @@ public class PostCommentsFrag extends Fragment implements View.OnClickListener,C
     @Override
     public void onStart() {
         super.onStart();
-        CommentController.getInstance(getActivity()).grabComments(post.getId(),this);
+        CommentController.getInstance(getActivity()).grabComments(post.getId(), this);
     }
 
     @Override
@@ -95,24 +93,15 @@ public class PostCommentsFrag extends Fragment implements View.OnClickListener,C
     }
 
     @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.addComButton :
-                newComment.show();
-                break;
-        }
-    }
-
-    @Override
     public void onStop() {
         super.onStop();
         loadingDialog.hide();
+        newComButton.show(true);
     }
 
     @Override
     public void onScroll(AbsListView list,int firstVisible,int visibleItems,int totalItems) {
-        //int topMargin = commentList.getChildAt(0) != null ? commentList.getChildAt(0).getTop() : 0;
-        if (firstVisible > previousVisibleItem) {menuButton.hide(true);} else if (firstVisible < previousVisibleItem) {menuButton.show(true);}
+        if (firstVisible > previousVisibleItem) {newComButton.hide(true);} else if (firstVisible < previousVisibleItem) {newComButton.show(true);}
         previousVisibleItem = firstVisible;
     }
 

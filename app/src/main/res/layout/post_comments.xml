@@ -5,27 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.example.dylan.ourcloud.CustomTextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="10dp"
-        android:gravity="center_horizontal"
-        android:textAlignment="gravity"
-        customText:bold="true"
-        android:textColor="@color/ColorBlack"
-        android:background="#8000bfa5"
-        android:id="@+id/addComButton"
-        android:text="Add"
-        />
-
-
     <!-- Listview to contain comment cards -->
     <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:dividerHeight="0dp"
         android:divider="@null"
-        android:layout_below="@id/addComButton"
         android:id="@+id/commentListView"
         />
 
