@@ -1,9 +1,14 @@
 package com.example.dylan.ourcloud.post_detail;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -35,6 +40,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class PostCommentsFrag extends Fragment implements CommentController.Callback,ListView.OnScrollListener {
 
     private Post post;
+    private BroadcastReceiver newCommentReceiver;
 
     int previousVisibleItem;
 
@@ -76,6 +82,29 @@ public class PostCommentsFrag extends Fragment implements CommentController.Call
     public void onStart() {
         super.onStart();
         CommentController.getInstance(getActivity()).grabComments(post.getId(), this);
+        initBroadcastReceiver();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(newCommentReceiver);
+        loadingDialog.hide();
+        newComButton.show(true);
+    }
+
+
+    public void initBroadcastReceiver() {
+
+        newCommentReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                CommentController.getInstance(getActivity()).grabComments(post.getId(),PostCommentsFrag.this);
+            }
+        };
+
+        LocalBroadcastManager.getInstance(getActivity()).registerReceiver(newCommentReceiver,new IntentFilter(CommentController.NEW_COMMENT));
+
     }
 
     @Override
@@ -92,12 +121,6 @@ public class PostCommentsFrag extends Fragment implements CommentController.Call
 
     }
 
-    @Override
-    public void onStop() {
-        super.onStop();
-        loadingDialog.hide();
-        newComButton.show(true);
-    }
 
     @Override
     public void onScroll(AbsListView list,int firstVisible,int visibleItems,int totalItems) {

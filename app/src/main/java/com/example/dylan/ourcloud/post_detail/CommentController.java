@@ -1,8 +1,10 @@
 package com.example.dylan.ourcloud.post_detail;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.LocalBroadcastManager;
 
 import com.example.dylan.ourcloud.Comment;
 import com.example.dylan.ourcloud.LocalUser;
@@ -26,6 +28,8 @@ import java.util.List;
  * Created by dylan on 8/31/15.
  */
 public class CommentController {
+
+    public static String NEW_COMMENT = "NEW_COMMENT";
 
     private Context context;
     private Handler handler;
@@ -76,6 +80,7 @@ public class CommentController {
                 /**
                  * Send local broadcast that there is new comment, any act. interested will grab it
                  */
+                LocalBroadcastManager.getInstance(context).sendBroadcast(new Intent(NEW_COMMENT));
             }
         });
 
