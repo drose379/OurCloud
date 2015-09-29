@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.util.Log;
 
+import com.example.dylan.ourcloud.util.GPhotoUrlCut;
 import com.google.android.gms.plus.model.people.Person;
 
 import org.json.JSONArray;
@@ -128,15 +129,12 @@ public class LocalUser {
     }
 
     public String getProfilePhotoSized(int size) {
-        Cursor result = userDBHelper.getReadableDatabase().rawQuery("SELECT * FROM user",null);
+        Cursor result = userDBHelper.getReadableDatabase().rawQuery("SELECT * FROM user", null);
         result.moveToFirst();
         int photoCol = result.getColumnIndex(LocalUserDBHelper.profile_image_col);
-        String splitUrl = result.getString(photoCol).split("\\=")[0];
-        return splitUrl + "=" + String.valueOf(size);
+        String url = result.getString(photoCol);
+        return GPhotoUrlCut.getImageSized(url,50);
     }
 
-    /**
-     * Getter methods below here.. use userDBHelper.getReadableDb().raqQeury() to grab item
-     */
 
 }

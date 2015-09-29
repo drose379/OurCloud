@@ -3,6 +3,8 @@ package com.example.dylan.ourcloud.live_zone;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.example.dylan.ourcloud.Post;
+
 /**
  * Created by dylan on 9/12/15.
  */

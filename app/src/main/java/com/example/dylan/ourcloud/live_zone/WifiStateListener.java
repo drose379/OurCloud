@@ -38,6 +38,10 @@ public class WifiStateListener extends BroadcastReceiver {
 
             Intent exitUser = new Intent(context,ExitLiveUser.class);
             context.startService(exitUser);
+        } else {
+            /**
+             * Connected to new network, reload all app data pertaining to the current network and load new data for newly connected network
+             */
         }
 
 

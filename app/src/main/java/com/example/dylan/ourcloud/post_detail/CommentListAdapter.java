@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.example.dylan.ourcloud.Comment;
 import com.example.dylan.ourcloud.R;
+import com.example.dylan.ourcloud.util.GPhotoUrlCut;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -58,7 +59,7 @@ public class CommentListAdapter extends BaseAdapter {
 
         TextView commentText = (TextView) v.findViewById(R.id.commentText);
 
-        Picasso.with(context).load(comment.getUserImage()).into(userImage);
+        Picasso.with(context).load(GPhotoUrlCut.getImageSized(comment.getUserImage(),40)).into(userImage);
         userName.setText(comment.getUserName());
 
         commentText.setText(comment.getCommentText());

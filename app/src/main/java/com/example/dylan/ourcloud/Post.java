@@ -1,5 +1,8 @@
 package com.example.dylan.ourcloud;
 
+import android.content.res.Resources;
+import android.util.Log;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -66,10 +69,11 @@ public class Post implements Serializable {
         return userImageUrl;
     }
     public String getUserImageSized(int size) {
+        Resources r = Resources.getSystem();
         String fullUrl = userImageUrl;
         String[] splitUrl = fullUrl.split("\\=");
 
-        return splitUrl[0] + "=" + String.valueOf(size);
+        return splitUrl[0] + "=" + String.valueOf( size * Math.round(r.getDisplayMetrics().density) );
     }
     public String getPostText() {
         return postText;

@@ -17,6 +17,14 @@ import java.util.List;
  */
 public class UserListenerActivity  extends NetworkListenerActivity {
 
+    private BroadcastReceiver userUpdateReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            List<User> users = intent.getParcelableArrayListExtra("activeUsers");
+            userUpdate(users);
+        }
+    };
+
     @Override
     public void onStart() {
         super.onStart();
@@ -24,15 +32,13 @@ public class UserListenerActivity  extends NetworkListenerActivity {
     }
 
     public void initUserListener() {
-        BroadcastReceiver userReceiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                List<User> users = intent.getParcelableArrayListExtra("activeUsers");
-                userUpdate(users);
-            }
-        };
+        LocalBroadcastManager.getInstance(this).registerReceiver(userUpdateReceiver, new IntentFilter(LiveUsers.UPDATE_ACTIVE_USERS));
+    }
 
-        LocalBroadcastManager.getInstance(this).registerReceiver(userReceiver,new IntentFilter(LiveUsers.UPDATE_ACTIVE_USERS));
+    @Override
+    public void finish() {
+        super.finish();
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(userUpdateReceiver); //untested
     }
 
     public void userUpdate(List<User> users) {
@@ -40,5 +46,6 @@ public class UserListenerActivity  extends NetworkListenerActivity {
          * Activities that extend this will implement their own functionality
          */
     }
+
 
 }

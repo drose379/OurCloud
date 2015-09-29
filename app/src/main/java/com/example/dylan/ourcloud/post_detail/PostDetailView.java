@@ -105,7 +105,7 @@ public class PostDetailView extends NetworkListenerActivity implements View.OnCl
 
         //click listener for photo to show full screen photo fragment
 
-        Picasso.with(this).load(post.getUserImageSized(150)).into(userHeader);
+        Picasso.with(this).load(post.getUserImageSized(70)).into(userHeader);
         userName.setText(post.getUser());
     }
 

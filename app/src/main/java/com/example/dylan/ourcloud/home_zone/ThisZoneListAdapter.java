@@ -67,7 +67,7 @@ public class ThisZoneListAdapter extends BaseAdapter {
         TextView dateText = (TextView) v.findViewById(R.id.postDate);
 
 
-        Picasso.with(context).load(currentPost.getUserImage()).into(userImage);
+        Picasso.with(context).load(currentPost.getUserImageSized(40)).into(userImage);
 
         userName.setText(currentPost.isCurrentUser() ? "Me" : currentPost.getUser());
         userName.setTextColor(currentPost.isCurrentUser() ? context.getResources().getColor(R.color.ColorStart) : Color.parseColor("#000000"));
@@ -97,13 +97,6 @@ public class ThisZoneListAdapter extends BaseAdapter {
          * Need to add setPostTimeMillis and getPostTimeMillis method to Post class
          */
         dateText.setText(DateUtil.currentDate(currentPost.getPostTimeMillis()));
-
-        Log.i("postType",currentPost.getType());
-
-            //need to show post image (add functionality)
-            //need to give comment option
-            //create detail view to view comments on card click
-            //show date in card bottom section, also show buttons for comment and favorite
 
         return v;
     }

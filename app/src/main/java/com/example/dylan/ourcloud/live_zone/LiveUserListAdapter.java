@@ -12,6 +12,7 @@ import com.example.dylan.ourcloud.LocalUser;
 import com.example.dylan.ourcloud.LocalUserDBHelper;
 import com.example.dylan.ourcloud.R;
 
+import com.example.dylan.ourcloud.util.GPhotoUrlCut;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -61,7 +62,7 @@ public class LiveUserListAdapter extends BaseAdapter {
         userImage = (CircleImageView) v.findViewById(R.id.userImage);
 
         userName.setText(user.getName().equals(LocalUser.getInstance(context).getItem(LocalUserDBHelper.nameCol)) ? "Me" : user.getName());
-        Picasso.with(context).load(user.getPhotoUrl()).into(userImage);
+        Picasso.with(context).load(GPhotoUrlCut.getImageSized(user.getPhotoUrl(),40)).into(userImage);
 
         return v;
     }
