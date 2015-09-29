@@ -27,21 +27,23 @@ import java.util.List;
  */
 public class CommentController {
 
-    private Fragment fragment;
     private Context context;
-    private Callback callback;
     private Handler handler;
     private OkHttpClient httpClient;
 
     public interface Callback {
-        void getComments(List<Comment> comments);
-        void commentSubmitted();
+        void getComments( List<Comment> comments );
     }
 
-    public CommentController(Fragment fragment,Context context) {
-        this.fragment = fragment;
+    private static CommentController commentController = null;
+
+    public static CommentController getInstance( Context context ) {
+        commentController = commentController == null ? new CommentController(context) : commentController;
+        return commentController;
+    }
+
+    public CommentController(Context context) {
         this.context = context;
-        callback = (Callback) fragment;
         httpClient = new OkHttpClient();
         handler = new Handler();
     }
@@ -71,15 +73,17 @@ public class CommentController {
 
             @Override
             public void onResponse(Response response) throws IOException {
-                Runnable r = new Runnable() {@Override public void run() {callback.commentSubmitted();}};
-                handler.post(r);
+                /**
+                 * Send local broadcast that there is new comment, any act. interested will grab it
+                 */
             }
         });
 
     }
 
-    public void grabComments(String postId) {
-        //grabs all comments for given postId
+    public void grabComments(String postId,final Fragment context) {
+        final Callback callback = (Callback) context;
+
         String json = JSONUtil.generateJSONArray(postId);
         RequestBody body = RequestBody.create(MediaType.parse("text/plain"), json);
         Request request = new Request.Builder()

@@ -7,11 +7,17 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.MaterialDialog;
+import com.example.dylan.ourcloud.LocalUser;
+import com.example.dylan.ourcloud.LocalUserDBHelper;
 import com.example.dylan.ourcloud.NetworkListenerActivity;
 import com.example.dylan.ourcloud.Post;
 import com.example.dylan.ourcloud.R;
@@ -39,9 +45,11 @@ public class PostDetailView extends NetworkListenerActivity implements View.OnCl
     private Post post;
     private Bundle postBundle;
 
-    FloatingActionButton menuButton;
+    FloatingActionButton newCommentButton;
+    ImageView toolbarMenuButton;
     DrawerLayout navDrawer;
     ListView navDrawerItems;
+    MaterialDialog newComment;
 
     Fragment currentDetailFrag;
 
@@ -55,7 +63,8 @@ public class PostDetailView extends NetworkListenerActivity implements View.OnCl
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         TextView toolbarTitle = (TextView) toolbar.findViewById(R.id.toolbarTitle);
-        menuButton = (FloatingActionButton) findViewById(R.id.menuButton);
+        toolbarMenuButton = (ImageView) toolbar.findViewById(R.id.toolbarMenuButton);
+        newCommentButton = (FloatingActionButton) findViewById(R.id.newCommentButton);
         navDrawer = (DrawerLayout) findViewById(R.id.postInfoLayout);
         navDrawerItems = (ListView) findViewById(R.id.navDrawerItems);
 
@@ -69,11 +78,12 @@ public class PostDetailView extends NetworkListenerActivity implements View.OnCl
             toolbarTitle.setText(post.getPostText());
         }
 
-        menuButton.setOnClickListener(this);
+        toolbarMenuButton.setOnClickListener(this);
 
         initHeaderView();
         initNavDrawer();
         initPostDetailView();
+        initDialog();
 
     }
 
@@ -86,7 +96,7 @@ public class PostDetailView extends NetworkListenerActivity implements View.OnCl
     @Override
     public void onClick(View v) {
         switch(v.getId()) {
-            case R.id.menuButton :
+            case R.id.toolbarMenuButton :
                 //check if nav drawer is open or closed, if open, close it, if closed, open it.
 
                 if (navDrawer.isDrawerOpen(Gravity.LEFT)) {
@@ -95,6 +105,9 @@ public class PostDetailView extends NetworkListenerActivity implements View.OnCl
                     navDrawer.openDrawer(Gravity.LEFT);
                 }
 
+                break;
+            case R.id.newCommentButton :
+                newComment.show();
                 break;
         }
     }
@@ -143,7 +156,7 @@ public class PostDetailView extends NetworkListenerActivity implements View.OnCl
                 break;
         }
 
-        navDrawerItems.setAdapter(new NavDrawerAdapter(this,menuOptions));
+        navDrawerItems.setAdapter(new NavDrawerAdapter(this, menuOptions));
 
 
         navDrawerItems.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -176,10 +189,46 @@ public class PostDetailView extends NetworkListenerActivity implements View.OnCl
                 }
 
                 navDrawer.closeDrawer(Gravity.LEFT);
-                getSupportFragmentManager().beginTransaction().add(R.id.postDetailFrame,currentDetailFrag).commit();
+                getSupportFragmentManager().beginTransaction().add(R.id.postDetailFrame, currentDetailFrag).commit();
             }
         });
     }
+
+    public void initDialog() {
+        View newCommentView = LayoutInflater.from(this).inflate(R.layout.new_comment, null);
+
+        CircleImageView userImage = (CircleImageView) newCommentView.findViewById(R.id.userImageMini);
+        TextView userName = (TextView) newCommentView.findViewById(R.id.userName);
+
+        Picasso.with(this).load(LocalUser.getInstance(this).getProfilePhotoSized(80)).into(userImage);
+        userName.setText(LocalUser.getInstance(this).getItem(LocalUserDBHelper.nameCol));
+
+        newComment = new MaterialDialog.Builder(this)
+                .title("New Comment")
+                .customView(newCommentView, true)
+                .positiveText("Done")
+                .positiveColor(getResources().getColor(R.color.ColorPrimary))
+                .negativeText("Cancel")
+                .callback(new MaterialDialog.ButtonCallback() {
+                    @Override
+                    public void onPositive(MaterialDialog dialog) {
+                        EditText commentArea = (EditText) dialog.getCustomView().findViewById(R.id.newCommentArea);
+                        if (!commentArea.getText().toString().isEmpty()) {
+                            String comment = commentArea.getText().toString();
+                            CommentController.getInstance(PostDetailView.this).newComment(comment, post);
+                            //why can I not show Loading dialog here? Saying window has leaked...
+                        }
+                    }
+                    @Override
+                    public void onNegative(MaterialDialog dialog) {
+                        EditText commentArea = (EditText) dialog.getCustomView().findViewById(R.id.newCommentArea);
+                        commentArea.setText("");
+                    }
+                })
+                        //Need to implement onDismiss to clear edittext whenever dialog is dismissed, Use LayoutInflater to inflate view instead
+                .build();
+    }
+
 
     public void initPostDetailView() {
         //instead of setting post text to default, switch over the postType and assign either photo or text as currentDetailFrag depending if post has text or not

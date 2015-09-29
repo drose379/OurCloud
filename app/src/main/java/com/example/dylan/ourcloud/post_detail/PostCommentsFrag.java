@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -48,8 +49,6 @@ public class PostCommentsFrag extends Fragment implements View.OnClickListener,C
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        commentController = new CommentController(this,getActivity());
-        menuButton = (FloatingActionButton) getActivity().findViewById(R.id.menuButton);
     }
 
     @Override
@@ -64,6 +63,7 @@ public class PostCommentsFrag extends Fragment implements View.OnClickListener,C
         View v = inflater.inflate(R.layout.post_comments,container,false);
 
         commentList = (ListView) v.findViewById(R.id.commentListView);
+
         TextView addButton = (TextView) v.findViewById(R.id.addComButton);
         noCommentsText = (TextView) v.findViewById(R.id.noCommentsText);
 
@@ -77,19 +77,11 @@ public class PostCommentsFrag extends Fragment implements View.OnClickListener,C
     @Override
     public void onStart() {
         super.onStart();
-        commentController.grabComments(post.getId());
-    }
-
-    @Override
-    public void commentSubmitted() {
-        //called after a comment is successfully submitted, reload now (use getComments)
-        loadingDialog.hide();
-        commentController.grabComments(post.getId());
+        CommentController.getInstance(getActivity()).grabComments(post.getId(),this);
     }
 
     @Override
     public void getComments(List<Comment> comments) {
-        //Pass list of comments to adapter, show in listview,
         if (!comments.isEmpty()) {
             commentList.setVisibility(View.VISIBLE);
             noCommentsText.setVisibility(View.GONE);
@@ -127,40 +119,6 @@ public class PostCommentsFrag extends Fragment implements View.OnClickListener,C
     @Override public void onScrollStateChanged(AbsListView list,int state) {}
 
     public void initDialogs() {
-
-        View newCommentView = LayoutInflater.from(getActivity()).inflate(R.layout.new_comment, null);
-
-        CircleImageView userImage = (CircleImageView) newCommentView.findViewById(R.id.userImageMini);
-        TextView userName = (TextView) newCommentView.findViewById(R.id.userName);
-
-        Picasso.with(getActivity()).load(LocalUser.getInstance(getActivity()).getProfilePhotoSized(80)).into(userImage);
-        userName.setText(LocalUser.getInstance(getActivity()).getItem(LocalUserDBHelper.nameCol));
-
-        newComment = new MaterialDialog.Builder(getActivity())
-                .title("New Comment")
-                .customView(newCommentView, true)
-                .positiveText("Done")
-                .positiveColor(getResources().getColor(R.color.ColorPrimary))
-                .negativeText("Cancel")
-                .callback(new MaterialDialog.ButtonCallback() {
-                    @Override
-                    public void onPositive(MaterialDialog dialog) {
-                        EditText commentArea = (EditText) dialog.getCustomView().findViewById(R.id.newCommentArea);
-                        if (!commentArea.getText().toString().isEmpty()) {
-                            loadingDialog.show();
-                            String comment = commentArea.getText().toString();
-                            commentController.newComment(comment, post);
-                            //why can I not show Loading dialog here? Saying window has leaked...
-                        }
-                    }
-                    @Override
-                    public void onNegative(MaterialDialog dialog) {
-                        EditText commentArea = (EditText) dialog.getCustomView().findViewById(R.id.newCommentArea);
-                        commentArea.setText("");
-                    }
-                })
-                //Need to implement onDismiss to clear edittext whenever dialog is dismissed, Use LayoutInflater to inflate view instead
-                .build();
 
         loadingDialog = new MaterialDialog.Builder(getActivity())
                 .title("Loading")
