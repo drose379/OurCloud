@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import android.support.v4.content.LocalBroadcastManager;
@@ -127,35 +128,27 @@ public class ChatConvo extends UserListenerActivity implements View.OnClickListe
 
         if (!userFound) {
             otherUserLeft();
-            getMessages();
-        } else if (sendButton.getVisibility() == View.GONE) {
-            //this fires if the other user left, and this convo is still open, and the other user re-joins
+            //getMessages();
+        } else {
             otherUserJoined();
             getMessages();
         }
 
+
     }
 
     public void otherUserLeft() {
-        ContentValues vals = new ContentValues();
-        vals.put("message",otherUser.getName() + " has left!");
-        vals.put("origin","3");
-        vals.put("other_user_id",otherUser.getId());
-        vals.put("other_user_name","");
-
-        messageDBHelper.getWritableDatabase().insert("messages",null,vals);
-        sendButton.setVisibility(View.GONE);
+        sendButton.setText( "Offline" );
+        sendButton.setBackgroundDrawable(getResources().getDrawable(R.drawable.send_button_offline));
+        sendButton.setTextColor( getResources().getColor(R.color.ColorPrimary) );
+        sendButton.setOnClickListener( null );
     }
 
     public void otherUserJoined() {
-        ContentValues vals = new ContentValues();
-        vals.put("message",otherUser.getName() + " has joined!!");
-        vals.put("origin","3");
-        vals.put("other_user_id",otherUser.getId());
-        vals.put("other_user_name","");
-
-        messageDBHelper.getWritableDatabase().insert("messages",null,vals);
-        sendButton.setVisibility(View.VISIBLE);
+        sendButton.setText( "Send" );
+        sendButton.setBackgroundDrawable(getResources().getDrawable(R.drawable.send_button_online));
+        sendButton.setTextColor( getResources().getColor(R.color.ColorLightPrimary) );
+        sendButton.setOnClickListener(this);
     }
 
     public void clearNotification() {

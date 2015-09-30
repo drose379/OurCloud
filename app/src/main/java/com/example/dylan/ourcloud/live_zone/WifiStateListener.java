@@ -12,6 +12,8 @@ import android.widget.Toast;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.example.dylan.ourcloud.WifiController;
 
+import java.util.Set;
+
 /**
  * Created by dylan on 9/24/15.
  */
@@ -22,22 +24,26 @@ public class WifiStateListener extends BroadcastReceiver {
     @Override
     public void onReceive(Context context,Intent intent) {
 
-        WifiController controller = WifiController.getInstance(context);
 
+
+        int networkType = (int) intent.getExtras().get("networkType");
 
         /**
          * Need to add a check if network "mobile" is active, if yes, call all code below
          * If it is Wifi, this means the user entered a new wifi zone, update all info, remove them from current zone... etc
          */
 
-        if (!controller.isConnected()) {
-            LiveUsers.appActive = false;
+        if ( networkType == 0 ) {
+
+            //this is being called correct number of times
+
+            Intent exitUser = new Intent(context,ExitLiveUser.class);
+            context.startService(exitUser);
 
             Intent networkChange = new Intent(EXIT_WIFI);
             LocalBroadcastManager.getInstance(context).sendBroadcast(networkChange);
 
-            Intent exitUser = new Intent(context,ExitLiveUser.class);
-            context.startService(exitUser);
+
         } else {
             /**
              * Connected to new network, reload all app data pertaining to the current network and load new data for newly connected network

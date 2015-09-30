@@ -4,10 +4,13 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.example.dylan.ourcloud.live_zone.ExitLiveUser;
 import com.example.dylan.ourcloud.live_zone.WifiStateListener;
 
 /**
@@ -16,8 +19,8 @@ import com.example.dylan.ourcloud.live_zone.WifiStateListener;
 public abstract class NetworkListenerActivity extends AppCompatActivity {
 
     @Override
-    public void onStart() {
-        super.onStart();
+    public void onCreate(Bundle savedInstance) {
+        super.onCreate(savedInstance);
         initWifiReceiver();
     }
 
@@ -26,6 +29,8 @@ public abstract class NetworkListenerActivity extends AppCompatActivity {
             @Override
             public void onReceive(Context context,Intent intent) {
                 NetworkListenerActivity.this.finish();
+                Intent exitUser = new Intent(context,ExitLiveUser.class);
+                startService(exitUser);
             }
         };
 

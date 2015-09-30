@@ -4,7 +4,9 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
 
 import com.example.dylan.ourcloud.live_zone.LiveUsers;
 import com.example.dylan.ourcloud.live_zone.User;
@@ -15,7 +17,7 @@ import java.util.List;
  * Created by dylan on 9/25/15.
  * This activity listens for User updates from the server along with network updates
  */
-public class UserListenerActivity  extends NetworkListenerActivity {
+public class UserListenerActivity extends NetworkListenerActivity {
 
     private BroadcastReceiver userUpdateReceiver = new BroadcastReceiver() {
         @Override
@@ -26,8 +28,8 @@ public class UserListenerActivity  extends NetworkListenerActivity {
     };
 
     @Override
-    public void onStart() {
-        super.onStart();
+    public void onCreate( Bundle savedInstance ) {
+        super.onCreate( savedInstance );
         initUserListener();
     }
 

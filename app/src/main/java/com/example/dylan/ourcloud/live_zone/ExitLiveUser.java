@@ -2,6 +2,7 @@ package com.example.dylan.ourcloud.live_zone;
 
 import android.app.IntentService;
 import android.content.Intent;
+import android.util.Log;
 
 import com.example.dylan.ourcloud.LocalUser;
 import com.example.dylan.ourcloud.LocalUserDBHelper;
@@ -25,6 +26,7 @@ public class ExitLiveUser extends IntentService {
 
     @Override
     public void onHandleIntent(Intent intent) {
+
         LiveUsers.appActive = false;
         OkHttpClient http = new OkHttpClient();
         LocalUser user = LocalUser.getInstance(this);
