@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.example.dylan.ourcloud.R;
 import com.example.dylan.ourcloud.UserListenerActivity;
+import com.example.dylan.ourcloud.util.ContactUserLookup;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -70,27 +71,27 @@ public class PrivateMessagesOverview extends UserListenerActivity implements Lis
     public List<User> grabThreads()
     {
 
-        List<String> otherUserNames = new ArrayList<String>();
+        List<String> otherUserIds = new ArrayList<String>();
         List<User> convoUsers = new ArrayList<User>();
 
         MessagesDBHelper dbHelper = new MessagesDBHelper(this);
         SQLiteDatabase readable = dbHelper.getReadableDatabase();
 
-        Cursor allSenders = readable.rawQuery("SELECT other_user_id, other_user_name, other_user_image FROM messages",null);
+        Cursor allSenders = readable.rawQuery("SELECT other_user_id FROM messages",null);
 
         while (allSenders.moveToNext()) {
-            int userNameIndex = allSenders.getColumnIndex("other_user_name");
             int userIdIndex = allSenders.getColumnIndex("other_user_id");
-            int userImageIndex = allSenders.getColumnIndex("other_user_image");
-
             String userId = allSenders.getString( userIdIndex );
-            String userName = allSenders.getString( userNameIndex ); //Really shouldnt be any, but remove any null usernames
-            String userImage = allSenders.getString(userImageIndex);
+
 
             //need to fix this loop to make sure only unique Users are added to list, may need a name list along with a user list, check name, if not in, add to user, add to name
 
-            if ( !otherUserNames.contains( userName ) ) {
-                otherUserNames.add( userName );
+            if ( !otherUserIds.contains( userId ) ) {
+                otherUserIds.add( userId );
+
+                String userName = ContactUserLookup.nameLookup( this, userId );
+                String userImage = ContactUserLookup.photoLookup( this, userId );
+
                 convoUsers.add( new User().setName(userName).setImage(userImage).setId(userId) );
             }
 

@@ -22,7 +22,11 @@ public class ContactUserLookup {
 
     public static String photoLookup( Context context, String id )
     {
-        return null;
+        SQLiteDatabase readable = new ContactDBHelper( context ).getReadableDatabase();
+        Cursor imageRes = readable.rawQuery( "SELECT user_image FROM contacts WHERE user_id = ?", new String[] {id} );
+        imageRes.moveToFirst();
+
+        return imageRes.getString( imageRes.getColumnIndex( "user_image" ) );
     }
 
 }
