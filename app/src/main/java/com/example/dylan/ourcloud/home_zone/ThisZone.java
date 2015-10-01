@@ -34,6 +34,7 @@ import com.example.dylan.ourcloud.TypeHelper;
 import com.example.dylan.ourcloud.live_zone.ExitLiveUser;
 import com.example.dylan.ourcloud.live_zone.LiveUsers;
 import com.example.dylan.ourcloud.live_zone.NewLiveUser;
+import com.example.dylan.ourcloud.live_zone.PrivateMessagesOverview;
 import com.example.dylan.ourcloud.live_zone.WifiStateListener;
 import com.example.dylan.ourcloud.live_zone.ZoneUserList;
 import com.example.dylan.ourcloud.post_detail.PostDetailView;
@@ -383,11 +384,12 @@ public class ThisZone extends NetworkListenerActivity implements View.OnClickLis
                 //me (user info)
                 break;
             case 1:
-                i = new Intent(this,ZoneUserList.class);
+                i = new Intent(this, ZoneUserList.class);
                 startActivity(i);
                 break;
             case 2:
-                //chat
+                Intent chatThreads = new Intent( this, PrivateMessagesOverview.class);
+                startActivity(chatThreads);
                 break;
             case 3:
                 //marked zones

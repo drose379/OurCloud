@@ -87,6 +87,7 @@
         <activity android:name=".post_detail.PostDetailView" android:label="Post" />
         <activity android:name=".live_zone.ZoneUserList"/>
         <activity android:name=".live_zone.ChatConvo" android:launchMode="singleTask" />
+        <activity android:name=".live_zone.PrivateMessagesOverview" />
 
     </application>
 
