@@ -45,7 +45,6 @@ public class SendPrivateMessage extends IntentService {
 
         RequestBody rBody = RequestBody.create(MediaType.parse("text/plain"), new JSONArray()
                 .put(LocalUser.getInstance(this).getItem(LocalUserDBHelper.user_id_col))
-                .put(LocalUser.getInstance(this).getItem(LocalUserDBHelper.nameCol))
                 .put(receiverId)
                 .put(message).toString());
 

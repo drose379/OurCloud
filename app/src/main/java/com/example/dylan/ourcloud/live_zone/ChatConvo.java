@@ -29,6 +29,7 @@ import com.example.dylan.ourcloud.NetworkListenerActivity;
 import com.example.dylan.ourcloud.R;
 import com.example.dylan.ourcloud.TypeHelper;
 import com.example.dylan.ourcloud.UserListenerActivity;
+import com.example.dylan.ourcloud.util.ContactUserLookup;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -164,12 +165,12 @@ public class ChatConvo extends UserListenerActivity implements View.OnClickListe
         while(results.moveToNext()) {
             int originCol = results.getColumnIndex("origin");
             int messageCol = results.getColumnIndex("message");
-            int otherUserNameCol = results.getColumnIndex("other_user_name");
+            int otherUserIdCol = results.getColumnIndex("other_user_id");
 
             messages.add(new Message()
                             .setOrigin(results.getInt(originCol))
                             .setText(results.getString(messageCol))
-                            .setOtherUserName(results.getString(otherUserNameCol))
+                            .setOtherUserName(ContactUserLookup.nameLookup( this, results.getString(otherUserIdCol) ))
                             );
         }
 

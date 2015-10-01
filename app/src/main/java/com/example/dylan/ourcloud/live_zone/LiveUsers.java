@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.example.dylan.ourcloud.LocalUser;
 import com.example.dylan.ourcloud.LocalUserDBHelper;
 import com.example.dylan.ourcloud.R;
+import com.example.dylan.ourcloud.util.ContactUserLookup;
 import com.github.nkzawa.emitter.Emitter;
 import com.github.nkzawa.socketio.client.IO;
 import com.github.nkzawa.socketio.client.Socket;
@@ -59,6 +60,8 @@ public class LiveUsers extends GcmListenerService {
             switch (messageType) {
                 case "1" :
 
+                    //live users update
+
                     LiveUsers.users.clear();
                     try {
 
@@ -73,24 +76,23 @@ public class LiveUsers extends GcmListenerService {
 
                     } catch (JSONException e) {e.getMessage();}
 
-                    updateUsers();
+                    updateUsersBroadcast();
+                    updateUserDictionary();
 
                     break;
 
                 case "2"  :
 
-                    //NEEDS CLEAN UP
+                    //private message
 
                     SQLiteDatabase writeable = new MessagesDBHelper(this).getWritableDatabase();
 
                     String senderId = data.getString("senderId");
-                    String senderName = data.getString("senderName");
                     String message = data.getString("message");
                     int origin = 2;
 
                     ContentValues vals = new ContentValues();
                     vals.put("other_user_id",senderId);
-                    vals.put("other_user_name", senderName);
                     vals.put("origin", origin);
                     vals.put("message", message);
 
@@ -100,7 +102,7 @@ public class LiveUsers extends GcmListenerService {
                     newMessage.putExtra("other_user_id",senderId);
                     LocalBroadcastManager.getInstance(this).sendBroadcast(newMessage);
 
-                    notifyNewMessage(senderId,senderName,message);
+                    notifyNewMessage( senderId, message );
 
                     break;
             }
@@ -112,15 +114,30 @@ public class LiveUsers extends GcmListenerService {
          */
     }
 
-    public void updateUsers() {
+    public void updateUsersBroadcast() {
         Intent updateUsers = new Intent(UPDATE_ACTIVE_USERS);
         updateUsers.putParcelableArrayListExtra("activeUsers",users);
         LocalBroadcastManager.getInstance(this).sendBroadcast(updateUsers);
     }
 
-    public void notifyNewMessage(String otherUserId,String senderName, String message) {
-        //String otherUserName = getUserName(otherUserId);
+    public void updateUserDictionary()
+    {
+        SQLiteDatabase writeable = new ContactDBHelper( this ).getWritableDatabase();
+        for ( User user : users ){
+            ContentValues vals = new ContentValues();
+            vals.put( ContactDBHelper.idCol, user.getId() );
+            vals.put( ContactDBHelper.nameCol, user.getName() );
+            vals.put( ContactDBHelper.imageCol, user.getPhotoUrl() );
 
+
+            writeable.insertWithOnConflict( ContactDBHelper.tableName,null,vals,SQLiteDatabase.CONFLICT_REPLACE );
+        }
+
+    }
+
+    public void notifyNewMessage(String otherUserId, String message) {
+
+        String senderName = ContactUserLookup.nameLookup( this, otherUserId );
 
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 

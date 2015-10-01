@@ -31,6 +31,17 @@
             android:id="@+id/noConvosText"
             />
 
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:divider="@null"
+            android:dividerHeight="0dp"
+            android:id="@+id/convoThreadsList"
+            >
+
+
+        </ListView>
+
 
         <!-- FAB to go to People Here activity to start a chat -->
 
