@@ -165,14 +165,4 @@ public class LiveUsers extends GcmListenerService {
 
     }
 
-    public static String getUserName(String userId) {
-        String otherUserName = null;
-        for(User user : LiveUsers.users) {
-            if (user.getId().equals(userId)) {
-                otherUserName = user.getName();
-            }
-        }
-        return otherUserName;
-    }
-
 }

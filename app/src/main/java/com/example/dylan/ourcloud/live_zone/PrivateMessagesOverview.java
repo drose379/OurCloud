@@ -1,8 +1,13 @@
 package com.example.dylan.ourcloud.live_zone;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -38,6 +43,7 @@ public class PrivateMessagesOverview extends UserListenerActivity implements Lis
     private TextView noThreadsText;
 
     private MessageThreadAdapter convoAdapter;
+    private BroadcastReceiver messageReceiver;
 
     public void onCreate( Bundle savedInstance )
     {
@@ -45,33 +51,75 @@ public class PrivateMessagesOverview extends UserListenerActivity implements Lis
         setContentView(R.layout.convo_thread_overview);
 
         noThreadsText = (TextView) findViewById(R.id.noConvosText);
+
+        initMessageListener();
     }
 
     @Override
     public void onStart()
     {
         super.onStart();
+
         convos = grabThreads();
 
+        convoList = (ListView) findViewById( R.id.convoThreadsList );
+        convoAdapter = new MessageThreadAdapter( this, convos );
+
+        convoList.setAdapter(convoAdapter);
+        convoList.setOnItemClickListener(this);
+
         if ( convos.size() == 0 ) {noThreadsText.setVisibility(View.VISIBLE);}
-        else
-        {
-            /**
-             * Set adapter to show each convo and last message sent to user
-             * Need to create basic messsage thread card
-             * Need to have access to users photo and last message sent for the card
-              */
-
+        else {
             getUserLastMessages();
+        }
+    }
 
-            convoList = (ListView) findViewById( R.id.convoThreadsList );
-            convoAdapter = new MessageThreadAdapter( this, convos );
+    @Override
+    public void onDestroy()
+    {
+        super.onDestroy();
+        LocalBroadcastManager.getInstance(this).unregisterReceiver( messageReceiver );
+        Log.i("convoOverview","Destrioid");
+    }
 
-            convoList.setAdapter( convoAdapter );
-            convoList.setOnItemClickListener(this);
+    public void initMessageListener()
+    {
+        messageReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive( Context context, Intent intent ) {
+                updateConvoOverview( intent.getStringExtra("other_user_id") );
+            }
+        };
 
+        LocalBroadcastManager.getInstance(this).registerReceiver(messageReceiver, new IntentFilter(LiveUsers.NEW_PRIVATE_MESSAGE ));
+    }
+
+    public void updateConvoOverview( String messageFromId )
+    {
+        noThreadsText.setVisibility( View.GONE );
+
+        //Check if the new message is from a user who is already in the convos list
+            // if already in list, just use getLatestMesages method
+            //if not in list, must use getThreads() and getLatestmessages
+
+        boolean userExistsInList = false;
+        for ( MessageThreadUser user : convos ) {
+            String id = user.getId();
+
+            userExistsInList = messageFromId.equals( id );
 
         }
+
+        if ( !userExistsInList ) {
+            convos = grabThreads();
+        }
+
+        getUserLastMessages();
+
+        convoAdapter.updateDataSet( convos );
+        convoAdapter.notifyDataSetChanged();
+
+
     }
 
     public List<MessageThreadUser> grabThreads()
@@ -116,8 +164,16 @@ public class PrivateMessagesOverview extends UserListenerActivity implements Lis
 
         for (MessageThreadUser user : convos) {
             String otherUserId = user.getId();
-            //query for newest message to/from this user id
-            //add it to messageThreadUser instance
+
+            SQLiteDatabase readable = new MessagesDBHelper( this ).getReadableDatabase();
+            Cursor messageResult = readable.rawQuery( "SELECT message FROM messages WHERE other_user_id = ?", new String[]{otherUserId} );
+            messageResult.moveToLast();
+
+            String recentMessage = messageResult.getString( messageResult.getColumnIndex("message") );
+
+            user.setLastMessage( recentMessage );
+
+            messageResult.close();
         }
 
     }
@@ -141,6 +197,10 @@ public class PrivateMessagesOverview extends UserListenerActivity implements Lis
          * Where does "People Here" activity get its photo from
          * Open ChatConvo activity, needs to be passed a User object through intent
          */
+
+        Intent openChat = new Intent( this, ChatConvo.class );
+        openChat.putExtra( "other_user", convos.get( position ) );
+        startActivity( openChat );
 
     }
 

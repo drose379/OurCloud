@@ -8,8 +8,12 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.example.dylan.ourcloud.R;
+import com.example.dylan.ourcloud.util.GPhotoUrlCut;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by dylan on 10/1/15.
@@ -41,11 +45,16 @@ public class MessageThreadAdapter extends BaseAdapter
         return 0;
     }
 
+    public void updateDataSet( List<MessageThreadUser> users )
+    {
+        this.users = users;
+    }
+
     public View getView( int item, View recycledView, ViewGroup parent )
     {
         View v = recycledView == null ? LayoutInflater.from( context ).inflate( R.layout.convo_thread_card, parent,false ) : recycledView;
 
-        User currentUser = users.get( item );
+        MessageThreadUser currentUser = users.get( item );
         boolean currentUserOnline = false;
 
 
@@ -54,8 +63,13 @@ public class MessageThreadAdapter extends BaseAdapter
             if ( id.equals(currentUser.getId()) ) {currentUserOnline = true;}
         }
 
-        TextView otherUser = ( TextView ) v.findViewById( R.id.convoOtherUserName );
-        otherUser.setText(currentUser.getName() + " " + String.valueOf(currentUserOnline) );
+        CircleImageView otherUserImage = ( CircleImageView ) v.findViewById( R.id.otherUserImage );
+        TextView otherUserName = (TextView) v.findViewById( R.id.convoOtherUserName );
+        TextView recentMessageText = (TextView) v.findViewById( R.id.recentMessage );
+
+        Picasso.with( context ).load(GPhotoUrlCut.getImageSized(currentUser.getPhotoUrl(), 65) ).into( otherUserImage );
+        otherUserName.setText(currentUser.getName() );
+        recentMessageText.setText( currentUser.getLastMessage() );
 
         /**
          * Now have access to image, name. Now need to gain access to last message sent, and if user is online or not
