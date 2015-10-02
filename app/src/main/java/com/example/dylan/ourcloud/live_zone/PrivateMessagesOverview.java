@@ -34,7 +34,10 @@ public class PrivateMessagesOverview extends UserListenerActivity implements Lis
      *     *
      */
     private List<User> convos;
+    private ListView convoList;
     private TextView noThreadsText;
+
+    private MessageThreadAdapter convoAdapter;
 
     public void onCreate( Bundle savedInstance )
     {
@@ -49,6 +52,7 @@ public class PrivateMessagesOverview extends UserListenerActivity implements Lis
     {
         super.onStart();
         convos = grabThreads();
+
         if ( convos.size() == 0 ) {noThreadsText.setVisibility(View.VISIBLE);}
         else
         {
@@ -58,8 +62,10 @@ public class PrivateMessagesOverview extends UserListenerActivity implements Lis
              * Need to have access to users photo and last message sent for the card
               */
 
-            ListView convoList = (ListView) findViewById( R.id.convoThreadsList );
-            MessageThreadAdapter convoAdapter = new MessageThreadAdapter( this, convos );
+            getUserLastMessages();
+
+            convoList = (ListView) findViewById( R.id.convoThreadsList );
+            convoAdapter = new MessageThreadAdapter( this, convos );
 
             convoList.setAdapter( convoAdapter );
             convoList.setOnItemClickListener(this);
@@ -77,14 +83,12 @@ public class PrivateMessagesOverview extends UserListenerActivity implements Lis
         MessagesDBHelper dbHelper = new MessagesDBHelper(this);
         SQLiteDatabase readable = dbHelper.getReadableDatabase();
 
-        Cursor allSenders = readable.rawQuery("SELECT other_user_id FROM messages",null);
+        Cursor allSenders = readable.rawQuery("SELECT other_user_id,message FROM messages",null);
 
         while (allSenders.moveToNext()) {
             int userIdIndex = allSenders.getColumnIndex("other_user_id");
+
             String userId = allSenders.getString( userIdIndex );
-
-
-            //need to fix this loop to make sure only unique Users are added to list, may need a name list along with a user list, check name, if not in, add to user, add to name
 
             if ( !otherUserIds.contains( userId ) ) {
                 otherUserIds.add( userId );
@@ -92,7 +96,7 @@ public class PrivateMessagesOverview extends UserListenerActivity implements Lis
                 String userName = ContactUserLookup.nameLookup( this, userId );
                 String userImage = ContactUserLookup.photoLookup( this, userId );
 
-                convoUsers.add( new User().setName(userName).setImage(userImage).setId(userId) );
+                convoUsers.add( new MessageThreadUser().setName(userName).setImage(userImage).setId(userId) );
             }
 
         }
@@ -100,6 +104,21 @@ public class PrivateMessagesOverview extends UserListenerActivity implements Lis
         allSenders.close();
 
         return convoUsers;
+    }
+
+    public void getUserLastMessages( )
+    {
+        /**
+         * Loop over each user, get their id, query DB for messages descending limit 1 where id = userid (should get most recent message)
+         * Add resulting message to the current MessageThreadUser
+         * Message should never be null, user only shows up in this list if we have either sent or received a message from this user
+         */
+    }
+
+    @Override
+    public void userUpdate( List<User> users )
+    {
+        convoAdapter.notifyDataSetChanged();
     }
 
     @Override

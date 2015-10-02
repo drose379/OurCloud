@@ -46,10 +46,21 @@ public class MessageThreadAdapter extends BaseAdapter
         View v = recycledView == null ? LayoutInflater.from( context ).inflate( R.layout.convo_thread_card, parent,false ) : recycledView;
 
         User currentUser = users.get( item );
+        boolean currentUserOnline = false;
+
+
+        for (User user : LiveUsers.users) {
+            String id = user.getId();
+            if ( id.equals(currentUser.getId()) ) {currentUserOnline = true;}
+        }
 
         TextView otherUser = ( TextView ) v.findViewById( R.id.convoOtherUserName );
+        otherUser.setText(currentUser.getName() + " " + String.valueOf(currentUserOnline) );
 
-        otherUser.setText( currentUser.getId() );
+        /**
+         * Now have access to image, name. Now need to gain access to last message sent, and if user is online or not
+         *
+         */
 
         return v;
     }

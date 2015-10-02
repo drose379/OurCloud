@@ -204,12 +204,10 @@ public class ChatConvo extends UserListenerActivity implements View.OnClickListe
     }
 
     public void insertMessageToLocal(String otherUserId,String message,int origin) {
-        String otherUserName = LiveUsers.getUserName(otherUserId);
         SQLiteDatabase writeable = messageDBHelper.getWritableDatabase();
 
         ContentValues vals = new ContentValues();
         vals.put("other_user_id",otherUserId);
-        vals.put("other_user_name",otherUserName);
         vals.put("origin", origin);
         vals.put("message", message);
 
