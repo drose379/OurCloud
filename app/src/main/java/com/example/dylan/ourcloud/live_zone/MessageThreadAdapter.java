@@ -18,9 +18,9 @@ public class MessageThreadAdapter extends BaseAdapter
 {
 
     private Context context;
-    private List<User> users;
+    private List<MessageThreadUser> users;
 
-    public MessageThreadAdapter( Context context, List<User> users )
+    public MessageThreadAdapter( Context context, List<MessageThreadUser> users )
     {
         this.context = context;
         this.users = users;

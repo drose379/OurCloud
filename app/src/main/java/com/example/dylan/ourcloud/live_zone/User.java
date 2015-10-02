@@ -10,9 +10,9 @@ import com.example.dylan.ourcloud.Post;
  */
 public class User implements Parcelable {
 
-    private String id;
-    private String name;
-    private String photoUrl;
+    protected String id;
+    protected String name;
+    protected String photoUrl;
 
     public User() {
 

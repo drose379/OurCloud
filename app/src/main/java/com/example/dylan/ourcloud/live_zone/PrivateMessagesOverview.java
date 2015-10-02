@@ -33,7 +33,7 @@ public class PrivateMessagesOverview extends UserListenerActivity implements Lis
      * Uses userListener to tell if user in chat list has gone offline or online, change "Green or red" dot
      *     *
      */
-    private List<User> convos;
+    private List<MessageThreadUser> convos;
     private ListView convoList;
     private TextView noThreadsText;
 
@@ -74,11 +74,11 @@ public class PrivateMessagesOverview extends UserListenerActivity implements Lis
         }
     }
 
-    public List<User> grabThreads()
+    public List<MessageThreadUser> grabThreads()
     {
 
         List<String> otherUserIds = new ArrayList<String>();
-        List<User> convoUsers = new ArrayList<User>();
+        List<MessageThreadUser> convoUsers = new ArrayList<MessageThreadUser>();
 
         MessagesDBHelper dbHelper = new MessagesDBHelper(this);
         SQLiteDatabase readable = dbHelper.getReadableDatabase();
@@ -113,6 +113,13 @@ public class PrivateMessagesOverview extends UserListenerActivity implements Lis
          * Add resulting message to the current MessageThreadUser
          * Message should never be null, user only shows up in this list if we have either sent or received a message from this user
          */
+
+        for (MessageThreadUser user : convos) {
+            String otherUserId = user.getId();
+            //query for newest message to/from this user id
+            //add it to messageThreadUser instance
+        }
+
     }
 
     @Override
