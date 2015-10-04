@@ -8,7 +8,7 @@
 
     <include
         android:id="@+id/toolbar"
-        layout="@layout/tool_bar"
+        layout="@layout/toolbar_backbutton"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:orientation="vertical"

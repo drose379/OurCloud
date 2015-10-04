@@ -8,9 +8,11 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -50,11 +52,14 @@ public class PrivateMessagesOverview extends UserListenerActivity implements Lis
     {
         super.onCreate(savedInstance);
         setContentView(R.layout.convo_thread_overview);
+        Toolbar toolbar = (Toolbar) findViewById( R.id.toolbar );
+        ImageView toolbarBackButton = (ImageView) toolbar.findViewById(R.id.toolbarBackButton);
 
         noThreadsText = (TextView) findViewById(R.id.noConvosText);
 
         FloatingActionButton newChatButton = (FloatingActionButton) findViewById( R.id.newChatButton );
-        newChatButton.setOnClickListener(this);
+        newChatButton.setOnClickListener( this );
+        toolbarBackButton.setOnClickListener( this );
 
         initMessageListener();
     }
@@ -216,6 +221,9 @@ public class PrivateMessagesOverview extends UserListenerActivity implements Lis
         {
             case R.id.newChatButton :
                 startActivity( new Intent( this, ZoneUserList.class ) );
+                break;
+            case R.id.toolbarBackButton :
+                PrivateMessagesOverview.this.finish();
                 break;
         }
     }

@@ -83,6 +83,7 @@ public class PostComposeActivity extends AppCompatActivity implements View.OnCli
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         TextView toolbarTitle = (TextView) toolbar.findViewById(R.id.toolbarTitle);
+        ImageView toolbarBackButton = (ImageView) toolbar.findViewById( R.id.toolbarBackButton );
         toolbarTitle.setText(LocalUser.getInstance(this).getItem(LocalUserDBHelper.zone_name_col));
 
         TextView userName = (TextView) findViewById(R.id.userName);
@@ -92,12 +93,12 @@ public class PostComposeActivity extends AppCompatActivity implements View.OnCli
         selectImageIcon = (ImageView) findViewById(R.id.photoAddButton);
         uploadedImageContainer = (ImageView) findViewById(R.id.selectedImageContainer);
 
-
         userName.setText(LocalUser.getInstance(this).getItem(LocalUserDBHelper.nameCol));
         Picasso.with(this).load(LocalUser.getInstance(this).getProfilePhotoSized(90)).into(userImage);
 
-        selectImageIcon.setOnClickListener(this);
-        postSubmitButton.setOnClickListener(this);
+        selectImageIcon.setOnClickListener( this );
+        postSubmitButton.setOnClickListener( this );
+        toolbarBackButton.setOnClickListener( this );
 
 
     }
@@ -265,6 +266,10 @@ public class PostComposeActivity extends AppCompatActivity implements View.OnCli
                  * NEED TO GENERATE DIFFERENT RESULT CODES FOR EACH SCENARIO, 1 FOR JUST TEXT, 2 FOR BOTH, 3 FOR JUST IMAGE
                  */
                 expDateDialog.show();
+                break;
+            case R.id.toolbarBackButton :
+                this.finish();
+                break;
         }
     }
 

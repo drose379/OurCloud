@@ -11,6 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -34,7 +35,7 @@ import java.util.List;
 /**
  * Created by dylan on 9/10/15.
  */
-public class ZoneUserList extends UserListenerActivity {
+public class ZoneUserList extends UserListenerActivity implements View.OnClickListener {
 
     private LocalUser localUser;
 
@@ -51,9 +52,11 @@ public class ZoneUserList extends UserListenerActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         TextView toolbarTitle = (TextView) toolbar.findViewById(R.id.toolbarTitle);
+        ImageView toolbarBack = ( ImageView ) toolbar.findViewById( R.id.toolbarBackButton );
 
         toolbarTitle.setTypeface(TypeHelper.getTypefaceBold(this));
         toolbarTitle.setText(localUser.getItem(LocalUserDBHelper.zone_name_col));
+        toolbarBack.setOnClickListener(this);
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -96,6 +99,17 @@ public class ZoneUserList extends UserListenerActivity {
             }
         });
 
+    }
+
+    @Override
+    public void onClick( View v )
+    {
+        switch ( v.getId() )
+        {
+            case R.id.toolbarBackButton :
+                ZoneUserList.this.finish();
+                break;
+        }
     }
 
 }
