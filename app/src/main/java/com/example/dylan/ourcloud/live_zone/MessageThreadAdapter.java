@@ -1,10 +1,13 @@
 package com.example.dylan.ourcloud.live_zone;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.dylan.ourcloud.R;
@@ -52,7 +55,14 @@ public class MessageThreadAdapter extends BaseAdapter
 
     public View getView( int item, View recycledView, ViewGroup parent )
     {
+
+        /**
+         * Need to show indicator of user online or offline ( Cloud icon and cloud with line through it icon )
+         * Need to show incicator of whether recent message is incoming <- OR outgoing -> ( Arrow icons )
+         */
+
         View v = recycledView == null ? LayoutInflater.from( context ).inflate( R.layout.convo_thread_card, parent,false ) : recycledView;
+        CardView thisCard = (CardView) v.findViewById( R.id.card );
 
         MessageThreadUser currentUser = users.get( item );
         boolean currentUserOnline = false;
@@ -66,15 +76,17 @@ public class MessageThreadAdapter extends BaseAdapter
         CircleImageView otherUserImage = ( CircleImageView ) v.findViewById( R.id.otherUserImage );
         TextView otherUserName = (TextView) v.findViewById( R.id.convoOtherUserName );
         TextView recentMessageText = (TextView) v.findViewById( R.id.recentMessage );
+        ImageView otherUserStatus = ( ImageView ) v.findViewById( R.id.otherUserStatus );
+        thisCard.setCardBackgroundColor( Color.parseColor( "#F5F5F5" ) );
 
-        Picasso.with( context ).load(GPhotoUrlCut.getImageSized(currentUser.getPhotoUrl(), 65) ).into( otherUserImage );
-        otherUserName.setText(currentUser.getName() );
-        recentMessageText.setText( currentUser.getLastMessage() );
+        Picasso.with( context ).load(GPhotoUrlCut.getImageSized(currentUser.getPhotoUrl(), 65) ).into(otherUserImage);
+        otherUserName.setText(currentUser.getName());
+        recentMessageText.setText(currentUser.getLastMessage());
 
-        /**
-         * Now have access to image, name. Now need to gain access to last message sent, and if user is online or not
-         *
-         */
+        otherUserStatus.setImageDrawable( context.getResources().getDrawable(currentUserOnline ?
+                R.drawable.ic_cloud_queue_black_24dp : R.drawable.ic_cloud_off_black_24dp ) );
+
+
 
         return v;
     }

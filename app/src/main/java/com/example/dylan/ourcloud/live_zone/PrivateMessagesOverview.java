@@ -79,7 +79,6 @@ public class PrivateMessagesOverview extends UserListenerActivity implements Lis
     {
         super.onDestroy();
         LocalBroadcastManager.getInstance(this).unregisterReceiver( messageReceiver );
-        Log.i("convoOverview","Destrioid");
     }
 
     public void initMessageListener()

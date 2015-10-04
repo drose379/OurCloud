@@ -78,6 +78,9 @@ public class ChatConvo extends UserListenerActivity implements View.OnClickListe
         broadcastManager = LocalBroadcastManager.getInstance(this);
         convoOtherUserId = otherUser.getId();
         toolbarTitle.setText(otherUser.getName());
+
+        isUserOnline();
+
         getMessages();
         initMessageListener();
         clearNotification();
@@ -136,6 +139,12 @@ public class ChatConvo extends UserListenerActivity implements View.OnClickListe
         }
 
 
+    }
+
+    public void isUserOnline() {
+        /**
+         * Check if user is online when activity first opens
+         */
     }
 
     public void otherUserLeft() {
