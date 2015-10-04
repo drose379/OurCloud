@@ -18,10 +18,12 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.4/taskArtifacts/fileSnapshots.bin" afterPath="$PROJECT_DIR$/.gradle/2.4/taskArtifacts/fileSnapshots.bin" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.4/taskArtifacts/taskArtifacts.bin" afterPath="$PROJECT_DIR$/.gradle/2.4/taskArtifacts/taskArtifacts.bin" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/example/dylan/ourcloud/live_zone/ChatConvo.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/dylan/ourcloud/live_zone/ChatConvo.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/example/dylan/ourcloud/live_zone/LiveUsers.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/dylan/ourcloud/live_zone/LiveUsers.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/example/dylan/ourcloud/live_zone/ChatConvoListAdapter.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/dylan/ourcloud/live_zone/ChatConvoListAdapter.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/example/dylan/ourcloud/live_zone/MessageThreadAdapter.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/dylan/ourcloud/live_zone/MessageThreadAdapter.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/example/dylan/ourcloud/live_zone/MessageThreadUser.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/dylan/ourcloud/live_zone/MessageThreadUser.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/example/dylan/ourcloud/live_zone/PrivateMessagesOverview.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/dylan/ourcloud/live_zone/PrivateMessagesOverview.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/convo_thread_card.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/convo_thread_card.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/convo_thread_overview.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/convo_thread_overview.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="OurCloud.iws" />
@@ -50,11 +52,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="LiveUsers.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="LiveUsers.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/dylan/ourcloud/live_zone/LiveUsers.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.8838897">
-              <caret line="168" column="0" selection-start-line="168" selection-start-column="0" selection-end-line="168" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="131" column="0" selection-start-line="131" selection-start-column="0" selection-end-line="131" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -84,17 +86,19 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PrivateMessagesOverview.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="PrivateMessagesOverview.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/dylan/ourcloud/live_zone/PrivateMessagesOverview.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="200" column="66" selection-start-line="200" selection-start-column="66" selection-end-line="200" selection-end-column="66" />
+            <state vertical-scroll-proportion="0.5065312">
+              <caret line="56" column="46" selection-start-line="56" selection-start-column="46" selection-end-line="56" selection-end-column="46" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#2715#2935#0" expanded="true" />
-                <element signature="e#2934#2935#0" expanded="true" />
-                <element signature="e#3943#3951#0" expanded="true" />
-                <element signature="e#4013#4032#0" expanded="true" />
+                <element signature="e#2938#3158#0" expanded="true" />
+                <element signature="e#3157#3158#0" expanded="true" />
+                <element signature="e#4165#4173#0" expanded="true" />
+                <element signature="e#4235#4254#0" expanded="true" />
+                <element signature="e#6314#6315#0" expanded="true" />
+                <element signature="e#6365#6366#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -104,7 +108,7 @@
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/dylan/ourcloud/live_zone/MessageThreadAdapter.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="59" column="110" selection-start-line="59" selection-start-column="110" selection-end-line="59" selection-end-column="110" />
+              <caret line="98" column="0" selection-start-line="98" selection-start-column="0" selection-end-line="98" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#908#909#0" expanded="true" />
@@ -119,8 +123,8 @@
       <file leaf-file-name="convo_thread_card.xml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/convo_thread_card.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-10.0">
-              <caret line="14" column="34" selection-start-line="14" selection-start-column="34" selection-end-line="14" selection-end-column="34" />
+            <state vertical-scroll-proportion="-10.75">
+              <caret line="58" column="31" selection-start-line="58" selection-start-column="31" selection-end-line="58" selection-end-column="31" />
               <folding />
             </state>
           </provider>
@@ -132,8 +136,8 @@
       <file leaf-file-name="convo_thread_overview.xml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/convo_thread_overview.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-8.571428">
-              <caret line="19" column="28" selection-start-line="19" selection-start-column="28" selection-end-line="19" selection-end-column="28" />
+            <state vertical-scroll-proportion="-20.75">
+              <caret line="54" column="42" selection-start-line="54" selection-start-column="42" selection-end-line="54" selection-end-column="42" />
               <folding />
             </state>
           </provider>
@@ -146,7 +150,20 @@
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/dylan/ourcloud/live_zone/MessageThreadUser.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="29" column="20" selection-start-line="29" selection-start-column="20" selection-end-line="29" selection-end-column="20" />
+              <caret line="53" column="43" selection-start-line="53" selection-start-column="43" selection-end-line="53" selection-end-column="43" />
+              <folding>
+                <element signature="e#653#654#0" expanded="true" />
+                <element signature="e#699#700#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ChatConvoListAdapter.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/dylan/ourcloud/live_zone/ChatConvoListAdapter.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="56" column="85" selection-start-line="56" selection-start-column="85" selection-end-line="56" selection-end-column="85" />
               <folding />
             </state>
           </provider>
@@ -1957,7 +1974,6 @@
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/dylan/ourcloud/live_zone/NewLiveUser.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/dylan/ourcloud/NetworkStateReceiver.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/dylan/ourcloud/live_zone/ZoneUserList.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/example/dylan/ourcloud/live_zone/ChatConvoListAdapter.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/dylan/ourcloud/util/ImageUtil.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/dylan/ourcloud/PostComposeActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/dylan/ourcloud/Post.java" />
@@ -1986,14 +2002,15 @@
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/dylan/ourcloud/live_zone/SendPrivateMessage.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/dylan/ourcloud/util/ContactUserLookup.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/dylan/ourcloud/live_zone/User.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/dylan/ourcloud/live_zone/LiveUsers.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/dylan/ourcloud/live_zone/ChatConvo.java" />
+        <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/dylan/ourcloud/live_zone/ChatConvoListAdapter.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/dylan/ourcloud/live_zone/MessageThreadUser.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/dylan/ourcloud/live_zone/MessageThreadAdapter.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/convo_thread_card.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/convo_thread_overview.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/dylan/ourcloud/live_zone/PrivateMessagesOverview.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/convo_thread_card.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/example/dylan/ourcloud/live_zone/MessageThreadAdapter.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/example/dylan/ourcloud/live_zone/LiveUsers.java" />
-        <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/example/dylan/ourcloud/live_zone/ChatConvo.java" />
       </list>
     </option>
   </component>
@@ -2200,7 +2217,7 @@
     <property name="settings.editor.splitter.proportion" value="0.2" />
     <property name="android.sdk.path" value="$USER_HOME$/Android/Sdk" />
     <property name="recentsLimit" value="5" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../GCMTest" />
+    <property name="last_opened_file_path" value="$USER_HOME$/Desktop" />
     <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_SERIALS" value="06157df6825cc621" />
     <property name="FullScreen" value="false" />
     <property name="SearchEverywhereHistoryKey" value="userupdate&#9;null&#9;null&#10;Log.i(&quot;userUpdate&quot;)&#9;null&#9;null&#10;ReceivedUpdate&#9;null&#9;null&#10;JSONU&#9;PSI&#9;JAVA://com.example.dylan.ourcloud.util.DateUtil.JSONUtil&#10;JSON&#9;PSI&#9;JAVA://com.example.dylan.ourcloud.util.DateUtil.JSONUtil" />
@@ -2430,7 +2447,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="1440" y="0" width="1920" height="1079" extended-state="5" />
+    <frame x="1440" y="0" width="1920" height="1079" extended-state="4" />
     <editor active="true" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -2482,34 +2499,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/dylan/ourcloud/LocalUserDBHelper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.14201184">
-          <caret line="15" column="47" selection-start-line="15" selection-start-column="47" selection-end-line="15" selection-end-column="47" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/dylan/ourcloud/live_zone/NewLiveUser.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="50" column="0" selection-start-line="50" selection-start-column="0" selection-end-line="50" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/dylan/ourcloud/live_zone/ChatConvoListAdapter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="55" column="140" selection-start-line="55" selection-start-column="140" selection-end-line="55" selection-end-column="140" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/dylan/ourcloud/PostComposeActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="205" column="59" selection-start-line="205" selection-start-column="59" selection-end-line="205" selection-end-column="59" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/dylan/ourcloud/WifiController.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.9777778">
@@ -2728,13 +2717,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/dylan/ourcloud/live_zone/ZoneUserList.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="81" column="24" selection-start-line="81" selection-start-column="24" selection-end-line="81" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/dylan/ourcloud/home_zone/ThisZoneController.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -2782,14 +2764,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/dylan/ourcloud/live_zone/MessageThreadUser.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="29" column="20" selection-start-line="29" selection-start-column="20" selection-end-line="29" selection-end-column="20" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/dylan/ourcloud/live_zone/SendPrivateMessage.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -2809,48 +2783,12 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/convo_thread_overview.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-8.571428">
-          <caret line="19" column="28" selection-start-line="19" selection-start-column="28" selection-end-line="19" selection-end-column="28" />
-          <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/dylan/ourcloud/live_zone/PrivateMessagesOverview.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="200" column="66" selection-start-line="200" selection-start-column="66" selection-end-line="200" selection-end-column="66" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#2715#2935#0" expanded="true" />
-            <element signature="e#2934#2935#0" expanded="true" />
-            <element signature="e#3943#3951#0" expanded="true" />
-            <element signature="e#4013#4032#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/send_button_offline.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.2322206">
           <caret line="8" column="8" selection-start-line="8" selection-start-column="8" selection-end-line="8" selection-end-column="8" />
           <folding />
         </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/convo_thread_card.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-10.0">
-          <caret line="14" column="34" selection-start-line="14" selection-start-column="34" selection-end-line="14" selection-end-column="34" />
-          <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer">
-        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/user_card.xml">
@@ -2872,28 +2810,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/dylan/ourcloud/live_zone/MessageThreadAdapter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="59" column="110" selection-start-line="59" selection-start-column="110" selection-end-line="59" selection-end-column="110" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#908#909#0" expanded="true" />
-            <element signature="e#943#944#0" expanded="true" />
-            <element signature="e#1163#1164#0" expanded="true" />
-            <element signature="e#1197#1198#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.71552974">
-          <caret line="25" column="57" selection-start-line="25" selection-start-column="57" selection-end-line="25" selection-end-column="57" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/dylan/ourcloud/live_zone/ChatConvo.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -2904,12 +2820,126 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.71552974">
+          <caret line="25" column="52" selection-start-line="25" selection-start-column="52" selection-end-line="25" selection-end-column="52" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/dylan/ourcloud/live_zone/Message.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.14513788">
+          <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/dylan/ourcloud/live_zone/ChatConvoListAdapter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="56" column="85" selection-start-line="56" selection-start-column="85" selection-end-line="56" selection-end-column="85" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/dylan/ourcloud/live_zone/LiveUsers.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.8838897">
-          <caret line="168" column="0" selection-start-line="168" selection-start-column="0" selection-end-line="168" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="131" column="0" selection-start-line="131" selection-start-column="0" selection-end-line="131" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/dylan/ourcloud/live_zone/MessageThreadUser.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="53" column="43" selection-start-line="53" selection-start-column="43" selection-end-line="53" selection-end-column="43" />
+          <folding>
+            <element signature="e#653#654#0" expanded="true" />
+            <element signature="e#699#700#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/convo_thread_card.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-10.75">
+          <caret line="58" column="31" selection-start-line="58" selection-start-column="31" selection-end-line="58" selection-end-column="31" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Desktop/device-2015-10-04-151924.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/dylan/ourcloud/live_zone/MessageThreadAdapter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="98" column="0" selection-start-line="98" selection-start-column="0" selection-end-line="98" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#908#909#0" expanded="true" />
+            <element signature="e#943#944#0" expanded="true" />
+            <element signature="e#1163#1164#0" expanded="true" />
+            <element signature="e#1197#1198#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/this_zone.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.45537066">
+          <caret line="70" column="36" selection-start-line="70" selection-start-column="36" selection-end-line="70" selection-end-column="36" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/convo_thread_overview.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-20.75">
+          <caret line="54" column="42" selection-start-line="54" selection-start-column="42" selection-end-line="54" selection-end-column="42" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/dylan/ourcloud/live_zone/ZoneUserList.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="1.509434">
+          <caret line="81" column="24" selection-start-line="81" selection-start-column="24" selection-end-line="81" selection-end-column="24" />
+          <folding>
+            <element signature="e#2374#3253#0" expanded="true" />
+            <element signature="e#3252#3253#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/dylan/ourcloud/live_zone/PrivateMessagesOverview.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.5065312">
+          <caret line="56" column="46" selection-start-line="56" selection-start-column="46" selection-end-line="56" selection-end-column="46" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#2938#3158#0" expanded="true" />
+            <element signature="e#3157#3158#0" expanded="true" />
+            <element signature="e#4165#4173#0" expanded="true" />
+            <element signature="e#4235#4254#0" expanded="true" />
+            <element signature="e#6314#6315#0" expanded="true" />
+            <element signature="e#6365#6366#0" expanded="true" />
           </folding>
         </state>
       </provider>

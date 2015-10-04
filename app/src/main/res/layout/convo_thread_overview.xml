@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:background="@color/ColorPrimaryDark"
     android:layout_width="match_parent"
@@ -14,7 +14,7 @@
         android:orientation="vertical"
         />
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -43,11 +43,20 @@
 
         </ListView>
 
-
         <!-- FAB to go to People Here activity to start a chat -->
+        <com.github.clans.fab.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_margin="8dp"
+            fab:fab_hideAnimation="@anim/fab_scale_down"
+            android:src="@drawable/ic_create_white_24dp"
+            android:id="@+id/newChatButton"
+            />
 
 
-    </LinearLayout>
+    </RelativeLayout>
 
 
 </LinearLayout>

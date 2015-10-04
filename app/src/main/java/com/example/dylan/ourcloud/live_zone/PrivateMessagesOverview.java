@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.example.dylan.ourcloud.R;
 import com.example.dylan.ourcloud.UserListenerActivity;
 import com.example.dylan.ourcloud.util.ContactUserLookup;
+import com.github.clans.fab.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -25,7 +26,7 @@ import java.util.List;
 /**
  * Created by dylan on 9/29/15.
  */
-public class PrivateMessagesOverview extends UserListenerActivity implements ListView.OnItemClickListener {
+public class PrivateMessagesOverview extends UserListenerActivity implements ListView.OnItemClickListener, View.OnClickListener {
 
     /**
      * ListView where each chat convorsation is a card
@@ -51,6 +52,9 @@ public class PrivateMessagesOverview extends UserListenerActivity implements Lis
         setContentView(R.layout.convo_thread_overview);
 
         noThreadsText = (TextView) findViewById(R.id.noConvosText);
+
+        FloatingActionButton newChatButton = (FloatingActionButton) findViewById( R.id.newChatButton );
+        newChatButton.setOnClickListener(this);
 
         initMessageListener();
     }
@@ -78,7 +82,7 @@ public class PrivateMessagesOverview extends UserListenerActivity implements Lis
     public void onDestroy()
     {
         super.onDestroy();
-        LocalBroadcastManager.getInstance(this).unregisterReceiver( messageReceiver );
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(messageReceiver);
     }
 
     public void initMessageListener()
@@ -90,7 +94,7 @@ public class PrivateMessagesOverview extends UserListenerActivity implements Lis
             }
         };
 
-        LocalBroadcastManager.getInstance(this).registerReceiver(messageReceiver, new IntentFilter(LiveUsers.NEW_PRIVATE_MESSAGE ));
+        LocalBroadcastManager.getInstance(this).registerReceiver(messageReceiver, new IntentFilter(LiveUsers.NEW_PRIVATE_MESSAGE));
     }
 
     public void updateConvoOverview( String messageFromId )
@@ -165,12 +169,14 @@ public class PrivateMessagesOverview extends UserListenerActivity implements Lis
             String otherUserId = user.getId();
 
             SQLiteDatabase readable = new MessagesDBHelper( this ).getReadableDatabase();
-            Cursor messageResult = readable.rawQuery( "SELECT message FROM messages WHERE other_user_id = ?", new String[]{otherUserId} );
+            Cursor messageResult = readable.rawQuery( "SELECT message,origin FROM messages WHERE other_user_id = ?", new String[]{otherUserId} );
             messageResult.moveToLast();
 
-            String recentMessage = messageResult.getString( messageResult.getColumnIndex("message") );
+            String recentMessage = messageResult.getString( messageResult.getColumnIndex( "message" ) );
+            int origin = messageResult.getInt( messageResult.getColumnIndex("origin") );
 
             user.setLastMessage( recentMessage );
+            user.setOrigin(origin);
 
             messageResult.close();
         }
@@ -199,8 +205,19 @@ public class PrivateMessagesOverview extends UserListenerActivity implements Lis
 
         Intent openChat = new Intent( this, ChatConvo.class );
         openChat.putExtra( "other_user", convos.get( position ) );
-        startActivity( openChat );
+        startActivity(openChat);
 
+    }
+
+    @Override
+    public void onClick( View v )
+    {
+        switch ( v.getId() )
+        {
+            case R.id.newChatButton :
+                startActivity( new Intent( this, ZoneUserList.class ) );
+                break;
+        }
     }
 
 

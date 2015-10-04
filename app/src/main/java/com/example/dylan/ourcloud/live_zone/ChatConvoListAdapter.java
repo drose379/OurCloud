@@ -54,7 +54,7 @@ public class ChatConvoListAdapter extends BaseAdapter {
         messageTextTest.setText(currentMessage.getText());
         senderNameTest.setText(currentMessage.getOrigin() == 1 ? "Me" : currentMessage.getOtherUserName());
         senderNameTest.setTextColor(currentMessage.getOrigin() == 1 ? Color.DKGRAY : context.getResources().getColor(R.color.ColorPrimary));
-        container.setCardBackgroundColor(Color.parseColor( origin == 1 ? "#F5F5F5" : (origin == 2 ? "#E0E0E0" : "#BDBDBD") ));
+        container.setCardBackgroundColor(Color.parseColor( origin == 1 ? "#F5F5F5" : "#E0E0E0" ));
 
 
         return v;

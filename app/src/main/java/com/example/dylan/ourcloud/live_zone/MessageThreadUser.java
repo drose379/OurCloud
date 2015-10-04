@@ -8,6 +8,7 @@ import android.os.Parcel;
 public class MessageThreadUser extends User {
 
     private String lastMessage;
+    private int origin;
 
     @Override
     public MessageThreadUser setId( String id )
@@ -35,10 +36,21 @@ public class MessageThreadUser extends User {
         this.lastMessage = lastMessage;
     }
 
+    /**
+     *
+     * @param origin 1 is outgoing, 2 incoming
+     */
+    public MessageThreadUser setOrigin( int origin )
+    {
+        this.origin = origin;
+        return this;
+    }
 
     public String getLastMessage()
     {
         return lastMessage;
     }
+
+    public int getOrigin() { return origin; }
 
 }

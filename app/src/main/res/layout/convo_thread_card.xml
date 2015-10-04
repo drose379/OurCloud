@@ -52,14 +52,29 @@
                     android:id="@+id/recentMessage"
                     />
 
-            <ImageView
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="20dp"
                 android:layout_centerVertical="true"
-                android:id="@+id/otherUserStatus"
-                />
+                android:orientation="vertical"
+                >
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/otherUserStatus"
+                    />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/origin"
+                    />
+
+            </LinearLayout>
+
 
         </RelativeLayout>
 

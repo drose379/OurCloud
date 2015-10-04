@@ -77,6 +77,7 @@ public class MessageThreadAdapter extends BaseAdapter
         TextView otherUserName = (TextView) v.findViewById( R.id.convoOtherUserName );
         TextView recentMessageText = (TextView) v.findViewById( R.id.recentMessage );
         ImageView otherUserStatus = ( ImageView ) v.findViewById( R.id.otherUserStatus );
+        ImageView origin = (ImageView) v.findViewById( R.id.origin );
         thisCard.setCardBackgroundColor( Color.parseColor( "#E0E0E0" ) );
 
         Picasso.with( context ).load(GPhotoUrlCut.getImageSized(currentUser.getPhotoUrl(), 65) ).into(otherUserImage);
@@ -85,6 +86,10 @@ public class MessageThreadAdapter extends BaseAdapter
 
         otherUserStatus.setImageDrawable( context.getResources().getDrawable(currentUserOnline ?
                 R.drawable.ic_cloud_queue_black_24dp : R.drawable.ic_cloud_off_black_24dp ) );
+
+        origin.setImageDrawable( context.getResources().getDrawable( currentUser.getOrigin() == 1 ? R.drawable.ic_arrow_forward_black_24dp :
+                R.drawable.ic_arrow_back_black_24dp ) );
+
 
 
 
