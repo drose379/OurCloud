@@ -156,7 +156,7 @@ public class LiveUsers extends GcmListenerService {
                 .setTicker(message)
                 .setLights(Color.GREEN,100,100)
                 .setAutoCancel(true)
-                .setSmallIcon(R.drawable.notification_template_icon_bg)
+                .setSmallIcon(R.drawable.ic_cloud_queue_white_24dp)
                 .build();
 
         if (!ChatConvo.convoOtherUserId.equals(otherUserId)) {

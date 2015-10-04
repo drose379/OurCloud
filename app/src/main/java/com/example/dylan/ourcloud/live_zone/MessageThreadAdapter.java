@@ -77,7 +77,7 @@ public class MessageThreadAdapter extends BaseAdapter
         TextView otherUserName = (TextView) v.findViewById( R.id.convoOtherUserName );
         TextView recentMessageText = (TextView) v.findViewById( R.id.recentMessage );
         ImageView otherUserStatus = ( ImageView ) v.findViewById( R.id.otherUserStatus );
-        thisCard.setCardBackgroundColor( Color.parseColor( "#F5F5F5" ) );
+        thisCard.setCardBackgroundColor( Color.parseColor( "#E0E0E0" ) );
 
         Picasso.with( context ).load(GPhotoUrlCut.getImageSized(currentUser.getPhotoUrl(), 65) ).into(otherUserImage);
         otherUserName.setText(currentUser.getName());

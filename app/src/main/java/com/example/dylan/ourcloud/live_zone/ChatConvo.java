@@ -142,9 +142,16 @@ public class ChatConvo extends UserListenerActivity implements View.OnClickListe
     }
 
     public void isUserOnline() {
-        /**
-         * Check if user is online when activity first opens
-         */
+        boolean userOnline = false;
+
+        for ( User user : LiveUsers.users ) {
+            if ( user.getName().equals( otherUser.getName() ) ) {
+                userOnline = true;
+            }
+        }
+
+        if ( !userOnline ) {otherUserLeft();}
+
     }
 
     public void otherUserLeft() {
