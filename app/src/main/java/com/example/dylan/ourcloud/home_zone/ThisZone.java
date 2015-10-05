@@ -30,6 +30,7 @@ import com.example.dylan.ourcloud.LocalUserDBHelper;
 import com.example.dylan.ourcloud.MainActivity;
 import com.example.dylan.ourcloud.NavDrawerAdapter;
 import com.example.dylan.ourcloud.NetworkListenerActivity;
+import com.example.dylan.ourcloud.PostListenerActivity;
 import com.example.dylan.ourcloud.TypeHelper;
 import com.example.dylan.ourcloud.live_zone.ExitLiveUser;
 import com.example.dylan.ourcloud.live_zone.LiveUsers;
@@ -55,7 +56,7 @@ import java.util.List;
 /**
  * Created by dylan on 8/6/15.
  */
-public class ThisZone extends NetworkListenerActivity implements View.OnClickListener,ListView.OnScrollListener,AdapterView.OnItemClickListener,
+public class ThisZone extends PostListenerActivity implements View.OnClickListener,ListView.OnScrollListener,AdapterView.OnItemClickListener,
         SwipeRefreshLayout.OnRefreshListener,ThisZoneController.Callback,
     ImageUtil.ImageCallback{
 
@@ -210,6 +211,11 @@ public class ThisZone extends NetworkListenerActivity implements View.OnClickLis
 
         thisZoneController.grabZonePosts();
         //refresh feed
+    }
+
+    @Override
+    public void newPostReceived() {
+        thisZoneController.grabZonePosts();
     }
 
     public void initDialogs() {

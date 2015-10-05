@@ -42,6 +42,7 @@ public class LiveUsers extends GcmListenerService {
 
     public static final String UPDATE_ACTIVE_USERS = "UPDATE_ACTIVE_USERS";
     public static final String NEW_PRIVATE_MESSAGE = "NEW_PRIVATE_MESSAGE";
+    public static final String NEW_ZONE_POST = "NEW_ZONE_POST";
     public static boolean appActive = true;
 
     public static ArrayList<User> users = new ArrayList<>();
@@ -103,6 +104,18 @@ public class LiveUsers extends GcmListenerService {
                     LocalBroadcastManager.getInstance(this).sendBroadcast(newMessage);
 
                     notifyNewMessage( senderId, message );
+
+                    break;
+
+                case "3" :
+
+                    /**
+                     * New post in this zone, send a local broadcast that ThisZone will listen for, when received by ThisZone, refresh.
+                     */
+
+                    LocalBroadcastManager.getInstance( this ).sendBroadcast( new Intent(NEW_ZONE_POST) );
+
+                    Log.i("newPostReceive","New post received");
 
                     break;
             }

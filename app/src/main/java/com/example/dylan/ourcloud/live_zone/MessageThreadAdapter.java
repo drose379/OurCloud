@@ -82,7 +82,7 @@ public class MessageThreadAdapter extends BaseAdapter
 
         Picasso.with( context ).load(GPhotoUrlCut.getImageSized(currentUser.getPhotoUrl(), 65) ).into(otherUserImage);
         otherUserName.setText(currentUser.getName());
-        recentMessageText.setText(currentUser.getLastMessage());
+        recentMessageText.setText(currentUser.getLastMessage().length() > 60 ? currentUser.getLastMessage().substring(0,60) + "..." : currentUser.getLastMessage());
 
         otherUserStatus.setImageDrawable( context.getResources().getDrawable(currentUserOnline ?
                 R.drawable.ic_cloud_queue_black_24dp : R.drawable.ic_cloud_off_black_24dp ) );
