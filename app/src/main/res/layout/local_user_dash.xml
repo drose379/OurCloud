@@ -27,7 +27,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="10dp"
-            android:background="@color/ColorStart"
+            android:background="#1DE9B6"
             >
 
             <de.hdodenhof.circleimageview.CircleImageView
@@ -51,6 +51,21 @@
                 />
 
         </RelativeLayout>
+
+        <com.example.dylan.ourcloud.UserOverview.SlidingTabLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:elevation="3dp"
+            android:background="#1DE9B6"
+            android:id="@+id/tabLayout"
+            />
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/localUserPager"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            />
 
 
     </LinearLayout>
