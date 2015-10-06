@@ -91,6 +91,7 @@
         <activity android:name=".live_zone.ChatConvo" android:launchMode="singleTask" />
         <activity android:name=".live_zone.PrivateMessagesOverview" />
         <activity android:name=".MarkedZoneDashboard" />
+        <activity android:name=".LocalUserDashboard" />
 
     </application>
 

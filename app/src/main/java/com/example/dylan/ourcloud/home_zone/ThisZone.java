@@ -27,6 +27,7 @@ import android.widget.TextView;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.example.dylan.ourcloud.LocalUser;
 import com.example.dylan.ourcloud.LocalUserDBHelper;
+import com.example.dylan.ourcloud.LocalUserDashboard;
 import com.example.dylan.ourcloud.MainActivity;
 import com.example.dylan.ourcloud.MarkedZoneDashboard;
 import com.example.dylan.ourcloud.NavDrawerAdapter;
@@ -384,7 +385,8 @@ public class ThisZone extends PostListenerActivity implements View.OnClickListen
         menuLayout.closeDrawer(Gravity.LEFT);
         switch (position) {
             case 0:
-                //me (user info)
+                i = new Intent( this, LocalUserDashboard.class);
+                startActivity( i );
                 break;
             case 1:
                 i = new Intent(this, ZoneUserList.class);

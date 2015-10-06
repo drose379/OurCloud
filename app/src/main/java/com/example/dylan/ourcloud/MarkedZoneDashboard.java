@@ -66,6 +66,7 @@ public class MarkedZoneDashboard extends NetworkListenerActivity implements View
                 break;
             case R.id.markZoneButton :
                 //use markedZoneController to mark this zone
+                //show dialog asking if the user would like to mark zone first
                 break;
         }
 
