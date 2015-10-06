@@ -74,6 +74,8 @@
 
         <service android:name=".live_zone.NewLiveUser"
             android:exported="false"/>
+        <service android:name=".home_zone.MarkZoneService"
+            android:exported="false"/>
 
         <service android:name=".live_zone.ExitLiveUser"
             android:exported="false"/>
@@ -88,6 +90,7 @@
         <activity android:name=".live_zone.ZoneUserList"/>
         <activity android:name=".live_zone.ChatConvo" android:launchMode="singleTask" />
         <activity android:name=".live_zone.PrivateMessagesOverview" />
+        <activity android:name=".MarkedZoneDashboard" />
 
     </application>
 

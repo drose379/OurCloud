@@ -28,6 +28,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.example.dylan.ourcloud.LocalUser;
 import com.example.dylan.ourcloud.LocalUserDBHelper;
 import com.example.dylan.ourcloud.MainActivity;
+import com.example.dylan.ourcloud.MarkedZoneDashboard;
 import com.example.dylan.ourcloud.NavDrawerAdapter;
 import com.example.dylan.ourcloud.NetworkListenerActivity;
 import com.example.dylan.ourcloud.PostListenerActivity;
@@ -300,10 +301,6 @@ public class ThisZone extends PostListenerActivity implements View.OnClickListen
                         .setType(1)
         );
         menuOptions.add(new MenuOption()
-                        .setTitle("Mark This Zone")
-                        .setType(1)
-        );
-        menuOptions.add(new MenuOption()
                         .setTitle("Exit")
                         .setType(1)
         );
@@ -398,12 +395,10 @@ public class ThisZone extends PostListenerActivity implements View.OnClickListen
                 startActivity(chatThreads);
                 break;
             case 3:
-                //marked zones
+                i = new Intent( this, MarkedZoneDashboard.class );
+                startActivity( i );
                 break;
             case 4:
-                //mark this zone
-                break;
-            case 5:
                 Intent exit = new Intent(this,ExitLiveUser.class);
                 LiveUsers.appActive = false;
                 startService(exit);

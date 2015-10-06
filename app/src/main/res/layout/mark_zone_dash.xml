@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:background="@color/ColorPrimaryDark"
+    android:layout_height="match_parent">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar_backbutton"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#ECEDF0"
+        >
+
+        <com.example.dylan.ourcloud.CustomTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="You have not marked and zones!"
+            android:layout_centerInParent="true"
+            android:textColor="@color/ColorPrimary"
+            android:visibility="gone"
+            android:id="@+id/noMarkedZones"
+            />
+
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/markZoneButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_margin="8dp"
+            fab:fab_hideAnimation="@anim/fab_scale_down"
+            android:src="@drawable/ic_add_white_24dp"
+            />
+
+    </RelativeLayout>
+
+
+
+</LinearLayout>
