@@ -27,38 +27,30 @@ public class Post implements Serializable {
         this.currentUser = currentUser;
     }
 
-    public Post setPostId(String id) {
+    public void setPostId(String id) {
         postId = id;
-        return this;
     }
 
-    public Post setUser(String user) {
+    public void setUser(String user) {
         this.user = user;
-        return this;
     }
-    public Post setUserImage(String url) {
+    public void setUserImage(String url) {
         userImageUrl = url;
-        return this;
     }
-    public Post setPostType(String type) {
+    public void setPostType(String type) {
         postType = type;
-        return this;
     }
-    public Post setPostText(String postText) {
+    public void setPostText(String postText) {
         this.postText = postText;
-        return this;
     }
-    public Post setPostImage(String url) {
+    public void setPostImage(String url) {
         postImageUrl = url;
-        return this;
     }
-    public Post setComments(ArrayList<Comment> comments) {
+    public void setComments(ArrayList<Comment> comments) {
         this.comments = comments;
-        return this;
     }
-    public Post setPostTimeMillis(long millis)  {
+    public void setPostTimeMillis(long millis)  {
         postTimeMillis = millis;
-        return this;
     }
 
     public String getId() {return postId;}

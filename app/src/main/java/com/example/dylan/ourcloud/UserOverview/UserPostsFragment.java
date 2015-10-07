@@ -13,6 +13,7 @@ import com.example.dylan.ourcloud.LocalUser;
 import com.example.dylan.ourcloud.LocalUserDBHelper;
 import com.example.dylan.ourcloud.Post;
 import com.example.dylan.ourcloud.R;
+import com.example.dylan.ourcloud.ViewedPost;
 
 import java.util.List;
 
@@ -45,9 +46,11 @@ public class UserPostsFragment extends Fragment implements GrabUserPosts.Callbac
     }
 
     @Override
-    public void getPosts( List<Post> posts ) {
+    public void getPosts( List<ViewedPost> posts ) {
         //populate the list with these posts
-        Log.i("gotPosts", String.valueOf(posts.size()));
+        for (ViewedPost post : posts) {
+            Log.i("viewers",post.getPostText() + "Viewers " + post.getViews().toString());
+        }
     }
 
 

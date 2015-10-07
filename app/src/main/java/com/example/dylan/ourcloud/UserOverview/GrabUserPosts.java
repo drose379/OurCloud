@@ -8,6 +8,7 @@ import android.util.Log;
 import com.example.dylan.ourcloud.LocalUser;
 import com.example.dylan.ourcloud.LocalUserDBHelper;
 import com.example.dylan.ourcloud.Post;
+import com.example.dylan.ourcloud.ViewedPost;
 import com.example.dylan.ourcloud.util.JSONUtil;
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.MediaType;
@@ -24,10 +25,10 @@ import java.util.List;
 /**
  * Created by dylan on 10/6/15.
  */
-public class GrabUserPosts extends AsyncTask<String,Integer,List<Post>> {
+public class GrabUserPosts extends AsyncTask<String,Integer,List<ViewedPost>> {
 
     public interface Callback {
-        void getPosts( List<Post> posts );
+        void getPosts( List<ViewedPost> posts );
     }
 
     private Context context;
@@ -40,8 +41,8 @@ public class GrabUserPosts extends AsyncTask<String,Integer,List<Post>> {
         client = new OkHttpClient();
     }
 
-    public List<Post> doInBackground( String... params ) {
-        List<Post> userPosts;
+    public List<ViewedPost> doInBackground( String... params ) {
+        List<ViewedPost> userPosts;
 
         JSONArray items = new JSONArray();
         items.put( params[0] );
@@ -63,7 +64,7 @@ public class GrabUserPosts extends AsyncTask<String,Integer,List<Post>> {
         return userPosts;
     }
 
-    public void onPostExecute( List<Post> posts ) {
+    public void onPostExecute( List<ViewedPost> posts ) {
         callback.getPosts( posts );
     }
 

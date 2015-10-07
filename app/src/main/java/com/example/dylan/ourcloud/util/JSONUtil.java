@@ -7,6 +7,7 @@ import com.example.dylan.ourcloud.Comment;
 import com.example.dylan.ourcloud.LocalUser;
 import com.example.dylan.ourcloud.LocalUserDBHelper;
 import com.example.dylan.ourcloud.Post;
+import com.example.dylan.ourcloud.ViewedPost;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -42,14 +43,16 @@ public class JSONUtil {
 
             for(int i = 0;i<postsParent.length();i++) {
                 JSONObject currentObject = postsParent.getJSONObject(i);
-                Post currentPost = new Post(currentUser)
-                        .setUser(currentObject.getString("user_name"))
-                        .setUserImage(currentObject.getString("user_image"))
-                        .setPostId(currentObject.getString("ID"))
-                        .setPostText(currentObject.getString("postText"))
-                        .setPostImage(currentObject.getString("postImage"))
-                        .setPostType(currentObject.getString("postType"))
-                        .setPostTimeMillis(Long.decode(currentObject.getString("postTime")));
+
+                Post currentPost = new Post(currentUser);
+                currentPost.setUser(currentObject.getString("user_name"));
+                currentPost.setUserImage(currentObject.getString("user_image"));
+                currentPost.setPostId(currentObject.getString("ID"));
+                currentPost.setPostText(currentObject.getString("postText"));
+                currentPost.setPostImage(currentObject.getString("postImage"));
+                currentPost.setPostType(currentObject.getString("postType"));
+                currentPost.setPostTimeMillis(Long.decode(currentObject.getString("postTime")));
+
                 posts.add(currentPost);
             }
 
@@ -59,8 +62,8 @@ public class JSONUtil {
         return posts;
     }
 
-    public static List<Post> toCurrentUserPostList( String postsJSON, Context context ) {
-        List<Post> posts = new ArrayList<Post>();
+    public static List<ViewedPost> toCurrentUserPostList( String postsJSON, Context context ) {
+        List<ViewedPost> posts = new ArrayList<ViewedPost>();
 
         String currentUser = LocalUser.getInstance( context ).getItem(LocalUserDBHelper.nameCol);
         String userImage = LocalUser.getInstance( context ).getItem( LocalUserDBHelper.profile_image_col );
@@ -70,14 +73,17 @@ public class JSONUtil {
 
             for(int i = 0;i<postsParent.length();i++) {
                 JSONObject currentObject = postsParent.getJSONObject(i);
-                Post currentPost = new Post(currentUser)
-                        .setUser(currentUser)
-                        .setUserImage( userImage )
-                        .setPostId(currentObject.getString("ID"))
-                        .setPostText(currentObject.getString("postText"))
-                        .setPostImage(currentObject.getString("postImage"))
-                        .setPostType(currentObject.getString("postType"))
-                        .setPostTimeMillis(Long.decode(currentObject.getString("postTime")));
+
+                ViewedPost currentPost = new ViewedPost(currentUser);
+                currentPost.setUser(currentUser);
+                currentPost.setUserImage( userImage );
+                currentPost.setPostId(currentObject.getString("ID"));
+                currentPost.setPostText(currentObject.getString("postText"));
+                currentPost.setPostImage(currentObject.getString("postImage"));
+                currentPost.setPostType(currentObject.getString("postType"));
+                currentPost.setPostTimeMillis(Long.decode(currentObject.getString("postTime")));
+                currentPost.setViews( currentObject.getString("views") );
+
                 posts.add(currentPost);
             }
 
