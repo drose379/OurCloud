@@ -22,7 +22,20 @@ public class UserOverviewPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem( int item ) {
-        return new UserPostsFragment();
+        Fragment f = null;
+        switch ( item ) {
+            case 0:
+                f = new UserPostsFragment();
+                break;
+            case 1:
+                f = new UserCommentsFragment();
+                break;
+            case 2:
+                f = new UserZonesFragment();
+                break;
+        }
+
+        return f;
     }
 
     public String getTabTitle( int item ) {

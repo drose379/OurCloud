@@ -1,9 +1,11 @@
 package com.example.dylan.ourcloud.util;
 
+import android.content.Context;
 import android.util.Log;
 
 import com.example.dylan.ourcloud.Comment;
 import com.example.dylan.ourcloud.LocalUser;
+import com.example.dylan.ourcloud.LocalUserDBHelper;
 import com.example.dylan.ourcloud.Post;
 
 import org.json.JSONArray;
@@ -46,7 +48,35 @@ public class JSONUtil {
                         .setPostId(currentObject.getString("ID"))
                         .setPostText(currentObject.getString("postText"))
                         .setPostImage(currentObject.getString("postImage"))
-                        .setPostType(currentObject.getString("postType")) //left off here, need to test this with logging in the ThisZone activity
+                        .setPostType(currentObject.getString("postType"))
+                        .setPostTimeMillis(Long.decode(currentObject.getString("postTime")));
+                posts.add(currentPost);
+            }
+
+        } catch (JSONException e) {
+            throw new RuntimeException(e.getMessage());
+        }
+        return posts;
+    }
+
+    public static List<Post> toCurrentUserPostList( String postsJSON, Context context ) {
+        List<Post> posts = new ArrayList<Post>();
+
+        String currentUser = LocalUser.getInstance( context ).getItem(LocalUserDBHelper.nameCol);
+        String userImage = LocalUser.getInstance( context ).getItem( LocalUserDBHelper.profile_image_col );
+
+        try {
+            JSONArray postsParent = new JSONArray(postsJSON);
+
+            for(int i = 0;i<postsParent.length();i++) {
+                JSONObject currentObject = postsParent.getJSONObject(i);
+                Post currentPost = new Post(currentUser)
+                        .setUser(currentUser)
+                        .setUserImage( userImage )
+                        .setPostId(currentObject.getString("ID"))
+                        .setPostText(currentObject.getString("postText"))
+                        .setPostImage(currentObject.getString("postImage"))
+                        .setPostType(currentObject.getString("postType"))
                         .setPostTimeMillis(Long.decode(currentObject.getString("postTime")));
                 posts.add(currentPost);
             }
