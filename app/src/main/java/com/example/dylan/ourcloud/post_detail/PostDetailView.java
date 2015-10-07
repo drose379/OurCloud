@@ -1,6 +1,7 @@
 package com.example.dylan.ourcloud.post_detail;
 
 import android.content.BroadcastReceiver;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
@@ -81,6 +82,11 @@ public class PostDetailView extends NetworkListenerActivity implements View.OnCl
 
         toolbarMenuButton.setOnClickListener(this);
         newCommentButton.setOnClickListener(this);
+
+        Intent postView = new Intent( this, PostViewRequest.class );
+        postView.putExtra("postID",post.getId());
+        postView.putExtra("userID",LocalUser.getInstance( this ).getItem(LocalUserDBHelper.user_id_col));
+        startService( postView );
 
         initHeaderView();
         initNavDrawer();
