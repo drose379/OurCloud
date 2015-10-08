@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.example.dylan.ourcloud.home_zone.ThisZone;
 import com.google.android.gms.common.ConnectionResult;
@@ -36,8 +37,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("OurCloud");
-        setSupportActionBar(toolbar);
+        TextView toolbarTitle = (TextView) toolbar.findViewById( R.id.toolbarTitle );
+        toolbarTitle.setText("OurCloud");
 
         loadContainer = (LinearLayout) findViewById(R.id.loadingContainer);
         signinContainer = (RelativeLayout) findViewById(R.id.loginContainer);

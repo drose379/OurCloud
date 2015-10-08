@@ -242,8 +242,12 @@ public class PostComposeActivity extends AppCompatActivity implements View.OnCli
                     break;
                 case Crop.REQUEST_CROP :
                     try {
-                        postImage = new File(Crop.getOutput(data).getPath());
-                        updateUserSelectedImage();
+
+                        if (data != null) {
+                            postImage = new File(Crop.getOutput(data).getPath());
+                            updateUserSelectedImage();
+                        }
+
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }

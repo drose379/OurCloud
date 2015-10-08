@@ -9,7 +9,8 @@ import android.support.v4.app.FragmentPagerAdapter;
  */
 public class UserOverviewPagerAdapter extends FragmentPagerAdapter {
 
-    private String[] items = { "Posts","Comments","Zones" };
+    //private String[] items = { "Posts","Comments","Zones" };
+    private String[] items = { "Posts", "TBA", "TBA" };
 
     public UserOverviewPagerAdapter( FragmentManager manager ) {
         super( manager );
