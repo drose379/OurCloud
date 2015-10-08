@@ -21,6 +21,14 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.iid.InstanceID;
 import com.google.android.gms.plus.model.people.Person;
+import com.squareup.okhttp.MediaType;
+import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.RequestBody;
+
+import org.json.JSONArray;
+
+import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener,SignInController.UICallback {
 
@@ -68,9 +76,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onReceive(Context context, Intent intent) {
                 LocalUser.getInstance(MainActivity.this).setGcmId(intent.getStringExtra("gcmId"));
-                Intent i = new Intent(MainActivity.this, ThisZone.class);
-                startActivity(i);
-                MainActivity.this.finish();
+
+                new UserSignIn().execute();
+                
+
                 LocalBroadcastManager.getInstance(MainActivity.this).unregisterReceiver(this);
             }
         },new IntentFilter(GcmTokenGrab.RECEIVE_GCM_TOKEN));
@@ -119,6 +128,43 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 signInController.attemptSignIn();
                 break;
         }
+    }
+
+    public class UserSignIn extends AsyncTask<Void,Void,Void> {
+
+        @Override
+        public Void doInBackground( Void... params ) {
+            LocalUser local = LocalUser.getInstance( MainActivity.this );
+
+            JSONArray items = new JSONArray();
+            items.put( local.getItem( LocalUserDBHelper.user_id_col ) );
+            items.put( local.getItem( LocalUserDBHelper.gcm_id_col ) );
+            items.put( local.getItem( LocalUserDBHelper.nameCol ) );
+            items.put( local.getItem( LocalUserDBHelper.profile_image_col ) );
+
+
+            OkHttpClient http = new OkHttpClient();
+            RequestBody body = RequestBody.create( MediaType.parse("text/plain"), items.toString() );
+            Request r = new Request.Builder()
+                    .post( body )
+                    .url("http://104.236.15.47/OurCloudAPI/index.php/userSignin")
+                    .build();
+
+            try {
+
+                http.newCall( r ).execute();
+
+                Intent i = new Intent(MainActivity.this, ThisZone.class);
+                startActivity(i);
+                MainActivity.this.finish();
+
+            } catch( IOException e ) {
+                e.getMessage();
+            }
+
+            return null;
+        }
+
     }
 
 

@@ -4,7 +4,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 
-import com.example.dylan.ourcloud.util.UserUtil;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.plus.Plus;
@@ -66,7 +65,7 @@ public class SignInController implements GoogleApiClient.OnConnectionFailedListe
     public void onConnected(Bundle connectionHint) {
         Person currentPerson = Plus.PeopleApi.getCurrentPerson(gClient);
         if (currentPerson != null) {
-            UserUtil.userSignIn(uiCallback, currentPerson);
+            uiCallback.signInSuccess( currentPerson );
         } else {
             throw new RuntimeException("Could not log you in.");
         }
