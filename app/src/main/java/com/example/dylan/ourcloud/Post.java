@@ -77,6 +77,7 @@ public class Post implements Serializable {
     public long getPostTimeMillis() {
         return postTimeMillis;
     }
+    public String getPostType() {return postType;}
 
     public boolean isCurrentUser() {
         return user.equals(currentUser);

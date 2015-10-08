@@ -7,8 +7,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.example.dylan.ourcloud.LocalUser;
 import com.example.dylan.ourcloud.LocalUserDBHelper;
 import com.example.dylan.ourcloud.Post;
@@ -20,10 +22,10 @@ import java.util.List;
 /**
  * Created by dylan on 10/6/15.
  */
-public class UserPostsFragment extends Fragment implements GrabUserPosts.Callback  {
+public class UserPostsFragment extends Fragment implements GrabUserPosts.Callback, AdapterView.OnItemClickListener  {
 
     private ListView postOverviewList;
-
+    private List<ViewedPost> posts;
 
 
     public void onAttach( Activity activity ) {
@@ -48,9 +50,26 @@ public class UserPostsFragment extends Fragment implements GrabUserPosts.Callbac
     @Override
     public void getPosts( List<ViewedPost> posts ) {
         //populate the list with these posts
-        for (ViewedPost post : posts) {
-            Log.i("viewers",post.getPostText() + "Viewers " + post.getViews().toString());
-        }
+        this.posts = posts;
+        UserPostsAdapter adapter = new UserPostsAdapter( posts, getActivity() );
+        postOverviewList.setAdapter(adapter);
+        postOverviewList.setOnItemClickListener(this);
+    }
+
+    @Override
+    public void onItemClick( AdapterView list, View view, int position, long id ) {
+        ViewedPost post = posts.get( position );
+
+        View v = LayoutInflater.from( getActivity() ).inflate( R.layout.users_viewed_list, null, false );
+        ListView userList = (ListView) v.findViewById( R.id.usersViewedList );
+        userList.setAdapter( new ViewListAdapter( getActivity(), post.getViews() ) );
+
+        MaterialDialog dialog = new MaterialDialog.Builder( getActivity() )
+                .title("Users Who Have Viewed")
+                .customView( v, true )
+                .build();
+
+        dialog.show();
     }
 
 
