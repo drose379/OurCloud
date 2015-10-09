@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 LocalUser.getInstance(MainActivity.this).setGcmId(intent.getStringExtra("gcmId"));
 
                 new UserSignIn().execute();
-                
+
 
                 LocalBroadcastManager.getInstance(MainActivity.this).unregisterReceiver(this);
             }

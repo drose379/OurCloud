@@ -118,6 +118,18 @@ public class LiveUsers extends GcmListenerService {
                     Log.i("newPostReceive","New post received");
 
                     break;
+                case "4" :
+                    //new comment on this users post
+                    //sends postId as a message, need way to get the Post text from the post id
+                    Log.i("postComment","Received comment on post" + data.getString("message") );
+                    /**
+                     * Need to grab the post title from the PostID passed
+                     * Create a posts LOCAL sqlite table where all the users posts will be saved, as well as on the server
+                     * This way, whenever a notification like this comes in, can easily grab info about it
+                     * Save postID,postTitle.
+                     * Get postID to save in response to the server saving it, SERVER postID and LOCAL postId MUST match
+                     */
+                    break;
             }
         }
 
