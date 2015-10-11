@@ -29,7 +29,7 @@ import java.util.List;
  */
 public class CommentController {
 
-    public static String NEW_COMMENT = "NEW_COMMENT";
+    public static String NEW_COMMENT_SUBMIT = "NEW_COMMENT_SUBMIT";
 
     private Context context;
     private Handler handler;
@@ -80,7 +80,7 @@ public class CommentController {
                 /**
                  * Send local broadcast that there is new comment, any act. interested will grab it
                  */
-                LocalBroadcastManager.getInstance(context).sendBroadcast(new Intent(NEW_COMMENT));
+                LocalBroadcastManager.getInstance(context).sendBroadcast(new Intent(NEW_COMMENT_SUBMIT));
             }
         });
 

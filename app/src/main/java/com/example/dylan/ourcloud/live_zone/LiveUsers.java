@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.example.dylan.ourcloud.LocalUser;
 import com.example.dylan.ourcloud.LocalUserDBHelper;
+import com.example.dylan.ourcloud.LocalUserDashboard;
 import com.example.dylan.ourcloud.R;
 import com.example.dylan.ourcloud.util.ContactUserLookup;
 import com.github.nkzawa.emitter.Emitter;
@@ -121,7 +122,7 @@ public class LiveUsers extends GcmListenerService {
                 case "4" :
                     //new comment on this users post
                     //sends postId as a message, need way to get the Post text from the post id
-                    Log.i("postComment","Received comment on post" + data.getString("message") );
+                    notifyNewComment();
                     /**
                      * Need to grab the post title from the PostID passed
                      * Create a posts LOCAL sqlite table where all the users posts will be saved, as well as on the server
@@ -162,7 +163,7 @@ public class LiveUsers extends GcmListenerService {
 
     public void notifyNewMessage(String otherUserId, String message) {
 
-        String senderName = ContactUserLookup.nameLookup( this, otherUserId );
+        String senderName = ContactUserLookup.nameLookup(this, otherUserId);
 
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
@@ -173,7 +174,6 @@ public class LiveUsers extends GcmListenerService {
         PendingIntent openOnNotification = PendingIntent.getActivity(this,2,onNotificationIntent,PendingIntent.FLAG_UPDATE_CURRENT);
 
         Notification newMessageNoti = new Notification.Builder(this)
-                .setContentTitle("New Message")
                 .setContentTitle(senderName)
                 .setContentText(message)
                 .setSound(Settings.System.DEFAULT_NOTIFICATION_URI)
@@ -188,6 +188,29 @@ public class LiveUsers extends GcmListenerService {
             notificationManager.notify(otherUserId,1,newMessageNoti);
         }
 
+    }
+
+    public void notifyNewComment() {
+
+        Intent i = new Intent( this, LocalUserDashboard.class );
+        PendingIntent openUserOverview = PendingIntent.getActivity( this,2,i,PendingIntent.FLAG_UPDATE_CURRENT );
+
+        Notification newCommentNoti = new Notification.Builder( this )
+                .setContentTitle("New Comment")
+                .setContentText("New Comment on One of Your Posts!")
+                .setSound(Settings.System.DEFAULT_NOTIFICATION_URI)
+                .setTicker("New Comment")
+                .setLights( Color.GREEN, 100, 100 )
+                .setAutoCancel(true)
+                .setSmallIcon(R.drawable.ic_cloud_queue_white_24dp)
+                .setContentIntent( openUserOverview )
+                .build();
+
+        //on click of this notificaiton, open up the user overview and show this post
+        //make sure OP does not get notifcation when they comment on their own post
+
+        NotificationManager notiManager  = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        notiManager.notify("newComment",2,newCommentNoti);
     }
 
 }

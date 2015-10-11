@@ -103,7 +103,7 @@ public class PostCommentsFrag extends Fragment implements CommentController.Call
             }
         };
 
-        LocalBroadcastManager.getInstance(getActivity()).registerReceiver(newCommentReceiver,new IntentFilter(CommentController.NEW_COMMENT));
+        LocalBroadcastManager.getInstance(getActivity()).registerReceiver(newCommentReceiver,new IntentFilter(CommentController.NEW_COMMENT_SUBMIT));
 
     }
 

@@ -79,10 +79,7 @@ public class ThisZone extends PostListenerActivity implements View.OnClickListen
     ImageView menuButton;
 
     boolean dialogsInflated;
-    MaterialDialog newPost;
-    MaterialDialog enableWifi;
     MaterialDialog newZoneName;
-    MaterialDialog mainOptionsMenu;
     MaterialDialog exitZone;
 
     int previousVisibleItem;
@@ -140,6 +137,7 @@ public class ThisZone extends PostListenerActivity implements View.OnClickListen
 
     public void initWifiConnect() {
         /** For testing, setting Zone statically
+         */
         LocalUser localUser = LocalUser.getInstance(this);
         if (wifiController.isConnected()) {
             localUser.setWifiId(wifiController.getWifiId());
@@ -147,15 +145,15 @@ public class ThisZone extends PostListenerActivity implements View.OnClickListen
 
             thisZoneController.getZoneId(localUser.getItem(LocalUserDBHelper.wifi_id_col), localUser.getNetworksInRange());
         } else {
-            enableWifi.show();
+            super.noWifi.show();
         }
-*/
+/**
 
         //Testing
         localUser.setWifiId("UNH-Secure");
         localUser.setNetworksInRange(Arrays.asList("UNH-Public"));
         thisZoneController.getZoneId(localUser.getItem(LocalUserDBHelper.wifi_id_col), localUser.getNetworksInRange());
-
+*/
     }
 
     /**
@@ -223,25 +221,6 @@ public class ThisZone extends PostListenerActivity implements View.OnClickListen
     public void initDialogs() {
 
         dialogsInflated = true;
-
-        enableWifi = new MaterialDialog.Builder(this)
-                .title("Enable Wifi")
-                .content("Please enable wifi to post in a zone, press reload when connected. If you want to check your marked zones, click skip")
-                .positiveText("Reload")
-                .negativeText("Skip")
-                .dismissListener(new DialogInterface.OnDismissListener() {
-                    @Override
-                    public void onDismiss(DialogInterface dialogInterface) {
-                        initWifiConnect();
-                    }
-                })
-                .callback(new MaterialDialog.ButtonCallback() {
-                    @Override
-                    public void onNegative(MaterialDialog dialog) {
-                        //wants to just view marked zones, account for this with a seperate activity for just marked zones
-                    }
-                })
-                .build();
 
         final View newZoneView = LayoutInflater.from(this).inflate(R.layout.new_zone_name, null);
         newZoneName = new MaterialDialog.Builder(this)

@@ -58,6 +58,7 @@
             android:id="@+id/loginContainer"
             >
 
+
             <com.google.android.gms.common.SignInButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

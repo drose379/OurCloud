@@ -1,5 +1,6 @@
 package com.example.dylan.ourcloud.home_zone;
 
+import android.content.ContentValues;
 import android.os.Handler;
 
 import com.example.dylan.ourcloud.LocalUser;
@@ -117,7 +118,7 @@ public class ThisZoneController {
     }
 
     public void createZoneName(String zoneId,String zoneName) {
-        RequestBody rBody = RequestBody.create(MediaType.parse("text/plain"),JSONUtil.generateJSONArray(zoneId,zoneName));
+        RequestBody rBody = RequestBody.create(MediaType.parse("text/plain"), JSONUtil.generateJSONArray(zoneId, zoneName));
         Request request = new Request.Builder()
                 .post(rBody)
                 .url("http://104.236.15.47/OurCloudAPI/index.php/updateZoneName")
@@ -125,14 +126,20 @@ public class ThisZoneController {
         Call call = httpClient.newCall(request);
         call.enqueue(new com.squareup.okhttp.Callback() {
             @Override
-            public void onFailure(Request request,IOException e) {
+            public void onFailure(Request request, IOException e) {
 
             }
+
             @Override
             public void onResponse(Response response) throws IOException {
                 final String zoneName = response.body().string();
 
-                Runnable r = new Runnable() {@Override public void run() {callback.zoneNameReady(zoneName);}};
+                Runnable r = new Runnable() {
+                    @Override
+                    public void run() {
+                        callback.zoneNameReady(zoneName);
+                    }
+                };
                 handler.post(r);
             }
         });
