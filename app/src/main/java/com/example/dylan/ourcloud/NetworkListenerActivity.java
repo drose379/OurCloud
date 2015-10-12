@@ -38,6 +38,11 @@ public abstract class NetworkListenerActivity extends AppCompatActivity {
     public void onStart() {
         super.onStart();
         activityActive = true;
+
+        if ( !WifiController.getInstance( this ).isConnected() ) {
+            noWifi.show();
+        }
+
     }
 
     @Override

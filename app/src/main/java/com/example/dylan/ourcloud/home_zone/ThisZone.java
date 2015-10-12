@@ -144,8 +144,6 @@ public class ThisZone extends PostListenerActivity implements View.OnClickListen
             localUser.setNetworksInRange(wifiController.getNetworksInRange());
 
             thisZoneController.getZoneId(localUser.getItem(LocalUserDBHelper.wifi_id_col), localUser.getNetworksInRange());
-        } else {
-            super.noWifi.show();
         }
 /**
 
