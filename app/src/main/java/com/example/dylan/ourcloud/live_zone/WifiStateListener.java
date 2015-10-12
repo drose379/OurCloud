@@ -20,73 +20,46 @@ import java.util.Set;
 public class WifiStateListener extends BroadcastReceiver {
 
     public static String EXIT_WIFI = "EXIT_WIFI";
+    public static String previousType = "null";
 
-    private String previousType;
 
     @Override
     public void onReceive(Context context,Intent intent) {
 
-        String conType;
-
         ConnectivityManager conManager = (ConnectivityManager) context.getSystemService( Context.CONNECTIVITY_SERVICE );
-        NetworkInfo activeNetwork = conManager.getActiveNetworkInfo();
-        if ( activeNetwork != null ) {
-            conType = conManager.getActiveNetworkInfo().getType() == ConnectivityManager.TYPE_WIFI ? "WIFI" : "OTHER";
+        NetworkInfo netInfo = conManager.getActiveNetworkInfo();
 
+        if ( netInfo != null ) {
 
-            if (!conType.equals(previousType)) {
-                Log.i("conType", conType + " Previous Type: " + previousType);
+            String networkType = netInfo.getType() == ConnectivityManager.TYPE_WIFI ? "WIFI" : "OTHER";
+
+            if ( !networkType.equals( previousType ) ) {
+
+                /**
+                 * This is working, if type is WIFI, reload all data, make sure to exit user from current zone, and open ThisZone with new zone info
+                 * If type is other, Exit user from zone and show disconnectd popup
+                 *
+                 * That logic will be done in NetworkListenerActivity, this receiver just needs to send a broadcast with either Connected for WIFI or Disconnected for OTHER
+                 */
+
             }
 
-            previousType = conType;
-            Log.i("conType", "Assigned previous type to " + previousType);
-        }
-        //Getting 2 WIFI broadcasts when connected to wrii, make sure to use previousType pattern to only use 1
+            previousType = networkType;
 
-
-
-        //use previousType idea to make sure not receiving OTHER OTHER twice, same for wifi
-/**
-
-        int networkType = (int) intent.getExtras().get("networkType");
-        /**
-         * Need to add a check if network "mobile" is active, if yes, call all code below
-         * If it is Wifi, this means the user entered a new wifi zone, update all info, remove them from current zone... etc
-
-
-
-        if ( previousType != networkType && networkType == 0 ) {
-
-            Log.i("networkType", String.valueOf( networkType ) );
-
-            Intent exitUser = new Intent(context,ExitLiveUser.class);
-            context.startService(exitUser);
-
-            Intent networkChange = new Intent(EXIT_WIFI);
-            LocalBroadcastManager.getInstance(context).sendBroadcast(networkChange);
-
-        } else if ( previousType != networkType && networkType == 1 ) {
-
-            Log.i("networkType", String.valueOf( networkType ) );
-
-            /**
-             * Connected to new network, reload all app data pertaining to the current network and load new data for newly connected network
-             * Bring back to ThisZone activity
-
-
-        //send broadcast ENTER_WIFI to be received by NetworkListener activity, make sure only sent when completely connected and not just enabled
-        } else {
-            Log.i("networkType", String.valueOf( networkType ) + " Outside of conditionals" );
-            Log.i("networkTypePrevious","Previous Type:" + previousType);
         }
 
-
         /**
-         * Need to implement whether the network is connected or disconnected, and act accordingly.
-         * WHEN WIFI DISCONNECTED, send out a broadcast, THE THISZONE activity will listen for it (if it is open) and show a dialog if it receives the broadcast
-
-
-*/
+         * Logging 1 every time, this means that a entire new Object is being created each time a broadcast is received
+         *
+         * This means need to store the previousType EITHER in a static field or elsewhere, maybe LocalUser, or in SQLITE table, find best implementation
+         *
+         * See github history for correct receiver code
+         *
+         * After testing
+         *
+         * STATIC FIELD WORKS, MOST LIKELY BEST SOLUTION, IMPLEMENT CORRECT RECEIVER CODE WITH STATIC FIELD FOR PREVIOUSTYPE
+         *
+         */
 
     }
 
