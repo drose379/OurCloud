@@ -28,8 +28,6 @@ public abstract class NetworkListenerActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstance) {
         super.onCreate(savedInstance);
 
-
-
         initDialog();
         initWifiReceiver();
     }
@@ -89,14 +87,24 @@ public abstract class NetworkListenerActivity extends AppCompatActivity {
             @Override
             public void onReceive(Context context,Intent intent) {
 
-                if ( !noWifi.isShowing() && activityActive ) { noWifi.show(); }
+                switch ( intent.getIntExtra("type", 0) ) {
+                    //disconnect
+                    case 0:
 
-                Intent exitUser = new Intent(context,ExitLiveUser.class);
-                startService(exitUser);
+                        if ( !noWifi.isShowing() && activityActive ) { noWifi.show(); }
+
+                        break;
+                    //connect
+                    case 1:
+
+                        noWifi.hide();
+
+                        break;
+                }
             }
         };
 
-        LocalBroadcastManager.getInstance(this).registerReceiver(networkReceiver,new IntentFilter(WifiStateListener.EXIT_WIFI));
+        LocalBroadcastManager.getInstance(this).registerReceiver(networkReceiver,new IntentFilter(WifiStateListener.CONNECTION_UPDATE));
 
     }
 }

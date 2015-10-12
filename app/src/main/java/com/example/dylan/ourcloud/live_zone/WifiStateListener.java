@@ -19,7 +19,7 @@ import java.util.Set;
  */
 public class WifiStateListener extends BroadcastReceiver {
 
-    public static String EXIT_WIFI = "EXIT_WIFI";
+    public static String CONNECTION_UPDATE = "CONNECTION_UPDATE";
     public static String previousType = "null";
 
 
@@ -41,6 +41,26 @@ public class WifiStateListener extends BroadcastReceiver {
                  *
                  * That logic will be done in NetworkListenerActivity, this receiver just needs to send a broadcast with either Connected for WIFI or Disconnected for OTHER
                  */
+
+                switch ( networkType ) {
+                    case "WIFI" :
+
+                        break;
+                    case "OTHER" :
+
+                        Intent exitUser = new Intent( context, ExitLiveUser.class );
+                        context.startService( exitUser );
+
+                        /**
+                         * 0 : Disconnect from wifi
+                         * 1:  (Re)connected to wifi
+                         */
+                        Intent exitWifiBroadcast = new Intent( CONNECTION_UPDATE );
+                        exitWifiBroadcast.putExtra( "type", 0 );
+                        LocalBroadcastManager.getInstance( context ).sendBroadcast( exitWifiBroadcast );
+
+                        break;
+                }
 
             }
 
