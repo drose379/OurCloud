@@ -45,6 +45,10 @@ public class WifiStateListener extends BroadcastReceiver {
                 switch ( networkType ) {
                     case "WIFI" :
 
+                        Intent enterWifiBroadcast = new Intent( CONNECTION_UPDATE );
+                        enterWifiBroadcast.putExtra( "type", 1 );
+                        LocalBroadcastManager.getInstance( context ).sendBroadcast( enterWifiBroadcast );
+
                         break;
                     case "OTHER" :
 

@@ -13,6 +13,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.example.dylan.ourcloud.home_zone.ThisZone;
 import com.example.dylan.ourcloud.live_zone.ExitLiveUser;
 import com.example.dylan.ourcloud.live_zone.WifiStateListener;
 
@@ -36,11 +37,6 @@ public abstract class NetworkListenerActivity extends AppCompatActivity {
     public void onStart() {
         super.onStart();
         activityActive = true;
-
-        if ( !WifiController.getInstance( this ).isConnected() ) {
-            noWifi.show();
-        }
-
     }
 
     @Override
@@ -56,21 +52,18 @@ public abstract class NetworkListenerActivity extends AppCompatActivity {
         noWifi = new MaterialDialog.Builder( NetworkListenerActivity.this )
                 .title("Not connected!")
                 .content("You are not connected to any zone, please choose an option")
-                .positiveText("Reload")
-                .negativeText("Global Zone")
-                .neutralText("Close")
+                .positiveText("Global Zone")
+                .negativeText("Close")
                 .callback(new MaterialDialog.ButtonCallback() {
                     @Override
                     public void onPositive(MaterialDialog dialog) {
-                        super.onAny(dialog);
+                        //join global
+                        Log.i("noWifi","Global zone clicked");
+                        updateZone();
                     }
                     @Override
                     public void onNegative( MaterialDialog dialog ) {
-
-                    }
-                    @Override
-                    public void onNeutral(MaterialDialog dialog) {
-
+                        NetworkListenerActivity.this.finish();
                     }
                 })
                 .dismissListener(new DialogInterface.OnDismissListener() {
@@ -91,13 +84,14 @@ public abstract class NetworkListenerActivity extends AppCompatActivity {
                     //disconnect
                     case 0:
 
-                        if ( !noWifi.isShowing() && activityActive ) { noWifi.show(); }
+                        //if ( !noWifi.isShowing() ) { noWifi.show(); }
+                        noWifi.show();
 
                         break;
                     //connect
                     case 1:
 
-                        noWifi.hide();
+                        updateZone();
 
                         break;
                 }
@@ -107,4 +101,9 @@ public abstract class NetworkListenerActivity extends AppCompatActivity {
         LocalBroadcastManager.getInstance(this).registerReceiver(networkReceiver,new IntentFilter(WifiStateListener.CONNECTION_UPDATE));
 
     }
+
+    public void updateZone() {
+        if ( noWifi.isShowing() ) {noWifi.hide();}
+    }
+
 }

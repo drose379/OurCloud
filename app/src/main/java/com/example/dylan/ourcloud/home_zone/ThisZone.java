@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.net.Network;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
@@ -49,6 +50,8 @@ import com.example.dylan.ourcloud.R;
 import com.example.dylan.ourcloud.WifiController;
 
 import com.github.clans.fab.FloatingActionButton;
+
+import org.json.JSONArray;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -135,15 +138,30 @@ public class ThisZone extends PostListenerActivity implements View.OnClickListen
 
     }
 
+    @Override
+    public void updateZone() {
+        super.updateZone();
+        initWifiConnect();
+    }
+
     public void initWifiConnect() {
         /** For testing, setting Zone statically
          */
         LocalUser localUser = LocalUser.getInstance(this);
-        if (wifiController.isConnected()) {
+        ConnectivityManager conManager = (ConnectivityManager) getSystemService( CONNECTIVITY_SERVICE );
+        if ( conManager.getActiveNetworkInfo().getType() == ConnectivityManager.TYPE_WIFI ) {
+        //if (wifiController.isConnected()) { // replace this with the ConnectionManager.activeNetwork check, more accureate
             localUser.setWifiId(wifiController.getWifiId());
             localUser.setNetworksInRange(wifiController.getNetworksInRange());
 
             thisZoneController.getZoneId(localUser.getItem(LocalUserDBHelper.wifi_id_col), localUser.getNetworksInRange());
+        } else {
+            localUser.setWifiId("global");
+            ArrayList<String> dummy = new ArrayList<String>();
+            dummy.add( "global" );
+            localUser.setNetworksInRange( dummy );
+
+            thisZoneController.getZoneId( "global", localUser.getNetworksInRange() );
         }
 /**
 
@@ -186,9 +204,10 @@ public class ThisZone extends PostListenerActivity implements View.OnClickListen
 
     @Override
     public void getZoneId(String zoneId,final String zoneName) {
-
+        Log.i("zoneID",zoneId + " from server");
         localUser.setZoneId(zoneId);
         localUser.setZoneName(zoneName);
+        Log.i("zoneName", zoneName);
 
         if(localUser.getItem(LocalUserDBHelper.zone_name_col).equals("null")) {
             newZoneName.show();

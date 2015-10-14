@@ -2,6 +2,7 @@ package com.example.dylan.ourcloud.home_zone;
 
 import android.content.ContentValues;
 import android.os.Handler;
+import android.util.Log;
 
 import com.example.dylan.ourcloud.LocalUser;
 import com.example.dylan.ourcloud.LocalUserDBHelper;
@@ -103,6 +104,7 @@ public class ThisZoneController {
                     zoneObject = new JSONObject(responseString);
                     zoneId = zoneObject.getString("ID");
                     zoneName = zoneObject.getString("name");
+                    Log.i("zoneName", zoneName + " from response");
                 } catch (JSONException e) {
                     throw new RuntimeException(e.getMessage());
                 }
