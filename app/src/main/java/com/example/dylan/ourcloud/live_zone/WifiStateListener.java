@@ -29,9 +29,22 @@ public class WifiStateListener extends BroadcastReceiver {
         ConnectivityManager conManager = (ConnectivityManager) context.getSystemService( Context.CONNECTIVITY_SERVICE );
         NetworkInfo netInfo = conManager.getActiveNetworkInfo();
 
+
+
         if ( netInfo != null ) {
 
-            String networkType = netInfo.getType() == ConnectivityManager.TYPE_WIFI ? "WIFI" : "OTHER";
+            Log.i("newType",netInfo.getTypeName());
+
+           // String networkType = netInfo.getType() == ConnectivityManager.TYPE_WIFI ? "WIFI" : "OTHER";
+/**
+            if ( netInfo.getType() == ConnectivityManager.TYPE_WIFI ) {
+                networkType = "WIFI";
+            } else if ( netInfo.getType() == ConnectivityManager.TYPE_MOBILE ) {
+                networkType = "MOBILE";
+            }
+*/
+
+            String networkType = netInfo.getTypeName();
 
             if ( !networkType.equals( previousType ) ) {
 
@@ -50,11 +63,7 @@ public class WifiStateListener extends BroadcastReceiver {
                         LocalBroadcastManager.getInstance( context ).sendBroadcast( enterWifiBroadcast );
 
                         break;
-                    case "OTHER" :
-
-                        Intent exitUser = new Intent( context, ExitLiveUser.class );
-                        context.startService( exitUser );
-
+                    case "MOBILE" :
                         /**
                          * 0 : Disconnect from wifi
                          * 1:  (Re)connected to wifi

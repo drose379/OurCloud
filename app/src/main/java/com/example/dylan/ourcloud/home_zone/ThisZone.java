@@ -141,6 +141,10 @@ public class ThisZone extends PostListenerActivity implements View.OnClickListen
     @Override
     public void updateZone() {
         super.updateZone();
+
+        Intent exitUser = new Intent( this, ExitLiveUser.class );
+        startService(exitUser);
+
         initWifiConnect();
     }
 
@@ -156,6 +160,7 @@ public class ThisZone extends PostListenerActivity implements View.OnClickListen
 
             thisZoneController.getZoneId(localUser.getItem(LocalUserDBHelper.wifi_id_col), localUser.getNetworksInRange());
         } else {
+            Log.i("noWifi","calling getzoneId on the global zone");
             localUser.setWifiId("global");
             ArrayList<String> dummy = new ArrayList<String>();
             dummy.add( "global" );
@@ -172,10 +177,28 @@ public class ThisZone extends PostListenerActivity implements View.OnClickListen
 */
     }
 
-    /**
-     * postContainer scroll listener needs to be updated each time data changes
-     * @param posts
-     */
+
+
+    @Override
+    public void getZoneId(String zoneId,final String zoneName) {
+        Log.i("zoneID",zoneId + " from server");
+        localUser.setZoneId(zoneId);
+        localUser.setZoneName(zoneName);
+
+        if(localUser.getItem(LocalUserDBHelper.zone_name_col).equals("null")) {
+            newZoneName.show();
+        } else {
+
+            Intent enterLiveUser = new Intent(this,NewLiveUser.class);
+            startService(enterLiveUser);
+
+            toolbarTitle.setText(zoneName);
+            thisZoneController.grabZonePosts();
+
+        }
+
+    }
+
     @Override
     public void getZonePosts(final List<Post> posts) {
         postContainer.setVisibility(View.VISIBLE);
@@ -202,26 +225,6 @@ public class ThisZone extends PostListenerActivity implements View.OnClickListen
         });
     }
 
-    @Override
-    public void getZoneId(String zoneId,final String zoneName) {
-        Log.i("zoneID",zoneId + " from server");
-        localUser.setZoneId(zoneId);
-        localUser.setZoneName(zoneName);
-        Log.i("zoneName", zoneName);
-
-        if(localUser.getItem(LocalUserDBHelper.zone_name_col).equals("null")) {
-            newZoneName.show();
-        } else {
-
-            Intent enterLiveUser = new Intent(this,NewLiveUser.class);
-            startService(enterLiveUser);
-
-            toolbarTitle.setText(zoneName);
-            thisZoneController.grabZonePosts();
-
-        }
-
-    }
 
     @Override
     public void postSubmitted() {

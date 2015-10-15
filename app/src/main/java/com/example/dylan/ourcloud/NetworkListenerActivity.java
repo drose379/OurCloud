@@ -58,7 +58,6 @@ public abstract class NetworkListenerActivity extends AppCompatActivity {
                     @Override
                     public void onPositive(MaterialDialog dialog) {
                         //join global
-                        Log.i("noWifi","Global zone clicked");
                         updateZone();
                     }
                     @Override
@@ -85,7 +84,7 @@ public abstract class NetworkListenerActivity extends AppCompatActivity {
                     case 0:
 
                         //if ( !noWifi.isShowing() ) { noWifi.show(); }
-                        noWifi.show();
+                        if ( activityActive ) {noWifi.show();}
 
                         break;
                     //connect
