@@ -83,14 +83,21 @@ public abstract class NetworkListenerActivity extends AppCompatActivity {
                     //disconnect
                     case 0:
 
-                        //if ( !noWifi.isShowing() ) { noWifi.show(); }
-                        if ( activityActive ) {noWifi.show();}
+                        if ( activityActive ) {
+                            noWifi.show();
+                        }
+                         else {
+                            updateZone();
+                        }
+
+                        Log.i("networkReceived","Disconnected from wifi");
 
                         break;
                     //connect
                     case 1:
 
                         updateZone();
+                        Log.i("networkReceived","Connected to wifi");
 
                         break;
                 }
@@ -102,7 +109,7 @@ public abstract class NetworkListenerActivity extends AppCompatActivity {
     }
 
     public void updateZone() {
-        if ( noWifi.isShowing() ) {noWifi.hide();}
+        if ( noWifi != null && noWifi.isShowing() ) {noWifi.hide();}
     }
 
 }
